@@ -1,0 +1,79 @@
+package core;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GridTest {
+
+    @Test
+    public void testDimensions() {
+        Grid grid = new Grid(4, 4);
+        assertEquals(4, grid.getCols());
+        assertEquals(4, grid.getRows());
+    }
+
+    @Test
+    public void testDifferentDimensions() {
+        Grid grid = new Grid(6, 3);
+        assertEquals(6, grid.getCols());
+        assertEquals(3, grid.getRows());
+    }
+
+    @Test
+    public void testTilesArrayInitializedByDefault() {
+        Grid grid = new Grid(4, 4);
+        assertNotNull(grid.getTiles());
+        assertEquals(4, grid.getTiles().length);       // rows
+        assertEquals(4, grid.getTiles()[0].length);    // cols
+    }
+
+    @Test
+    public void testSetAndGetTiles() {
+        Grid grid = new Grid(4, 4);
+        Tile[][] tiles = new Tile[4][4];
+        Tile tile = new Tile(TileType.STRAIGHT);
+        tiles[2][3] = tile;
+        grid.setTiles(tiles);
+        assertSame(tile, grid.getTiles()[2][3]);
+    }
+
+    @Test
+    public void testRandomInitFillsAllTiles() {
+        Grid grid = new Grid(4, 4);
+        grid.randomInitTile();
+        Tile[][] tiles = grid.getTiles();
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                assertNotNull(tiles[y][x], "Tile at (" + x + "," + y + ") should not be null after randomInit");
+            }
+        }
+    }
+
+    @Test
+    public void testRandomInitTilesHaveValidRotations() {
+        Grid grid = new Grid(4, 4);
+        grid.randomInitTile();
+        Tile[][] tiles = grid.getTiles();
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                int rotation = tiles[y][x].getRotation();
+                assertTrue(
+                    rotation == 0 || rotation == 90 || rotation == 180 || rotation == 270,
+                    "Tile at (" + x + "," + y + ") has invalid rotation: " + rotation
+                );
+            }
+        }
+    }
+
+    @Test
+    public void testRandomInitTilesHaveValidTypes() {
+        Grid grid = new Grid(4, 4);
+        grid.randomInitTile();
+        Tile[][] tiles = grid.getTiles();
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                assertNotNull(tiles[y][x].getType(), "Tile type at (" + x + "," + y + ") should not be null");
+            }
+        }
+    }
+}
