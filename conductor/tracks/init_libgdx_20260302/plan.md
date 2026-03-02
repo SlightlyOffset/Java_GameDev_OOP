@@ -15,8 +15,8 @@ This plan outlines the steps to set up the initial libGDX project and a basic ga
 ender(), and dispose() methods with basic screen clearing
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md) ($short_sha)
 
-## Phase 2: Environment Verification
-- [ ] Task: Verify build and execution
-    - [ ] Run ./gradlew desktop:run and confirm the game window appears
-    - [ ] Verify the render loop clears the screen with the expected color
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Environment Verification' (Protocol in workflow.md)
+## Phase 2: Environment Verification [checkpoint: $short_sha]
+- [x] Task: Verify build and execution ($short_sha)
+    - [x] Run ./gradlew desktop:run and confirm the game window appears
+    - [x] Verify the render loop clears the screen with the expected color
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Environment Verification' (Protocol in workflow.md) ($short_sha)
