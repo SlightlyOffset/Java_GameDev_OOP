@@ -6,8 +6,6 @@
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
     }
-    dependencies {
-    }
 }
 
 allprojects {
@@ -45,5 +43,11 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.1"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.1"
+    }
+    
+    test {
+        useJUnitPlatform()
     }
 }
