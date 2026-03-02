@@ -1,2 +1,2 @@
-﻿rootProject.name = "P'J_Cafe"
+rootProject.name = "P'J_Cafe"
 include "core", "desktop"

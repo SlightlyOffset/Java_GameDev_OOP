@@ -1,4 +1,4 @@
-﻿buildscript {
+buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
@@ -12,10 +12,10 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = "$projectVersion"
+    version = project.findProperty("projectVersion") ?: "0.1.0"
     ext {
         appName = "P'J_Cafe"
-        gdxVersion = "$gdxVersion"
+        gdxVersion = project.findProperty("gdxVersion") ?: "1.13.1"
     }
 
     repositories {
@@ -45,8 +45,9 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.1"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.1"
+        testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.1"
     }
-    
+
     test {
         useJUnitPlatform()
     }
