@@ -1,12 +1,12 @@
 # Implementation Plan - Main Game Menu
 
-## Phase 1: Preparation & Setup
+## Phase 1: Preparation & Setup [checkpoint: e0b2df0]
 - [x] Task: Project Setup for UI (54ae00e)
     - [ ] Create `MenuScreen` class implementing libGDX's `Screen`.
     - [ ] Define the `AssetManager` for loading textures and audio.
     - [ ] Write unit tests to verify `MenuScreen` initialization and stage setup.
     - [ ] Implement `MenuScreen` skeleton to pass initial tests.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Preparation & Setup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation & Setup' (e0b2df0)
 
 ## Phase 2: UI Layout & Graphics
 - [ ] Task: Background & Logo Rendering
