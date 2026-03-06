@@ -1,5 +1,7 @@
 package core;
 
+import core.mechanics.Tile;
+import core.mechanics.TileType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

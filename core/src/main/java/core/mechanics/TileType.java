@@ -1,4 +1,4 @@
-package core;
+package core.mechanics;
 
 public enum TileType {
     STRAIGHT,

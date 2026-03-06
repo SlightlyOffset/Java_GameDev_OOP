@@ -1,4 +1,4 @@
-package core;
+package core.mechanics;
 
 import java.util.Random;
 

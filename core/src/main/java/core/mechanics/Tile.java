@@ -1,4 +1,4 @@
-package core;
+package core.mechanics;
 
 public class Tile {
     private final TileType type;

@@ -1,8 +1,7 @@
-package core;
+package core.mechanics;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import core.windows.GameScreen;
 
 public class PathPuzzleGame extends Game {
     @Override
