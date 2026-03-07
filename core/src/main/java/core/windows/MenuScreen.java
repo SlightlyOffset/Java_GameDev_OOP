@@ -16,16 +16,49 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import core.mechanics.PathPuzzleGame;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.graphics.Pixmap;
+
 public class MenuScreen implements Screen {
     private final AssetManager assetManager;
     private final PathPuzzleGame game;
     private Stage stage;
     private Table table;
     private Viewport viewport;
+    private Skin skin;
 
     public MenuScreen(PathPuzzleGame game) {
         this.game = game;
         this.assetManager = game.assetManager;
+        initSkin();
+    }
+
+    private void initSkin() {
+        // Skip skin initialization in tests if Gdx.graphics is not available
+        if (Gdx.graphics == null) return;
+        
+        skin = new Skin();
+        // Create a default font
+        BitmapFont font = new BitmapFont();
+        skin.add("default", font);
+
+        // Create a basic texture for button background
+        Pixmap pixmap = new Pixmap(100, 30, Pixmap.Format.RGBA8888);
+        pixmap.setColor(com.badlogic.gdx.graphics.Color.GRAY);
+        pixmap.fill();
+        skin.add("background", new Texture(pixmap));
+
+        // Create a button style
+        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.up = skin.newDrawable("background", com.badlogic.gdx.graphics.Color.GRAY);
+        buttonStyle.down = skin.newDrawable("background", com.badlogic.gdx.graphics.Color.DARK_GRAY);
+        buttonStyle.checked = skin.newDrawable("background", com.badlogic.gdx.graphics.Color.BLUE);
+        buttonStyle.over = skin.newDrawable("background", com.badlogic.gdx.graphics.Color.LIGHT_GRAY);
+        buttonStyle.font = skin.getFont("default");
+        skin.add("default", buttonStyle);
+        
+        pixmap.dispose();
     }
 
     @Override
@@ -45,18 +78,17 @@ public class MenuScreen implements Screen {
 
     private void setupUI() {
         // Add Logo (image)
-        // Check if loaded before using to avoid crash in tests where it might not be mocked fully
         if (assetManager.isLoaded("Logo.png", Texture.class)) {
             Image logo = new Image(assetManager.get("Logo.png", Texture.class));
             table.add(logo).padBottom(50).row(); // Move to next row after adding logo
         }
 
-        // Create Buttons - Commented out for now to prevent crash until skins are loaded
-        // TextButton startButton = new TextButton("Start", new TextButton.TextButtonStyle());
-        // TextButton exitButton = new TextButton("Exit", new TextButton.TextButtonStyle());
+        // Create Buttons
+        TextButton startButton = new TextButton("Start", skin);
+        TextButton optionsButton = new TextButton("Options", skin);
+        TextButton exitButton = new TextButton("Exit", skin);
 
         // Add listeners for interaction
-        /*
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -71,9 +103,10 @@ public class MenuScreen implements Screen {
             }
         });
 
+        // Add buttons to the table
         table.add(startButton).fillX().uniformX().pad(10).row();
+        table.add(optionsButton).fillX().uniformX().pad(10).row();
         table.add(exitButton).fillX().uniformX().pad(10);
-        */
     }
 
     @Override

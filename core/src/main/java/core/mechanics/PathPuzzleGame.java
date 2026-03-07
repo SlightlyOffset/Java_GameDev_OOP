@@ -15,8 +15,10 @@ public class PathPuzzleGame extends Game {
 
         // Preload assets
         assetManager.load("Logo.png", Texture.class);
-        // We need a background image, using a placeholder for now
-        // assetManager.load("background.png", Texture.class); 
+        // assetManager.load("background.png", Texture.class);
+        // Note: We need a skin for UI buttons. Using a placeholder for now if possible.
+        // For actual implementation, we might need to load a .json skin or create one manually.
+        
         assetManager.finishLoading();
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
