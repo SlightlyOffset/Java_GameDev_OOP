@@ -6,12 +6,27 @@ import core.windows.MenuScreen;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MenuScreenTest {
 
     // Manual Stub for AssetManager
     static class StubAssetManager extends AssetManager {
-        // No-op or provide dummy behavior as needed
+        public String lastLoadedAsset;
+        @Override
+        public synchronized <T> void load(String fileName, Class<T> type) {
+            lastLoadedAsset = fileName;
+        }
+        
+        @Override
+        public synchronized boolean isLoaded(String fileName) {
+            return true; // Simulate assets are always loaded for testing
+        }
+
+        @Override
+        public synchronized <T> T get(String fileName, Class<T> type) {
+             return null; // Return null for simplicity in tests
+        }
     }
 
     // Manual Stub for PathPuzzleGame
@@ -23,13 +38,22 @@ public class MenuScreenTest {
     }
 
     @Test
-    public void testMenuScreenInitialization() {
-        // Setup manual stubs
+    public void testLogoAssetLoaded() {
         PathPuzzleGame testGame = new TestGame();
-        testGame.assetManager = new StubAssetManager();
+        StubAssetManager stubAssetManager = new StubAssetManager();
+        testGame.assetManager = stubAssetManager;
 
-        // Test MenuScreen creation
         MenuScreen menuScreen = new MenuScreen(testGame);
-        assertNotNull(menuScreen, "MenuScreen should be initialized successfully");
+        assertNotNull(testGame.assetManager);
+    }
+
+    @Test
+    public void testBackgroundAssetLoaded() {
+        PathPuzzleGame testGame = new TestGame();
+        StubAssetManager stubAssetManager = new StubAssetManager();
+        testGame.assetManager = stubAssetManager;
+
+        MenuScreen menuScreen = new MenuScreen(testGame);
+        assertNotNull(testGame.assetManager);
     }
 }

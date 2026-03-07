@@ -2,6 +2,7 @@ package core.mechanics;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import core.windows.GameScreen;
 import core.windows.MenuScreen;
 
@@ -12,7 +13,11 @@ public class PathPuzzleGame extends Game {
     public void create() {
         assetManager = new AssetManager();
 
-        // Optional: Preload assets here (maybe :P)
+        // Preload assets
+        assetManager.load("Logo.png", Texture.class);
+        // We need a background image, using a placeholder for now
+        // assetManager.load("background.png", Texture.class); 
+        assetManager.finishLoading();
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
     }

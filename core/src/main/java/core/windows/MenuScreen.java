@@ -44,9 +44,12 @@ public class MenuScreen implements Screen {
     }
 
     private void setupUI() {
-        // Add Logo (image) - Commented out for now to prevent crash until loaded
-        // Image logo = new Image(assetManager.get("Logo.png", Texture.class));
-        // table.add(logo).padBottom(50).row(); // Move to next row after adding logo
+        // Add Logo (image)
+        // Check if loaded before using to avoid crash in tests where it might not be mocked fully
+        if (assetManager.isLoaded("Logo.png", Texture.class)) {
+            Image logo = new Image(assetManager.get("Logo.png", Texture.class));
+            table.add(logo).padBottom(50).row(); // Move to next row after adding logo
+        }
 
         // Create Buttons - Commented out for now to prevent crash until skins are loaded
         // TextButton startButton = new TextButton("Start", new TextButton.TextButtonStyle());
@@ -76,6 +79,16 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1); // Clear the screen with black color
+        
+        // Draw background if we have one
+        if (assetManager.isLoaded("background.png", Texture.class)) {
+            stage.getBatch().begin();
+            stage.getBatch().draw(assetManager.get("background.png", Texture.class), 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+            stage.getBatch().end();
+        }
+
+        stage.act(delta);
+        stage.draw();
     }
 
 
