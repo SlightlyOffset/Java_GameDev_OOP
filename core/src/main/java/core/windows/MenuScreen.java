@@ -24,6 +24,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.badlogic.gdx.audio.Music;
 
+import com.badlogic.gdx.audio.Sound;
+
 public class MenuScreen implements Screen {
     private final AssetManager assetManager;
     private final PathPuzzleGame game;
@@ -32,6 +34,7 @@ public class MenuScreen implements Screen {
     private Viewport viewport;
     private Skin skin;
     private Music music;
+    private Sound clickSound;
 
     public MenuScreen(PathPuzzleGame game) {
         this.game = game;
@@ -95,6 +98,11 @@ public class MenuScreen implements Screen {
             table.add(logo).padBottom(50).row(); // Move to next row after adding logo
         }
 
+        // Load click sound
+        if (assetManager.isLoaded("click.mp3", Sound.class)) {
+            clickSound = assetManager.get("click.mp3", Sound.class);
+        }
+
         // Create Buttons
         TextButton startButton = new TextButton("Start", skin);
         TextButton optionsButton = new TextButton("Options", skin);
@@ -104,6 +112,7 @@ public class MenuScreen implements Screen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play();
                 game.setScreen(new GameScreen(game)); // Start the game -> Transition to GameScreen
             }
         });
@@ -111,6 +120,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play();
                 Gdx.app.log("MenuScreen", "Options button clicked - placeholder");
             }
         });
@@ -118,6 +128,7 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play();
                 Gdx.app.exit(); // Exit the game
             }
         });

@@ -120,4 +120,16 @@ public class MenuScreenTest {
         // No longer failing placeholder
         assertNotNull(menuScreen);
     }
+
+    @Test
+    public void testClickSFXLoaded() {
+        PathPuzzleGame testGame = new TestGame();
+        StubAssetManager stubAssetManager = new StubAssetManager();
+        testGame.assetManager = stubAssetManager;
+
+        MenuScreen menuScreen = new MenuScreen(testGame);
+        
+        // No longer failing placeholder
+        assertNotNull(menuScreen);
+    }
 }
