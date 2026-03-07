@@ -98,6 +98,13 @@ public class MenuScreen implements Screen {
             }
         });
 
+        optionsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("MenuScreen", "Options button clicked - placeholder");
+            }
+        });
+
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
