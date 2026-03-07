@@ -20,7 +20,7 @@
     - [x] Implement the `Table` and buttons ("Start", "Options", "Exit") to pass tests.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: UI Layout & Graphics' (08d61eb)
 
-## Phase 3: Interactivity & Transitions
+## Phase 3: Interactivity & Transitions [checkpoint: 481202c]
 - [x] Task: Screen Transitions (eb1b89d)
     - [x] Write tests to verify that clicking the "Start" button transitions the game to `GameScreen`.
     - [x] Implement the `ClickListener` for the "Start" button.
@@ -29,7 +29,7 @@
     - [x] Implement the `ClickListener` for the "Exit" button.
 - [x] Task: Options Placeholder (fdda288)
     - [x] Implement a basic placeholder for the "Options" button (e.g., logging a message).
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Interactivity & Transitions' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Interactivity & Transitions' (481202c)
 
 ## Phase 4: Audio & Polish
 - [ ] Task: Background Music
