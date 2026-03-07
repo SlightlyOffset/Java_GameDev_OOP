@@ -9,7 +9,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation & Setup' (e0b2df0)
 
 ## Phase 2: UI Layout & Graphics
-- [ ] Task: Background & Logo Rendering
+- [x] Task: Background & Logo Rendering (1a27cf5)
     - [ ] Write tests for background image loading and rendering in `MenuScreen`.
     - [ ] Implement background image display using a `Texture` or `TextureRegion`.
     - [ ] Write tests for logo placement within the UI table.
