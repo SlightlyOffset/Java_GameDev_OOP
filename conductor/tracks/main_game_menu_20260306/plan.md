@@ -31,11 +31,11 @@
     - [x] Implement a basic placeholder for the "Options" button (e.g., logging a message).
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Interactivity & Transitions' (481202c)
 
-## Phase 4: Audio & Polish
+## Phase 4: Audio & Polish [checkpoint: bb55cee]
 - [x] Task: Background Music (c6e8038)
     - [x] Write tests for loading and playback of background music.
     - [x] Implement looping background music in `MenuScreen`.
 - [x] Task: Sound Effects (SFX) (ec8297b)
     - [x] Write tests for triggering SFX on button clicks.
     - [x] Implement click SFX using `Sound` assets.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Audio & Polish' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Audio & Polish' (bb55cee)
