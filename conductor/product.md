@@ -13,6 +13,7 @@ The project aims to develop a desktop-based puzzle game with a central mechanic 
 ## Key Features
 - **Path Rotation:** Rotate path tiles/segments to change their orientation.
 - **Level Completion:** Successfully connect the start and end points to complete a level.
+- **Main Game Menu:** Initial screen for starting games, accessing options, and exiting.
 - **Java 20+ Compatibility:** Modern Java environment utilizing contemporary language features.
 - **libGDX Framework:** High-performance cross-platform game development framework for graphics and input management.
 
