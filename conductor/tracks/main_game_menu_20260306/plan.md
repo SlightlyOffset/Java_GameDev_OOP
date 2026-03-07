@@ -39,3 +39,6 @@
     - [x] Write tests for triggering SFX on button clicks.
     - [x] Implement click SFX using `Sound` assets.
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Audio & Polish' (bb55cee)
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions (f2e820a)
