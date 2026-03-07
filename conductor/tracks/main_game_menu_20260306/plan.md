@@ -14,7 +14,7 @@
     - [ ] Implement background image display using a `Texture` or `TextureRegion`.
     - [ ] Write tests for logo placement within the UI table.
     - [ ] Implement logo rendering at the top of the button panel.
-- [ ] Task: Button Panel Layout
+- [x] Task: Button Panel Layout (78de155)
     - [ ] Write tests for UI `Table` alignment (aligned to the right side of the screen).
     - [ ] Write tests for button creation and vertical organization in the `Table`.
     - [ ] Implement the `Table` and buttons ("Start", "Options", "Exit") to pass tests.
