@@ -21,9 +21,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: UI Layout & Graphics' (08d61eb)
 
 ## Phase 3: Interactivity & Transitions
-- [ ] Task: Screen Transitions
-    - [ ] Write tests to verify that clicking the "Start" button transitions the game to `GameScreen`.
-    - [ ] Implement the `ClickListener` for the "Start" button.
+- [x] Task: Screen Transitions (eb1b89d)
+    - [x] Write tests to verify that clicking the "Start" button transitions the game to `GameScreen`.
+    - [x] Implement the `ClickListener` for the "Start" button.
 - [ ] Task: Application Control
     - [ ] Write tests to verify that clicking the "Exit" button triggers `Gdx.app.exit()`.
     - [ ] Implement the `ClickListener` for the "Exit" button.
