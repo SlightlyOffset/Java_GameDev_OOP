@@ -37,7 +37,10 @@ public class GameScreen extends ScreenAdapter {
 
         // 4. Create a ShapeRenderer for drawing shapes
         shapeRenderer = new ShapeRenderer();
+    }
 
+    @Override
+    public void show() {
         // 5. Register click input
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
