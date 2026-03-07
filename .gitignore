@@ -2,6 +2,7 @@
 .gradle/
 build/
 **/build/
+gradlew.bat
 
 # IDE - IntelliJ IDEA
 .idea/
