@@ -11,7 +11,7 @@
 ## Phase 2: Testing & Integration
 - [x] Task: Unit Testing Serialization. (7f1a0fc)
     - [ ] Write tests to verify that a `Grid` can be converted to JSON and back without data loss.
-- [ ] Task: Integrate with `GameScreen`.
+- [x] Task: Integrate with `GameScreen`. (a5361f1)
     - [ ] Update `GameScreen` constructor or `show()` to accept a level filename.
 
 ## Phase 3: Verification & Doc Sync
