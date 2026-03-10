@@ -5,9 +5,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 public class LevelLoader {
-    private static final Json json = new Json();
 
     public static Grid loadLevel(String path) {
+        Json json = new Json();
         FileHandle file;
         if (Gdx.files != null) {
             file = Gdx.files.internal(path);
@@ -19,6 +19,7 @@ public class LevelLoader {
     }
 
     public static String toJson(Grid grid) {
+        Json json = new Json();
         return json.toJson(grid);
     }
 }
