@@ -9,7 +9,7 @@
     - [ ] Create a static or singleton class to handle file reading and object creation.
 
 ## Phase 2: Testing & Integration
-- [ ] Task: Unit Testing Serialization.
+- [x] Task: Unit Testing Serialization. (7f1a0fc)
     - [ ] Write tests to verify that a `Grid` can be converted to JSON and back without data loss.
 - [ ] Task: Integrate with `GameScreen`.
     - [ ] Update `GameScreen` constructor or `show()` to accept a level filename.
