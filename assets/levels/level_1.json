@@ -1,0 +1,21 @@
+{
+  "cols": 3,
+  "rows": 3,
+  "tiles": [
+    [
+      { "type": "L_TURN", "rotation": 0 },
+      { "type": "STRAIGHT", "rotation": 90 },
+      { "type": "L_TURN", "rotation": 90 }
+    ],
+    [
+      { "type": "STRAIGHT", "rotation": 0 },
+      { "type": "CROSS", "rotation": 0 },
+      { "type": "STRAIGHT", "rotation": 0 }
+    ],
+    [
+      { "type": "L_TURN", "rotation": 270 },
+      { "type": "STRAIGHT", "rotation": 90 },
+      { "type": "L_TURN", "rotation": 180 }
+    ]
+  ]
+}
