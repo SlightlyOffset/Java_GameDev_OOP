@@ -1,8 +1,8 @@
 package core.mechanics;
 
 public class Tile {
-    private TileType type;
-    private int rotation; // 0, 90, 180, 270
+    public TileType type;
+    public int rotation; // 0, 90, 180, 270
 
     public Tile() {
         this.type = TileType.STRAIGHT;
