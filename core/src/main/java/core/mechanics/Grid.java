@@ -3,8 +3,8 @@ package core.mechanics;
 import java.util.Random;
 
 public class Grid {
-    private final int cols;
-    private final int rows;
+    private int cols;
+    private int rows;
     private Tile[][] tiles;
 
     public Grid() {

@@ -1,7 +1,7 @@
 package core.mechanics;
 
 public class Tile {
-    private final TileType type;
+    private TileType type;
     private int rotation; // 0, 90, 180, 270
 
     public Tile() {
