@@ -1,12 +1,47 @@
 {
-  // May add level title in future update
+  /* 
+    P'J Cafe - Level Template Guide
+    -------------------------------
+    This template defines the JSON structure for creating levels.
+    Note: Standard JSON does not support comments; ensure they are removed 
+    if your parser is strict. libGDX's Json reader supports them by default.
+  */
 
-  "cols":, // number of colums in the level (int) -> n
-  "rows":, // number of rows in the level (int) -> i
-  "tile": [ // top layer list corespond to the number of rows,
-    //and each dict inside corespond to the number of columns
-    { "type": /* type of the tile -> refer to Enum TileTyle.java */, "rotation": /* rotation of the tile in degree, can be 0, 90, 180, 270 */ },
-    // add more dicts here to n columns
-  ],
-    // add more lists here to i rows
+  "cols": 3, // Total number of columns (integer)
+  "rows": 3, // Total number of rows (integer)
+
+  /* 
+    "tiles" is a 2D array: [rows][columns]
+    Top-level lists represent rows (starting from Y=0 at the bottom).
+    Inner objects represent individual tiles in that row (starting from X=0 at the left).
+  */
+  "tiles": [
+    [
+      { 
+        /* 
+          "type": Tile connection pattern. 
+          Available: [STRAIGHT, L_TURN, T_JUNCTION, CROSS] 
+        */
+        "type": "L_TURN", 
+        
+        /* 
+          "rotation": Initial orientation in degrees.
+          Valid values: [0, 90, 180, 270] 
+        */
+        "rotation": 0 
+      },
+      { "type": "STRAIGHT", "rotation": 90 },
+      { "type": "L_TURN", "rotation": 90 }
+    ],
+    [
+      { "type": "STRAIGHT", "rotation": 0 },
+      { "type": "CROSS", "rotation": 0 },
+      { "type": "STRAIGHT", "rotation": 0 }
+    ],
+    [
+      { "type": "L_TURN", "rotation": 270 },
+      { "type": "STRAIGHT", "rotation": 90 },
+      { "type": "L_TURN", "rotation": 180 }
+    ]
+  ]
 }
