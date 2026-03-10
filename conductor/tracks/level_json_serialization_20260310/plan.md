@@ -17,3 +17,6 @@
 ## Phase 3: Verification & Doc Sync
 - [x] Task: Final Manual Verification. (Done)
 - [x] Task: Update `tracks.md`. (ee52158)
+
+## Phase: Review Fixes
+- [~] Task: Apply review suggestions
