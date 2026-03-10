@@ -111,7 +111,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (clickSound != null) clickSound.play();
-                game.setScreen(new GameScreen(game)); // Start the game -> Transition to GameScreen
+                game.setScreen(new GameScreen(game, "levels/level_1.json")); // Start the game -> Transition to GameScreen
             }
         });
 
