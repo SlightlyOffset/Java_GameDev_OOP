@@ -20,7 +20,7 @@ P'J Cafe is a desktop-based puzzle game developed as a project for an Object-Ori
 
 - `core/`: Contains the shared game logic, mechanics, and object-oriented implementations.
 - `desktop/`: Handles desktop-specific initialization and application configuration.
-- `assets/`: (Empty) Dedicated directory for game textures, sounds, and other resources.
+- `assets/`: Dedicated directory for game textures, sounds, and other resources.
 
 ## 🚀 Getting Started
 
