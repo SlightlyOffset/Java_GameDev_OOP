@@ -8,7 +8,7 @@
 - [x] Task: Implement `LevelLoader` utility. (ab6cf20)
     - [ ] Create a static or singleton class to handle file reading and object creation.
 
-## Phase 2: Testing & Integration
+## Phase 2: Testing & Integration [checkpoint: ddcb869]
 - [x] Task: Unit Testing Serialization. (7f1a0fc)
     - [ ] Write tests to verify that a `Grid` can be converted to JSON and back without data loss.
 - [x] Task: Integrate with `GameScreen`. (a5361f1)
