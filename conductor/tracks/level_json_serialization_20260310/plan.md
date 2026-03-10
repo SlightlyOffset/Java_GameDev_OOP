@@ -19,4 +19,4 @@
 - [x] Task: Update `tracks.md`. (ee52158)
 
 ## Phase: Review Fixes
-- [~] Task: Apply review suggestions
+- [x] Task: Apply review suggestions (f2b54cb)
