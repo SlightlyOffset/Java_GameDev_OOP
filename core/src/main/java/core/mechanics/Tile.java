@@ -1,32 +1,18 @@
 package core.mechanics;
 
-public class Tile {
-    public TileType type;
-    public int rotation; // 0, 90, 180, 270
-
+public class Tile extends BaseTile implements Rotatable {
     public Tile() {
-        this.type = TileType.STRAIGHT;
-        this.rotation = 0;
+        super();
     }
-
     public Tile(TileType type) {
-        this.type = type;
-        this.rotation = 0;
+        super(type);
     }
-
+    @Override
     public void rotateClockwise() {
         rotation = (rotation + 90) % 360;
     }
-
+    @Override
     public void rotateCounterClockwise() {
         rotation = (rotation - 90 + 360) % 360;
-    }
-
-    public int getRotation() {
-        return rotation;
-    }
-
-    public TileType getType() {
-        return type;
     }
 }
