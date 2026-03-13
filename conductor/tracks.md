@@ -18,8 +18,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 - [ ] **Track: Architecture: Pluggable Rendering System**
 *Link: [./tracks/pluggable_renderer_20260314/](./tracks/pluggable_renderer_20260314/)*
-  - [x] **Sub-Track: Feature: AWT Renderer Implementation**
-  *Link: [./tracks/awt_renderer_20260314/](./tracks/awt_renderer_20260314/)*
 
 - [ ] **Track: Feature: Threaded Playtime Timer**
 *Link: [./tracks/threaded_timer_20260311/](./tracks/threaded_timer_20260311/)*
