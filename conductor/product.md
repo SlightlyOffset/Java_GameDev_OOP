@@ -22,9 +22,11 @@ The project aims to develop a desktop-based puzzle game with a central mechanic 
 - **JSON Level Loading:** Levels are defined in external JSON files, decoupling level design from the game's source code.
 - **Main Game Menu:** Initial screen for starting games, accessing options, and exiting.
 - **Java 20+ Compatibility:** Modern Java environment utilizing contemporary language features.
+- **Pluggable Rendering System:** Architecture that decouples game logic from rendering, allowing for both high-performance (libGDX) and standard Java (AWT/Swing) backends.
 - **libGDX Framework:** High-performance cross-platform game development framework for graphics and input management.
 
 ## Technical Goals
 - **Platform:** Desktop (Windows/macOS/Linux via JVM).
 - **Technology Stack:** Java 20+, libGDX.
 - **OOP Principles:** Demonstrate clean object-oriented design (encapsulation, inheritance, polymorphism, and abstraction) as a reference for students.
+  - **Abstraction:** Use of custom interfaces (e.g., `IRenderer`) to abstract framework-specific dependencies.
