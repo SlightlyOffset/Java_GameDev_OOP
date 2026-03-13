@@ -58,6 +58,14 @@ public class AwtGameWindow extends JFrame {
                         grid.getTiles()[gridY][gridX].rotateClockwise();
                     }
                 }
+                else if (e.getButton() == MouseEvent.BUTTON3) {
+                    int gridX = (int) (relativeX / 100);
+                    int gridY = (int) (relativeY / 100);
+
+                    if (gridX >= 0 && gridX < grid.getCols() && gridY >= 0 && gridY < grid.getRows()) {
+                        grid.getTiles()[gridY][gridX].rotateCounterClockwise();
+                    }
+                }
             }
         });
 
