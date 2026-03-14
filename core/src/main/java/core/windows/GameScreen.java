@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
 import core.mechanics.Tile;
 
 public class GameScreen extends ScreenAdapter {
-    private static final int TILE_SIZE = 100;
+    private static final int TILE_SIZE = 40;
     private final PathPuzzleGame game;
     private Grid grid;
     private ShapeRenderer shapeRenderer;
@@ -116,7 +117,7 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.setColor(Color.YELLOW);
         float cx = px + TILE_SIZE / 2f;     // center X of the tile
         float cy = py + TILE_SIZE / 2f;     // center Y of the tile
-        float hw = 6;                       // half-width of the tile
+        float hw = 2;                       // half-width of the tile
 
         // N = top, E = right, S = bottom, W = left
         boolean n = hasConnection(tile, 0);
@@ -140,6 +141,11 @@ public class GameScreen extends ScreenAdapter {
             case L_TURN     -> base = new boolean[]{true, true, false, false};
             case T_JUNCTION -> base = new boolean[]{true, true, false, true};
             case CROSS      -> base = new boolean[]{true, true, true, true};
+            case STRAIGHT_ROTATABLE   -> base = new boolean[]{true, false, true, false};
+            case L_TURN_ROTATABLE     -> base = new boolean[]{true, true, false, false};
+            case T_JUNCTION_ROTATABLE -> base = new boolean[]{true, true, false, true};
+            case TELEPORT      -> base = new boolean[]{true, true, true, true};
+            case WRONG_TELEPORT      -> base = new boolean[]{true, true, true, true};
             default         -> base = new boolean[]{false, false, false, false};
         }
         // Rotate direction index backwards by the tile's rotation steps'

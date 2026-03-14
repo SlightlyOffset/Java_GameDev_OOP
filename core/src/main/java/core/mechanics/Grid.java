@@ -19,10 +19,12 @@ public class Grid {
     }
 
     public int getCols() {
+        if (tiles != null && tiles.length > 0) return tiles[0].length;
         return cols;
     }
 
     public int getRows() {
+        if (tiles != null) return tiles.length; // ให้นับจากแถวที่มีอยู่จริง
         return rows;
     }
 

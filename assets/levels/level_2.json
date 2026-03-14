@@ -1,7 +1,7 @@
 {
   "cols": 20,
   "rows": 13,
-  //"image": "assets/Level_1_map.png",
+  //"image"
   "tiles": [
     [ //1
       { "type": "EMPYT", "rotation": 0 }, //1
@@ -71,18 +71,18 @@
       { "type": "EMPYT", "rotation": 0 }, //2
       { "type": "EMPYT", "rotation": 0 }, //3
       { "type": "EMPYT", "rotation": 0 }, //4
-      { "type": "STRAIGHT", "rotation": 90 }, //5
-      { "type": "STRAIGHT", "rotation": 90 }, //6
-      { "type": "STRAIGHT", "rotation": 90 }, //7
+      { "type": "EMPYT", "rotation": 0 }, //5
+      { "type": "EMPYT", "rotation": 0 }, //6
+      { "type": "L_TURN_ROTATABLE", "rotation": 270 }, //7
       { "type": "STRAIGHT", "rotation": 90 }, //8
-      { "type": "STRAIGHT", "rotation": 90 }, //9
+      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //9
       { "type": "STRAIGHT", "rotation": 90 }, //10
       { "type": "STRAIGHT", "rotation": 90 }, //11
       { "type": "STRAIGHT", "rotation": 90 }, //12
       { "type": "STRAIGHT", "rotation": 90 }, //13
-      { "type": "L_TURN", "rotation": 270 }, //14
-      { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 90 }, //14
+      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "L_TURN_ROTATABLE", "rotation": 0 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -94,16 +94,16 @@
       { "type": "EMPYT", "rotation": 0 }, //4
       { "type": "EMPYT", "rotation": 0 }, //5
       { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "EMPYT", "rotation": 0 }, //7
+      { "type": "STRAIGHT", "rotation": 0 }, //7
       { "type": "EMPYT", "rotation": 0 }, //8
       { "type": "EMPYT", "rotation": 0 }, //9
       { "type": "EMPYT", "rotation": 0 }, //10
       { "type": "EMPYT", "rotation": 0 }, //11
       { "type": "EMPYT", "rotation": 0 }, //12
       { "type": "EMPYT", "rotation": 0 }, //13
-      { "type": "STRAIGHT", "rotation": 0 }, //14
+      { "type": "EMPYT", "rotation": 0 }, //14
       { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 0 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -113,18 +113,18 @@
       { "type": "EMPYT", "rotation": 0 }, //2
       { "type": "EMPYT", "rotation": 0 }, //3
       { "type": "EMPYT", "rotation": 0 }, //4
-      { "type": "EMPYT", "rotation": 0 }, //5
-      { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "EMPYT", "rotation": 0 }, //7
-      { "type": "EMPYT", "rotation": 0 }, //8
-      { "type": "EMPYT", "rotation": 0 }, //9
-      { "type": "EMPYT", "rotation": 0 }, //10
-      { "type": "EMPYT", "rotation": 0 }, //11
-      { "type": "EMPYT", "rotation": 0 }, //12
-      { "type": "EMPYT", "rotation": 0 }, //13
-      { "type": "STRAIGHT_ROTATABLE", "rotation": 90 }, //14
-      { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 90 }, //5
+      { "type": "STRAIGHT", "rotation": 90 }, //6
+      { "type": "T_JUNCTION_ROTATABLE", "rotation": 270 }, //7
+      { "type": "STRAIGHT", "rotation": 90 }, //8
+      { "type": "STRAIGHT", "rotation": 90 }, //9
+      { "type": "STRAIGHT", "rotation": 90 }, //10
+      { "type": "T_JUNCTION_ROTATABLE", "rotation": 180 }, //11
+      { "type": "STRAIGHT", "rotation": 90 }, //12
+      { "type": "STRAIGHT", "rotation": 90 }, //13
+      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //14
+      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "T_JUNCTION_ROTATABLE", "rotation": 180 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -140,12 +140,12 @@
       { "type": "EMPYT", "rotation": 0 }, //8
       { "type": "EMPYT", "rotation": 0 }, //9
       { "type": "EMPYT", "rotation": 0 }, //10
-      { "type": "EMPYT", "rotation": 0 }, //11
+      { "type": "STRAIGHT_ROTATABLE", "rotation": 90 }, //11
       { "type": "EMPYT", "rotation": 0 }, //12
       { "type": "EMPYT", "rotation": 0 }, //13
-      { "type": "STRAIGHT", "rotation": 0 }, //14
+      { "type": "EMPYT", "rotation": 0 }, //14
       { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 0 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -157,16 +157,16 @@
       { "type": "EMPYT", "rotation": 0 }, //4
       { "type": "EMPYT", "rotation": 0 }, //5
       { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "L_TURN_ROTATABLE", "rotation": 180 }, //7
-      { "type": "STRAIGHT", "rotation": 90 }, //8
-      { "type": "STRAIGHT", "rotation": 90 }, //9
-      { "type": "STRAIGHT", "rotation": 90 }, //10
-      { "type": "STRAIGHT", "rotation": 90 }, //11
-      { "type": "STRAIGHT", "rotation": 90 }, //12
-      { "type": "STRAIGHT", "rotation": 90 }, //13
-      { "type": "L_TURN", "rotation": 180 }, //14
+      { "type": "EMPYT", "rotation": 0 }, //7
+      { "type": "EMPYT", "rotation": 0 }, //8
+      { "type": "EMPYT", "rotation": 0 }, //9
+      { "type": "EMPYT", "rotation": 0 }, //10
+      { "type": "STRAIGHT", "rotation": 0 }, //11
+      { "type": "EMPYT", "rotation": 0 }, //12
+      { "type": "EMPYT", "rotation": 0 }, //13
+      { "type": "EMPYT", "rotation": 0 }, //14
       { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 0 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -177,17 +177,17 @@
       { "type": "EMPYT", "rotation": 0 }, //3
       { "type": "EMPYT", "rotation": 0 }, //4
       { "type": "EMPYT", "rotation": 0 }, //5
-      { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "STRAIGHT", "rotation": 0 }, //7
-      { "type": "EMPYT", "rotation": 0 }, //8
-      { "type": "EMPYT", "rotation": 0 }, //9
-      { "type": "EMPYT", "rotation": 0 }, //10
-      { "type": "EMPYT", "rotation": 0 }, //11
-      { "type": "EMPYT", "rotation": 0 }, //12
-      { "type": "EMPYT", "rotation": 0 }, //13
-      { "type": "EMPYT", "rotation": 0 }, //14
-      { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
+      { "type": "L_TURN_ROTATABLE", "rotation": 180 }, //6
+      { "type": "STRAIGHT", "rotation": 90 }, //7
+      { "type": "STRAIGHT", "rotation": 90 }, //8
+      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //9
+      { "type": "STRAIGHT", "rotation": 90 }, //10
+      { "type": "T_JUNCTION_ROTATABLE", "rotation": 90 }, //11
+      { "type": "STRAIGHT", "rotation": 90 }, //12
+      { "type": "STRAIGHT", "rotation": 90 }, //13
+      { "type": "STRAIGHT", "rotation": 90 }, //14
+      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "L_TURN", "rotation": 180 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
@@ -198,18 +198,18 @@
       { "type": "EMPYT", "rotation": 0 }, //3
       { "type": "EMPYT", "rotation": 0 }, //4
       { "type": "EMPYT", "rotation": 0 }, //5
-      { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "STRAIGHT", "rotation": 0 }, //7
-      { "type": "EMPYT", "rotation": 0 }, //8
-      { "type": "EMPYT", "rotation": 0 }, //9
-      { "type": "EMPYT", "rotation": 0 }, //10
-      { "type": "EMPYT", "rotation": 0 }, //11
-      { "type": "EMPYT", "rotation": 0 }, //12
-      { "type": "EMPYT", "rotation": 0 }, //13
-      { "type": "EMPYT", "rotation": 0 }, //14
-      { "type": "EMPYT", "rotation": 0 }, //15
-      { "type": "EMPYT", "rotation": 0 }, //16
-      { "type": "EMPYT", "rotation": 0 }, //17
+      { "type": "T_JUNCTION_ROTATABLE", "rotation": 270 }, //6
+      { "type": "STRAIGHT", "rotation": 90 }, //7
+      { "type": "STRAIGHT", "rotation": 90 }, //8
+      { "type": "STRAIGHT", "rotation": 90 }, //9
+      { "type": "STRAIGHT", "rotation": 90 }, //10
+      { "type": "STRAIGHT", "rotation": 90 }, //11
+      { "type": "STRAIGHT", "rotation": 90 }, //12
+      { "type": "STRAIGHT", "rotation": 90 }, //13
+      { "type": "STRAIGHT", "rotation": 90 }, //14
+      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "STRAIGHT", "rotation": 90 }, //16
+      { "type": "STRAIGHT", "rotation": 90 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
     ],
@@ -220,15 +220,15 @@
       { "type": "EMPYT", "rotation": 0 }, //4
       { "type": "EMPYT", "rotation": 0 }, //5
       { "type": "EMPYT", "rotation": 0 }, //6
-      { "type": "L_TURN_ROTATABLE", "rotation": 270 }, //7
-      { "type": "STRAIGHT", "rotation": 90 }, //8
-      { "type": "STRAIGHT", "rotation": 90 }, //9
-      { "type": "STRAIGHT", "rotation": 90 }, //10
-      { "type": "STRAIGHT", "rotation": 90 }, //11
-      { "type": "STRAIGHT", "rotation": 90 }, //12
-      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //13
-      { "type": "STRAIGHT", "rotation": 90 }, //14
-      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "EMPYT", "rotation": 0 }, //7
+      { "type": "EMPYT", "rotation": 0 }, //8
+      { "type": "EMPYT", "rotation": 0 }, //9
+      { "type": "EMPYT", "rotation": 0 }, //10
+      { "type": "EMPYT", "rotation": 0 }, //11
+      { "type": "EMPYT", "rotation": 0 }, //12
+      { "type": "EMPYT", "rotation": 0 }, //13
+      { "type": "EMPYT", "rotation": 0 }, //14
+      { "type": "EMPYT", "rotation": 0 }, //15
       { "type": "EMPYT", "rotation": 0 }, //16
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
@@ -275,6 +275,6 @@
       { "type": "EMPYT", "rotation": 0 }, //17
       { "type": "EMPYT", "rotation": 0 }, //18
       { "type": "EMPYT", "rotation": 0 }  //19
-    ]
+    ],
   ]
 }
