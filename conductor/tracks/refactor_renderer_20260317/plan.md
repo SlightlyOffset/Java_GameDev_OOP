@@ -15,7 +15,7 @@ tags:
 - [x] Task: Refactor `AwtRenderer` and `GdxRenderer`. 100338b
     - [x] Extend `BaseRenderer` instead of `IRenderer`.
 
-## Phase 2: Bug Fixes & Refactoring
+## Phase 2: Bug Fixes & Refactoring [checkpoint: 6db2afc]
 - [x] Task: Fix `AwtGameCanvas`. e42f67f
     - [x] Ensure the call to `worldRenderer.clearScreen()` is consistent with the new implementation.
 - [x] Task: Update `GameScreen`. bacfafd
