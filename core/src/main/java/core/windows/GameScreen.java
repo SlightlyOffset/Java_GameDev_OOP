@@ -9,6 +9,7 @@ import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
 import core.rendering.GdxRenderer;
+import core.rendering.IRenderer;
 import core.rendering.WorldRenderer;
 
 public class GameScreen extends ScreenAdapter {
@@ -21,7 +22,7 @@ public class GameScreen extends ScreenAdapter {
     private float gridOffsetY;
 
     // Pluggable Rendering components
-    private final GdxRenderer gdxRenderer;
+    private final IRenderer renderer;
     private final WorldRenderer worldRenderer;
 
     public GameScreen(PathPuzzleGame game) {
@@ -40,8 +41,9 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // 2. Initialize Pluggable Renderer
-        gdxRenderer = new GdxRenderer();
-        worldRenderer = new WorldRenderer(gdxRenderer, TILE_SIZE);
+        GdxRenderer gdxRenderer = new GdxRenderer();
+        this.renderer = gdxRenderer;
+        worldRenderer = new WorldRenderer(renderer, TILE_SIZE);
 
         // 3. Set up camera (false = Y go upward)
         if (Gdx.graphics != null) {
@@ -88,13 +90,13 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // 1. Clear the screen using the pluggable renderer
-        gdxRenderer.clearScreen(0.2f, 0.2f, 0.2f, 1);
+        worldRenderer.clearScreen();
 
         camera.update();
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         // 2. Delegate world rendering to WorldRenderer
-        gdxRenderer.setShapeRenderer(shapeRenderer);
+        ((GdxRenderer) renderer).setShapeRenderer(shapeRenderer);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         worldRenderer.render(grid, gridOffsetX, gridOffsetY);
         shapeRenderer.end();
