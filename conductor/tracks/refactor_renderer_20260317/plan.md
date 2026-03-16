@@ -10,8 +10,8 @@ tags:
 - [x] Task: Create `BaseRenderer` abstract class in `core.rendering`. f8fe5ac
     - [ ] Implement `IRenderer`.
     - [ ] Provide basic implementation or empty defaults for optional methods (e.g., `endFrame`).
-- [ ] Task: Update `WorldRenderer` in `core.rendering`.
-    - [ ] Add `public void clearScreen()` which calls `renderer.clearScreen(0.2f, 0.2f, 0.2f, 1)`.
+- [x] Task: Update `WorldRenderer` in `core.rendering`. 31eb54a
+    - [x] Add `public void clearScreen()` which calls `renderer.clearScreen(0.2f, 0.2f, 0.2f, 1)`.
 - [ ] Task: Refactor `AwtRenderer` and `GdxRenderer`.
     - [ ] Extend `BaseRenderer` instead of `IRenderer`.
 
