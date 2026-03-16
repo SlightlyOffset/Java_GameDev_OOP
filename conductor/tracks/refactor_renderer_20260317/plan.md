@@ -22,6 +22,6 @@ tags:
     - [x] Replace `gdxRenderer.clearScreen(...)` with `worldRenderer.clearScreen()`.
 
 ## Phase 3: Verification
-- [ ] Task: Run the AWT version with `-awt` flag.
-- [ ] Task: Run the libGDX version.
-- [ ] Task: Run unit tests to ensure no regressions.
+- [x] Task: Run the AWT version with `-awt` flag. Verified
+- [x] Task: Run the libGDX version. Verified
+- [x] Task: Run unit tests to ensure no regressions. Verified (BUILD SUCCESSFUL)
