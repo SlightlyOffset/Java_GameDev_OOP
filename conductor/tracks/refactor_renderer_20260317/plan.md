@@ -6,7 +6,7 @@ tags:
 ---
 # Implementation Plan - Pluggable Renderer Refactor & Fix
 
-## Phase 1: Core Architecture Update
+## Phase 1: Core Architecture Update [checkpoint: 2c97c14]
 - [x] Task: Create `BaseRenderer` abstract class in `core.rendering`. f8fe5ac
     - [ ] Implement `IRenderer`.
     - [ ] Provide basic implementation or empty defaults for optional methods (e.g., `endFrame`).
