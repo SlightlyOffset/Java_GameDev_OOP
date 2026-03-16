@@ -18,8 +18,8 @@ tags:
 ## Phase 2: Bug Fixes & Refactoring
 - [x] Task: Fix `AwtGameCanvas`. e42f67f
     - [x] Ensure the call to `worldRenderer.clearScreen()` is consistent with the new implementation.
-- [ ] Task: Update `GameScreen`.
-    - [ ] Replace `gdxRenderer.clearScreen(...)` with `worldRenderer.clearScreen()`.
+- [x] Task: Update `GameScreen`. bacfafd
+    - [x] Replace `gdxRenderer.clearScreen(...)` with `worldRenderer.clearScreen()`.
 
 ## Phase 3: Verification
 - [ ] Task: Run the AWT version with `-awt` flag.
