@@ -23,7 +23,7 @@ public class AwtGameCanvas extends JPanel {
         this.grid = grid;
         this.awtRenderer = awtRenderer;
         this.worldRenderer = worldRenderer;
-        this.tileSize = 100; // Match AwtGameWindow
+        this.tileSize = AwtGameWindow.TILE_SIZE; // Use single source of truth from AwtGameWindow
     }
 
     @Override
