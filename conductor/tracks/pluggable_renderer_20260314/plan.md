@@ -28,6 +28,6 @@ tags:
     - [ ] Call `worldRenderer.render(grid, ...)` in the libGDX render loop.
 
 ## Phase 4: Verification & Grading Proof
-- [ ] Task: Unit Test Rerun & Verification.
-- [ ] Task: Ensure both AWT and Gdx rendering paths function correctly.
-- [ ] Task: Update `tracks.md`.
+- [x] Task: Unit Test Rerun & Verification.
+- [x] Task: Ensure both AWT and Gdx rendering paths function correctly.
+- [x] Task: Update `tracks.md`.
