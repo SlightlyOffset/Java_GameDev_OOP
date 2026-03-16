@@ -49,6 +49,9 @@ public class AwtRendererTest {
 
         @Override public void setColor(Color c) { this.lastColor = c; }
         @Override public void fillRect(int x, int y, int width, int height) { this.lastRect = new Rectangle(x, y, width, height); }
+        @Override public void clearRect(int x, int y, int width, int height) {}
+        @Override public void setPaintMode() {}
+        @Override public void setXORMode(Color c1) {}
 
         // --- All other methods are no-ops ---
         @Override public void draw(Shape s) {}

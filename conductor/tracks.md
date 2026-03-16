@@ -19,6 +19,9 @@ This file tracks all major tracks for the project. Each track has its own detail
 - [x] **Track: Architecture: Pluggable Rendering System**
 *Link: [./tracks/pluggable_renderer_20260314/](./tracks/pluggable_renderer_20260314/)*
 
+- [~] **Track: Architecture: Pluggable Renderer Refactor & Fix**
+*Link: [./tracks/refactor_renderer_20260317/](./tracks/refactor_renderer_20260317/)*
+
 - [ ] **Track: Feature: Threaded Playtime Timer**
 *Link: [./tracks/threaded_timer_20260311/](./tracks/threaded_timer_20260311/)*
 
