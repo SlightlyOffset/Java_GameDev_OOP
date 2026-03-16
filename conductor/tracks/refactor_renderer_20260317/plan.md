@@ -12,8 +12,8 @@ tags:
     - [ ] Provide basic implementation or empty defaults for optional methods (e.g., `endFrame`).
 - [x] Task: Update `WorldRenderer` in `core.rendering`. 31eb54a
     - [x] Add `public void clearScreen()` which calls `renderer.clearScreen(0.2f, 0.2f, 0.2f, 1)`.
-- [ ] Task: Refactor `AwtRenderer` and `GdxRenderer`.
-    - [ ] Extend `BaseRenderer` instead of `IRenderer`.
+- [x] Task: Refactor `AwtRenderer` and `GdxRenderer`. 100338b
+    - [x] Extend `BaseRenderer` instead of `IRenderer`.
 
 ## Phase 2: Bug Fixes & Refactoring
 - [ ] Task: Fix `AwtGameCanvas`.
