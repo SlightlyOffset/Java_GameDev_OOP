@@ -37,8 +37,19 @@ public class WorldRenderer {
             for (int x = 0; x < grid.getCols(); x++) {
                 float px = offsetX + x * tileSize;
                 float py = offsetY + y * tileSize;
+
+                renderer.drawRect(px, py, tileSize, tileSize, "000000");
+                float boderThickness = 1f;
+
+                String bgColor = "#404040";
+                if (x == grid.getStartX() && y == grid.getStartY()) {
+                    bgColor = "#1A5276";
+                }
+                else if (x == grid.getEndX() && y == grid.getEndY()) {
+                    bgColor = "#922B21";
+                }
                 // Draw dark gray background
-                renderer.drawRect(px, py, tileSize, tileSize, "#404040");
+                renderer.drawRect(px + boderThickness, py + boderThickness, tileSize - (boderThickness * 2), tileSize - (boderThickness * 2), bgColor);
             }
         }
 
@@ -47,12 +58,12 @@ public class WorldRenderer {
             for (int x = 0; x < grid.getCols(); x++) {
                 float px = offsetX + x * tileSize;
                 float py = offsetY + y * tileSize;
-                drawTilePaths(grid.getTiles()[y][x], px, py);
+                drawTilePaths(grid.getTiles()[y][x], px, py, grid.isSolved());
             }
         }
     }
 
-    private void drawTilePaths(Tile tile, float px, float py) {
+    private void drawTilePaths(Tile tile, float px, float py, boolean isSolved) {
         float cx = px + tileSize / 2f;     // center X of the tile
         float cy = py + tileSize / 2f;     // center Y of the tile
         float hw = 6;                      // half-width of the path line
@@ -63,7 +74,7 @@ public class WorldRenderer {
         boolean s = hasConnection(tile, 2);
         boolean w = hasConnection(tile, 3);
 
-        String pathColor = "#FFFF00"; // Yellow path lines
+        String pathColor = isSolved ? "#00FF00": "#FFFF00"; // Yellow path lines (Green color if complete)
 
         if (n) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 0, pathColor);
         if (e) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 1, pathColor);

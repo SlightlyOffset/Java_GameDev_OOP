@@ -15,7 +15,7 @@ import core.rendering.WorldRenderer;
  * Satisfies OOP Requirement 1.1 (Graphics & Threads).
  */
 public class AwtGameWindow extends JFrame {
-    private static final int TILE_SIZE = 100;
+    public static final int TILE_SIZE = 100;
     private final Grid grid;
     private final AwtRenderer awtRenderer;
     private final WorldRenderer worldRenderer;
