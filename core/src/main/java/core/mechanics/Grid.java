@@ -7,6 +7,7 @@ public class Grid {
     private int rows;
     private Tile[][] tiles;
     private boolean isSolved = false;
+    private static final int UNSET = -1
 
     // start(x, y), end(x, y)
     private int startX, startY, endX, endY;
@@ -14,18 +15,20 @@ public class Grid {
     public Grid() {
         this.cols = 0;
         this.rows = 0;
+        this.startX = 0;
+        this.startY = 0;
+        this.endX = UNSET;
+        this.endY = UNSET;
     }
 
     public Grid(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
         tiles = new Tile[rows][cols];
-
-        // กำหนดจุดเริ่มต้น (ซ้ายล่าง) และจุดหมาย (ขวาบน) เป็นค่าเริ่มต้น
         this.startX = 0;
         this.startY = 0;
-        this.endX = cols - 1;
-        this.endY = rows - 1;
+        this.endX = UNSET;
+        this.endY = UNSET;
     }
 
     public void setStartAndEnd(int startX, int startY, int endX, int endY) {
@@ -94,12 +97,15 @@ public class Grid {
         if (rows == 0 || cols == 0) {
             return false;
         }
+        int resolvedEndX = (endX == UNSET) ? cols - 1 : endX;
+        int resolvedEndY = (endY == UNSET) ? rows - 1 : endY;
+
         boolean[][] visited = new boolean[rows][cols];
         // เริ่มต้นหาเส้นทางจาก Start ที่ตั้งไว้
-        return hasPath(startY, startX, visited);
+        return hasPath(startY, startX, visited, resolvedEndX, resolvedEndY);
     }
 
-    private boolean hasPath(int r, int c, boolean[][] visited) {
+    private boolean hasPath(int r, int c, boolean[][] visited, int resolvedEndX, int resolvedEndY) {
         if (r < 0 || r >= rows || c < 0 || c >= cols || visited[r][c]) {
             return false;
         } else {
@@ -107,40 +113,25 @@ public class Grid {
         }
 
         // ตรวจสอบว่าถึงจุด End หรือยัง
-        if (r == endY && c == endX) {
+        if (r == resolvedEndY && c == resolvedEndX) {
             return true;
         }
 
         boolean[] currentConnection = tiles[r][c].getType().getConnections(tiles[r][c].getRotation());
 
-        // --- แก้ไขทิศทางให้ตรงกับ LibGDX ตรงนี้ครับ ---
 
-        // 0: ทิศเหนือ (พอร์ตชี้ขึ้น) ต้องไปตรวจ Tile แถวบน (r + 1) พอร์ตทิศใต้ (2)
-        if (currentConnection[0] && canConnect(r + 1, c, 2)) {
-            if (hasPath(r + 1, c, visited))
-                return true;
+        if (currentConnection[0] && canConnect(r + 1, c, 2) && hasPath(r + 1, c, visited, resolvedEndX, resolvedEndY)) {
+            return true;
         }
-
-        // 1: ทิศตะวันออก (พอร์ตชี้ขวา) ต้องไปตรวจ Tile คอลัมน์ขวา (c + 1)
-        // พอร์ตทิศตะวันตก (3)
-        if (currentConnection[1] && canConnect(r, c + 1, 3)) {
-            if (hasPath(r, c + 1, visited))
-                return true;
+        if (currentConnection[1] && canConnect(r, c + 1, 3) && hasPath(r, c + 1, visited, resolvedEndX, resolvedEndY)) {
+            return true;
         }
-
-        // 2: ทิศใต้ (พอร์ตชี้ลง) ต้องไปตรวจ Tile แถวล่าง (r - 1) พอร์ตทิศเหนือ (0)
-        if (currentConnection[2] && canConnect(r - 1, c, 0)) {
-            if (hasPath(r - 1, c, visited))
-                return true;
+        if (currentConnection[2] && canConnect(r - 1, c, 0) && hasPath(r - 1, c, visited, resolvedEndX, resolvedEndY)) {
+            return true;
         }
-
-        // 3: ทิศตะวันตก (พอร์ตชี้ซ้าย) ต้องไปตรวจ Tile คอลัมน์ซ้าย (c - 1)
-        // พอร์ตทิศตะวันออก (1)
-        if (currentConnection[3] && canConnect(r, c - 1, 1)) {
-            if (hasPath(r, c - 1, visited))
-                return true;
+        if (currentConnection[3] && canConnect(r, c - 1, 1) && hasPath(r, c - 1, visited, resolvedEndX, resolvedEndY)) {
+            return true;
         }
-
         return false;
     }
 
@@ -148,7 +139,10 @@ public class Grid {
         if (nextR < 0 || nextR >= rows || nextC < 0 || nextC >= cols) {
             return false;
         }
-        Tile nexTile = tiles[nextR][nextC];
-        return nexTile.getType().getConnections(nexTile.getRotation())[oppositeSide];
+        Tile nextTile = tiles[nextR][nextC];
+        if (nextTile == null || nextTile.getType() == null) {
+            return false;
+        }
+        return nextTile.getType().getConnections(nextTile.getRotation())[oppositeSide];
     }
 }

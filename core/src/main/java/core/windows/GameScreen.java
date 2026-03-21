@@ -36,10 +36,8 @@ public class GameScreen extends ScreenAdapter {
         // 1. Create and fill the grid
         if (levelPath != null) {
             grid = LevelLoader.loadLevel(levelPath);
-            if (grid.getEndX() == 0 && grid.getEndY() == 0) {
-                grid.setStartAndEnd(0, 0, grid.getCols() - 1, grid.getRows() - 1);
-            }
-        } else {
+        }
+        else {
             grid = new Grid(4, 4);
             grid.randomInitTile();
         }
@@ -70,48 +68,27 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (grid.isSolved()) {
-                    game.setScreen(new GameScreen(game)); 
+                    game.setScreen(new GameScreen(game));
                     dispose();
                     return true;
                 }
-                // LibGDX screenY=0 is top, but camera Y=0 is bottom -> flip it
+            
                 float worldX = screenX;
                 float worldY = Gdx.graphics.getHeight() - screenY;
-
-                float gridWidth = grid.getCols() * TILE_SIZE;
+            
+                float gridWidth  = grid.getCols() * TILE_SIZE;
                 float gridHeight = grid.getRows() * TILE_SIZE;
-
+            
                 if (worldX < gridOffsetX || worldX >= gridOffsetX + gridWidth ||
                     worldY < gridOffsetY || worldY >= gridOffsetY + gridHeight) {
                     return true;
                 }
-
-                // Convert pixel position to grid position
+            
                 int tileX = (int) ((worldX - gridOffsetX) / TILE_SIZE);
                 int tileY = (int) ((worldY - gridOffsetY) / TILE_SIZE);
-
-                // Check bounds before accessing the array
-                if ((tileX >= 0 && tileX < grid.getCols()) &&
-                    tileY >= 0 && tileY < grid.getRows()) {
-
-                    boolean isStartTile = (tileX == grid.getStartX() && tileY == grid.getStartY());
-                    boolean isEndTile = (tileX == grid.getEndX() && tileY == grid.getEndY());
-                    
-                    if (!isStartTile && !isEndTile) {
-                        grid.getTiles()[tileY][tileX].rotateClockwise();
-                    }
-
-                    if (grid.isPathComplete()) {
-                        System.out.println("Level Complete!");
-                        grid.setSolved(true);
-                    }
-                    else {
-                        grid.setSolved(false);
-                    }
-                }
+            
+                handleTileClick(tileX, tileY);
                 return true;
-            }
-        });
     }
 
     @Override
@@ -152,9 +129,12 @@ public class GameScreen extends ScreenAdapter {
     Tile tile = grid.getTiles()[y][x];
     tile.rotateClockwise(); //
     
+    if (!isStartTile && !isEndTile) {
+        grid.getTiles()[y][x].rotateClockwise();    
+    }
+    grid.setSolved(grid.isPathComplete());
     if (grid.isPathComplete()) {
-        System.out.println("Level Complete!"); 
-        // แสดง UI หรือเปลี่ยนด่านได้ที่นี่
+        System.out.println("Level Complete!");
     }
 }
 }

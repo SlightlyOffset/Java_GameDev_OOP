@@ -7,40 +7,16 @@ public class Tile extends BaseTile implements Rotatable {
 
     public enum Direction {
         // ลำดับที่ 0, 1, 2, 3
-        north, east, south, west;
+        NORTH, EAST, SOUTH, WEST;
+        
         public Direction getOpposite() {
-            switch (this) {
-                case north:
-                    return south;
-                case east:
-                    return west;
-                case south:
-                    return north;
-                case west:
-                    return east;
-                default:
-                    return null;
-            }
+            return Direction.values()[(this.ordinal() + 2) % 4];
         }
     }
 
     public boolean hasConnection(Direction d) {
-        int rotationStep = rotation / 90;
-        int originalDirectionIndex = (4 + d.ordinal() - rotationStep) % 4;
-        Direction originalDirection = d.values()[originalDirectionIndex];
-
-        switch (type) {
-            case STRAIGHT:
-                return originalDirection == d.north || originalDirection == d.south;
-            case L_TURN:
-                return originalDirection == d.north || originalDirection == d.east;
-            case T_JUNCTION:
-                return originalDirection == d.west  || originalDirection == d.north || originalDirection == d.east;
-            case CROSS:
-                return true;
-            default:
-                return false;
-        }
+        boolean[] connections = type.getConnections(rotation);
+        return connections[d.ordinal()];
     }
 
     public Tile(TileType type) {

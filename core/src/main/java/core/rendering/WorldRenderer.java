@@ -38,18 +38,18 @@ public class WorldRenderer {
                 float px = offsetX + x * tileSize;
                 float py = offsetY + y * tileSize;
 
-                renderer.drawRect(px, py, tileSize, tileSize, "000000");
-                float boderThickness = 1f;
+                renderer.drawRect(px, py, tileSize, tileSize, "#000000");
+                float borderThickness = 1f;
 
                 String bgColor = "#404040";
                 if (x == grid.getStartX() && y == grid.getStartY()) {
                     bgColor = "#1A5276";
                 }
-                else if (x == grid.getEndX() && y == grid.getEndY()) {
+                else if (x == grid.getEndX() && y == grid.getEndY()) {z
                     bgColor = "#922B21";
                 }
                 // Draw dark gray background
-                renderer.drawRect(px + boderThickness, py + boderThickness, tileSize - (boderThickness * 2), tileSize - (boderThickness * 2), bgColor);
+                renderer.drawRect(px + borderThickness, py + borderThickness, tileSize - (borderThickness * 2), tileSize - (borderThickness * 2), bgColor);
             }
         }
 

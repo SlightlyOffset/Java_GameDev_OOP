@@ -92,9 +92,6 @@ public class GridTest {
             tiles[0][i].rotateClockwise(); // จาก เหนือ-ใต้ เป็น ออก-ตก
         }
         grid.setTiles(tiles);
-
-        // ตรวจสอบว่าเส้นทางจาก (0,0) ไปถึง (0,2) เชื่อมต่อกันจริง
-        // หมายเหตุ: ต้องปรับ Logic isPathComplete() ให้รับจุด Start/End ตาม Test Case
         assertTrue(grid.isPathComplete());
     }
 
@@ -104,8 +101,8 @@ public class GridTest {
         Tile[][] tiles = new Tile[2][2];
 
         // วาง Tile ที่ไม่เชื่อมต่อกัน
-        tiles[0][0] = new Tile(TileType.STRAIGHT); // เหนือ-ใต้
-        tiles[0][1] = new Tile(TileType.STRAIGHT); // เหนือ-ใต้
+        tiles[0][0] = new Tile(TileType.STRAIGHT);
+        tiles[0][1] = new Tile(TileType.STRAIGHT);
         tiles[1][0] = new Tile(TileType.STRAIGHT);
         tiles[1][1] = new Tile(TileType.STRAIGHT);
 
