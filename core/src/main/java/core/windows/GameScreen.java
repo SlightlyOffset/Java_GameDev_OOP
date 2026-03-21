@@ -89,6 +89,8 @@ public class GameScreen extends ScreenAdapter {
             
                 handleTileClick(tileX, tileY);
                 return true;
+            }
+        });
     }
 
     @Override
@@ -122,19 +124,22 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        if (Gdx.graphics != null) shapeRenderer.dispose();
+        if (Gdx.graphics != null) {
+            shapeRenderer.dispose();
+        }
     }
 
     public void handleTileClick(int x, int y) {
-    Tile tile = grid.getTiles()[y][x];
-    tile.rotateClockwise(); //
-    
-    if (!isStartTile && !isEndTile) {
-        grid.getTiles()[y][x].rotateClockwise();    
+        boolean isStartTile = (x == grid.getStartX() && y == grid.getStartY());
+        boolean isEndTile = (x == grid.getEndX() && y == grid.getEndY());
+        
+        if (!isStartTile && !isEndTile) {
+            grid.getTiles()[y][x].rotateClockwise();    
+        }
+        
+        grid.setSolved(grid.isPathComplete());
+        if (grid.isPathComplete()) {
+            System.out.println("Level Complete!");
+        }
     }
-    grid.setSolved(grid.isPathComplete());
-    if (grid.isPathComplete()) {
-        System.out.println("Level Complete!");
-    }
-}
 }

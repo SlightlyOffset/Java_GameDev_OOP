@@ -7,7 +7,7 @@ public class Grid {
     private int rows;
     private Tile[][] tiles;
     private boolean isSolved = false;
-    private static final int UNSET = -1
+    private static final int UNSET = -1;
 
     // start(x, y), end(x, y)
     private int startX, startY, endX, endY;

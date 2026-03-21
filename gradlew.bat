@@ -1,6 +1,6 @@
 @echo off
 setlocal
-set JAVA_HOME=C:\Program Files\Java\jdk-25
+set JAVA_HOME=C:\Program Files\Java\jdk-21
 set JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 set APP_HOME=%~dp0
 

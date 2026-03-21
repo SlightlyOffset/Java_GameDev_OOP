@@ -45,7 +45,7 @@ public class WorldRenderer {
                 if (x == grid.getStartX() && y == grid.getStartY()) {
                     bgColor = "#1A5276";
                 }
-                else if (x == grid.getEndX() && y == grid.getEndY()) {z
+                else if (x == grid.getEndX() && y == grid.getEndY()) {
                     bgColor = "#922B21";
                 }
                 // Draw dark gray background
@@ -68,30 +68,15 @@ public class WorldRenderer {
         float cy = py + tileSize / 2f;     // center Y of the tile
         float hw = 6;                      // half-width of the path line
 
-        // Direction mapping: 0 = N, 1 = E, 2 = S, 3 = W
-        boolean n = hasConnection(tile, 0);
-        boolean e = hasConnection(tile, 1);
-        boolean s = hasConnection(tile, 2);
-        boolean w = hasConnection(tile, 3);
-
         String pathColor = isSolved ? "#00FF00": "#FFFF00"; // Yellow path lines (Green color if complete)
 
-        if (n) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 0, pathColor);
-        if (e) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 1, pathColor);
-        if (s) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 2, pathColor);
-        if (w) renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 3, pathColor);
-    }
-
-    private boolean hasConnection(Tile tile, int direction) {
-        boolean[] base;
-        switch (tile.getType()) {
-            case STRAIGHT   -> base = new boolean[]{true, false, true, false};
-            case L_TURN     -> base = new boolean[]{true, true, false, false};
-            case T_JUNCTION -> base = new boolean[]{true, true, false, true};
-            case CROSS      -> base = new boolean[]{true, true, true, true};
-            default         -> base = new boolean[]{false, false, false, false};
-        }
-        int steps = tile.getRotation() / 90;
-        return base[(direction - steps + 4) % 4];
+        if (tile.hasConnection(Tile.Direction.NORTH))
+            renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 0, pathColor);
+        if (tile.hasConnection(Tile.Direction.EAST))
+            renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 1, pathColor);
+        if (tile.hasConnection(Tile.Direction.SOUTH))
+            renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 2, pathColor);
+        if (tile.hasConnection(Tile.Direction.WEST))
+            renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 3, pathColor);
     }
 }
