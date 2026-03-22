@@ -1,10 +1,12 @@
 package core.windows;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
@@ -14,24 +16,38 @@ import core.rendering.IRenderer;
 import core.rendering.WorldRenderer;
 
 public class GameScreen extends ScreenAdapter {
-    private static final int TILE_SIZE = 100;
+    private static final int TILE_SIZE = 40;
     private final PathPuzzleGame game;
     private Grid grid;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
     private float gridOffsetX;
     private float gridOffsetY;
+    private final String levelPath;
+    private static final String[] LEVELS = {
+        //  Put all level here
+        "levels/level_1.json",
+        "levels/level_2.json",
+        "levels/level_3.json",
+    };
+    private final int currentLevelIndex;
 
     // Pluggable Rendering components
     private final IRenderer renderer;
     private final WorldRenderer worldRenderer;
 
     public GameScreen(PathPuzzleGame game) {
-        this(game, null);
+        this(game, null, 0);
     }
 
     public GameScreen(PathPuzzleGame game, String levelPath) {
+        this(game, levelPath, 0);
+    }
+
+    public GameScreen(PathPuzzleGame game, String levelPath, int levelIndex) {
         this.game = game;
+        this.levelPath = levelPath;
+        this.currentLevelIndex = levelIndex;
 
         // 1. Create and fill the grid
         if (levelPath != null) {
@@ -68,7 +84,13 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (grid.isSolved()) {
-                    game.setScreen(new GameScreen(game));
+                    int nextIndex = currentLevelIndex + 1;
+                    if (nextIndex < LEVELS.length) {
+                        game.setScreen(new GameScreen(game, LEVELS[nextIndex], nextIndex));
+                    }
+                    else {
+                        game.setScreen(new MenuScreen(game));
+                    }
                     dispose();
                     return true;
                 }
@@ -130,15 +152,19 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void handleTileClick(int x, int y) {
-        boolean isStartTile = (x == grid.getStartX() && y == grid.getStartY());
-        boolean isEndTile = (x == grid.getEndX() && y == grid.getEndY());
+        // boolean isStartTile = (x == grid.getStartX() && y == grid.getStartY());
+        // boolean isEndTile = (x == grid.getEndX() && y == grid.getEndY());
         
-        if (!isStartTile && !isEndTile) {
-            grid.getTiles()[y][x].rotateClockwise();    
-        }
+        // if (!isStartTile && !isEndTile) {
+        //     grid.getTiles()[y][x].rotateClockwise();    
+        // }
+        // grid.setSolved(grid.isPathComplete());
         
-        grid.setSolved(grid.isPathComplete());
-        if (grid.isPathComplete()) {
+        grid.getTiles()[y][x].rotateClockwise();
+        
+        boolean solved = grid.isPathComplete();
+        grid.setSolved(solved);
+        if (solved) {
             System.out.println("Level Complete!");
         }
     }

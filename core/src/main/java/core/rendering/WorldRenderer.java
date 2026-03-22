@@ -16,6 +16,7 @@ public class WorldRenderer {
      * @param renderer Any implementation of IRenderer (AWT or GDX)
      * @param tileSize Size in pixels for each tile
      */
+
     public WorldRenderer(IRenderer renderer, int tileSize) {
         this.renderer = renderer;
         this.tileSize = tileSize;
@@ -33,6 +34,9 @@ public class WorldRenderer {
      */
     public void render(Grid grid, float offsetX, float offsetY) {
         // 1. Draw tile backgrounds
+        int resolvedEndX = grid.getEndX();
+        int resolvedEndY = grid.getEndY();
+
         for (int y = 0; y < grid.getRows(); y++) {
             for (int x = 0; x < grid.getCols(); x++) {
                 float px = offsetX + x * tileSize;
@@ -45,7 +49,7 @@ public class WorldRenderer {
                 if (x == grid.getStartX() && y == grid.getStartY()) {
                     bgColor = "#1A5276";
                 }
-                else if (x == grid.getEndX() && y == grid.getEndY()) {
+                else if (x == resolvedEndX && y == resolvedEndY) {
                     bgColor = "#922B21";
                 }
                 // Draw dark gray background
@@ -66,17 +70,18 @@ public class WorldRenderer {
     private void drawTilePaths(Tile tile, float px, float py, boolean isSolved) {
         float cx = px + tileSize / 2f;     // center X of the tile
         float cy = py + tileSize / 2f;     // center Y of the tile
-        float hw = 6;                      // half-width of the path line
+        float hw = 2;                      // half-width of the path line
 
         String pathColor = isSolved ? "#00FF00": "#FFFF00"; // Yellow path lines (Green color if complete)
 
-        if (tile.hasConnection(Tile.Direction.NORTH))
+        boolean[] connections = tile.getType().getConnections(tile.getRotation());
+        if (connections[Tile.Direction.NORTH.ordinal()])
             renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 0, pathColor);
-        if (tile.hasConnection(Tile.Direction.EAST))
+        if (connections[Tile.Direction.EAST.ordinal()])
             renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 1, pathColor);
-        if (tile.hasConnection(Tile.Direction.SOUTH))
+        if (connections[Tile.Direction.SOUTH.ordinal()])
             renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 2, pathColor);
-        if (tile.hasConnection(Tile.Direction.WEST))
+        if (connections[Tile.Direction.WEST.ordinal()])
             renderer.drawPathLine(cx, cy, hw, tileSize / 2f, 3, pathColor);
     }
 }

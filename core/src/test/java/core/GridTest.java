@@ -82,14 +82,12 @@ public class GridTest {
 
     @Test
     public void testSimpleStraightPath() {
-        // สร้าง Grid ขนาด 1x3 (แนวนอน)
         Grid grid = new Grid(3, 1);
         Tile[][] tiles = new Tile[1][3];
 
-        // วาง Tile แบบ STRAIGHT ทั้งหมดและหมุนให้เป็นแนวนอน (90 องศา)
         for (int i = 0; i < 3; i++) {
             tiles[0][i] = new Tile(TileType.STRAIGHT);
-            tiles[0][i].rotateClockwise(); // จาก เหนือ-ใต้ เป็น ออก-ตก
+            tiles[0][i].rotateClockwise();
         }
         grid.setTiles(tiles);
         assertTrue(grid.isPathComplete());
@@ -100,15 +98,12 @@ public class GridTest {
         Grid grid = new Grid(2, 2);
         Tile[][] tiles = new Tile[2][2];
 
-        // วาง Tile ที่ไม่เชื่อมต่อกัน
         tiles[0][0] = new Tile(TileType.STRAIGHT);
         tiles[0][1] = new Tile(TileType.STRAIGHT);
         tiles[1][0] = new Tile(TileType.STRAIGHT);
         tiles[1][1] = new Tile(TileType.STRAIGHT);
 
         grid.setTiles(tiles);
-
-        // ต้องคืนค่า false เพราะท่อหันผิดทิศทาง ไม่เกิดเส้นทางจากจุดเริ่มไปจุดจบ
         assertFalse(grid.isPathComplete());
     }
 }

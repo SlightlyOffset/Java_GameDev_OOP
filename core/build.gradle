@@ -1,6 +1,6 @@
 java {
-	sourceCompatibility = JavaVersion.toVersion(findProperty("javaVersion") ?: 21)
-	targetCompatibility = JavaVersion.toVersion(findProperty("javaVersion") ?: 21)
+	sourceCompatibility = JavaVersion.toVersion(findProperty("javaVersion") ?: 25)
+	targetCompatibility = JavaVersion.toVersion(findProperty("javaVersion") ?: 25)
 }
 
 tasks.withType(JavaCompile).configureEach {

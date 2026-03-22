@@ -2,10 +2,10 @@ package core.mechanics;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import core.windows.GameScreen;
+import com.badlogic.gdx.graphics.Texture;
+
 import core.windows.MenuScreen;
 
 public class PathPuzzleGame extends Game {

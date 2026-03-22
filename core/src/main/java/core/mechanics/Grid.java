@@ -32,6 +32,12 @@ public class Grid {
     }
 
     public void setStartAndEnd(int startX, int startY, int endX, int endY) {
+        if (startX < 0 || startX >= cols || startY < 0 || startY >= rows) {
+            throw new IllegalArgumentException("Start coordinates out of bounds: (" + startX + ", " + startY + ")");
+        }
+        if (endX < 0 || endX >= cols || endY < 0 || endY >= rows) {
+            throw new IllegalArgumentException("End coordinates out of bounds: (" + endX + ", " + endY + ")");
+        }
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
@@ -47,11 +53,11 @@ public class Grid {
     }
 
     public int getEndX() {
-        return endX;
+        return endX == UNSET && cols > 0 ? cols - 1 : endX;
     }
 
     public int getEndY() {
-        return endY;
+        return endY == UNSET && rows > 0 ? rows - 1 : endY;
     }
 
     public int getCols() {
@@ -67,7 +73,12 @@ public class Grid {
     }
 
     public void setTiles(Tile[][] tiles) {
+        if (tiles == null || tiles.length == 0 || tiles[0].length == 0) {
+            throw new IllegalArgumentException("tiles must be a non-empty array.");
+        }
         this.tiles = tiles;
+        this.rows = tiles.length;
+        this.cols = tiles[0].length;
     }
 
     public boolean isSolved() {
@@ -108,30 +119,28 @@ public class Grid {
     private boolean hasPath(int r, int c, boolean[][] visited, int resolvedEndX, int resolvedEndY) {
         if (r < 0 || r >= rows || c < 0 || c >= cols || visited[r][c]) {
             return false;
-        } else {
-            visited[r][c] = true;
         }
+        visited[r][c] = true;
 
-        // ตรวจสอบว่าถึงจุด End หรือยัง
         if (r == resolvedEndY && c == resolvedEndX) {
             return true;
         }
 
-        boolean[] currentConnection = tiles[r][c].getType().getConnections(tiles[r][c].getRotation());
+        Tile currentTile = tiles[r][c];
+        if (currentTile == null || currentTile.getType() == null) {
+            return false;
+        }
+        boolean[] currentConnection = currentTile.getType().getConnections(currentTile.getRotation());
 
 
-        if (currentConnection[0] && canConnect(r + 1, c, 2) && hasPath(r + 1, c, visited, resolvedEndX, resolvedEndY)) {
+        if (currentConnection[0] && canConnect(r + 1, c, 2) && hasPath(r + 1, c, visited, resolvedEndX, resolvedEndY))
             return true;
-        }
-        if (currentConnection[1] && canConnect(r, c + 1, 3) && hasPath(r, c + 1, visited, resolvedEndX, resolvedEndY)) {
+        if (currentConnection[1] && canConnect(r, c + 1, 3) && hasPath(r, c + 1, visited, resolvedEndX, resolvedEndY))
             return true;
-        }
-        if (currentConnection[2] && canConnect(r - 1, c, 0) && hasPath(r - 1, c, visited, resolvedEndX, resolvedEndY)) {
+        if (currentConnection[2] && canConnect(r - 1, c, 0) && hasPath(r - 1, c, visited, resolvedEndX, resolvedEndY))
             return true;
-        }
-        if (currentConnection[3] && canConnect(r, c - 1, 1) && hasPath(r, c - 1, visited, resolvedEndX, resolvedEndY)) {
+        if (currentConnection[3] && canConnect(r, c - 1, 1) && hasPath(r, c - 1, visited, resolvedEndX, resolvedEndY))
             return true;
-        }
         return false;
     }
 

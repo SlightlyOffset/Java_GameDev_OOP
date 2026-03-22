@@ -4,34 +4,51 @@ public enum TileType {
     STRAIGHT,
     L_TURN,
     T_JUNCTION,
-    CROSS;
+    STRAIGHT_ROTATABLE,
+    L_TURN_ROTATABLE,
+    T_JUNCTION_ROTATABLE,
+    DEADEND,
+    TELEPORT,
+    WRONG_TELEPORT,
+    EMPTY;
 
-    public boolean[] getConnections(int rotation) {
-        boolean[] ports = new boolean[4];
+    private static final boolean[][] PRECOMPUTED = new boolean[TileType.values().length * 4][4];
+
+    static {
+        for (TileType type : TileType.values()) {
+            boolean[] base = type.getBase();
+            for (int steps = 0; steps < 4; steps++) {
+                boolean[] rotated = new boolean[4];
+                for (int i = 0; i < 4; i++) {
+                    rotated[(i + steps) % 4] = base[i];
+                }
+                PRECOMPUTED[type.ordinal() * 4 + steps] = rotated;
+            }
+        }
+    }
+
+    private boolean[] getBase() {
         switch (this) {
             case STRAIGHT:
-                // เหนือ-ใต้
-                ports[0] = ports[2] = true;
-                break;
+            case STRAIGHT_ROTATABLE:
+                return new boolean[] { true, false, true, false };
             case L_TURN:
-                // เหนือ-ตะวันออก
-                ports[0] = ports[1] = true;
-                break;
+            case L_TURN_ROTATABLE:
+                return new boolean[] { true, true, false, false };
             case T_JUNCTION:
-                // เหนือ-ตะวันออก-ตะวันตก
-                ports[0] = ports[1] = ports[3] = true;
-                break;
-            case CROSS:
-                // ทุกทิศ
-                ports[0] = ports[1] = ports[2] = ports[3] = true;
-                break;
+            case T_JUNCTION_ROTATABLE:
+                return new boolean[] { true, true, false, true };
+            case DEADEND:
+                return new boolean[] { true, false, false, false };
+            case TELEPORT:
+                return new boolean[] { true, true, true, true };
+            default:
+                return new boolean[] { false, false, false, false };
         }
+    }
 
+    public boolean[] getConnections(int rotation) {
         int steps = (rotation / 90) % 4;
-        boolean[] rotatedPorts = new boolean[4];
-        for (int i = 0; i < 4; i++) {
-            rotatedPorts[(i + steps) % 4] = ports[i];
-        }
-        return rotatedPorts;
+        return PRECOMPUTED[this.ordinal() * 4 + steps];
     }
 }
