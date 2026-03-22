@@ -136,10 +136,10 @@ public class GameScreen extends ScreenAdapter {
         if (!isStartTile && !isEndTile) {
             grid.getTiles()[y][x].rotateClockwise();    
         }
-        
-        grid.setSolved(grid.isPathComplete());
-        if (grid.isPathComplete()) {
-            System.out.println("Level Complete!");
+        boolean isCompleted = grid.isPathComplete();
+        grid.setSolved(isCompleted);
+        if (isCompleted) {
+            Gdx.app.log("GameScreen", "Path complete!");
         }
     }
 }
