@@ -5,13 +5,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -30,31 +38,82 @@ public class SettingScreen implements Screen {
     private Skin skin;
     private Music music;
     private Sound clickSound;
-
+    private Label sfxLabel, musicLabel;
+    private Slider sfxSlider, musicSlider;
+    private float sfxVolume = 1f;
     public SettingScreen(PathPuzzleGame game) {
         this.game = game;
         this.assetManager = game.assetManager;
     }
 
+private void initSkin() {
+    if (Gdx.graphics == null) return;
+
+    skin = new Skin();
+
+    // ===== FONT =====
+    BitmapFont font = new BitmapFont();
+    skin.add("default", font);
+
+    // ===== PIXMAP =====
+    Pixmap pixmap = new Pixmap(200, 80, Pixmap.Format.RGBA8888);
+    pixmap.setColor(Color.WHITE);
+    pixmap.fill();
+
+    Texture texture = new Texture(pixmap);
+    skin.add("background", texture);
+    pixmap.dispose();
+
+    // ===== LABEL STYLE =====
+    Label.LabelStyle labelStyle = new Label.LabelStyle();
+    labelStyle.font = font;
+    labelStyle.fontColor = Color.WHITE;
+    skin.add("default", labelStyle);
+
+    // ===== SLIDER STYLE =====
+    Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
+
+    sliderStyle.background = skin.newDrawable("background", Color.DARK_GRAY);
+    sliderStyle.knob = skin.newDrawable("background", Color.WHITE);
+
+    skin.add("default-horizontal", sliderStyle);
+
+    // ===== BUTTON STYLE =====
+    TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+
+    buttonStyle.up = skin.newDrawable("background", new Color(0, 0, 0, 0.3f));
+    buttonStyle.over = skin.newDrawable("background", new Color(1, 1, 1, 0.2f));
+    buttonStyle.down = skin.newDrawable("background", new Color(1, 1, 1, 0.4f));
+    buttonStyle.checked = skin.newDrawable("background", Color.BLUE);
+
+    buttonStyle.font = font;
+
+    skin.add("default", buttonStyle);
+}
+    
     @Override
     public void show() {
         viewport = new FitViewport(1920, 1080); // Use ScreenViewport to prevent stretching
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage); // Let the stage handle input events (click events)
-        
-        //change to set positon
-        //table = new Table();
-        //table.setFillParent(true); // Make the table the size of the viewport
-        //table.right();  // Align the table to the right side per spec
-        //stage.addActor(table);
+        initSkin(); 
 
-        // Add Buttons to the stage
+        sfxLabel = new Label("SFX", skin);
+        musicLabel = new Label("Music", skin);
+
+        sfxSlider = new Slider(0f, 1f, 0.01f, false, skin);
+        musicSlider = new Slider(0f, 1f, 0.01f, false, skin);
+        sfxVolume = game.sfxVolume;
+        float musicVolume = game.musicVolume;
+        sfxSlider.setValue(sfxVolume);
+        musicSlider.setValue(musicVolume);
         setupUI();
 
         // Play background music if loaded
         if (assetManager.isLoaded("menu_bgm.mp3", Music.class)) {
             music = assetManager.get("menu_bgm.mp3", Music.class);
             music.setLooping(true);
+            music.setVolume(musicSlider.getValue());
             music.play();
         }
     }
@@ -64,7 +123,7 @@ public class SettingScreen implements Screen {
         if (assetManager.isLoaded("click.mp3", Sound.class)) {
             clickSound = assetManager.get("click.mp3", Sound.class);
         }
-
+        
         // Create Buttons
         Texture Save = assetManager.get("setting/Save_bttn.png", Texture.class);
         Texture Savepress = assetManager.get("setting/Savepress_bttn.png", Texture.class);
@@ -97,27 +156,63 @@ public class SettingScreen implements Screen {
         stage.addActor(SaveButton);
         stage.addActor(ExitButton);
 
+        //add sfxLabel position
+        sfxLabel.setPosition(400, 700);
+        sfxSlider.setPosition(600, 700);
+        sfxSlider.setSize(800, 50);
+
+        //add musicLabel position
+        musicLabel.setPosition(400, 600);
+        musicSlider.setPosition(600, 600);
+        musicSlider.setSize(800, 50);
+
+        //add label and slider to stage
+        stage.addActor(sfxLabel);
+        stage.addActor(sfxSlider);
+        stage.addActor(musicLabel);
+        stage.addActor(musicSlider);
         // Add listeners for interaction
         SaveButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
-                game.setScreen(new MenuScreen(game));
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            if (clickSound != null) clickSound.play(sfxVolume);
+
+            game.sfxVolume = sfxVolume;
+            game.musicVolume = musicSlider.getValue();
+
+            game.setScreen(new MenuScreen(game));
+        }
+        });
+
+        sfxSlider.addListener(new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            sfxVolume = sfxSlider.getValue();
+        }
+        });
+
+        musicSlider.addListener(new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            if (music != null) {
+                music.setVolume(musicSlider.getValue());
             }
+        }
         });
 
         ExitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
-                game.setScreen(new MenuScreen(game));
-            }
-        });
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            if (clickSound != null) clickSound.play(sfxVolume);
 
-        // change to set position on button
-        //table.add(startButton).fillX().uniformX().pad(10).row();
-        //table.add(optionsButton).fillX().uniformX().pad(10).row();
-        //table.add(exitButton).fillX().uniformX().pad(10);
+            // ❗คืนค่าเพลงกลับเป็นของเดิม
+            if (music != null) {
+                music.setVolume(game.musicVolume);
+            }
+
+            game.setScreen(new MenuScreen(game));
+        }
+    });
     }
 
     @Override

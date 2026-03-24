@@ -10,7 +10,8 @@ import core.windows.MenuScreen;
 
 public class PathPuzzleGame extends Game {
     public AssetManager assetManager;
-
+    public float sfxVolume = 1f;
+    public float musicVolume = 1f;
     @Override
     public void create() {
         assetManager = new AssetManager();

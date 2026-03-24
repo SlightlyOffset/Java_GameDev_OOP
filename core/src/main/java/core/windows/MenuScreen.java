@@ -111,7 +111,7 @@ public class MenuScreen implements Screen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
+                if (clickSound != null) clickSound.play(game.sfxVolume);
                 game.setScreen(new GameScreen(game)); // Start the game -> Transition to GameScreen
             }
         });
@@ -119,7 +119,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
+                if (clickSound != null) clickSound.play(game.sfxVolume);;
                 game.setScreen(new SettingScreen(game)); // Transition to SettingScreen
             }
         });
@@ -127,7 +127,7 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
+                if (clickSound != null) clickSound.play(game.sfxVolume);;
                 Gdx.app.exit(); // Exit the game
             }
         });
