@@ -49,8 +49,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // 2. Initialize Pluggable Renderer
-        GdxRenderer gdxRenderer = new GdxRenderer();
-        this.renderer = gdxRenderer;
+        this.renderer = new GdxRenderer();
         worldRenderer = new WorldRenderer(renderer, TILE_SIZE);
 
         // 3. Set up camera (false = Y go upward)
@@ -75,8 +74,8 @@ public class GameScreen extends ScreenAdapter {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (grid.isSolved()) {
                     int nextIndex = currentLevelIndex + 1;
-                    if (nextIndex < game.LEVELS.length) {
-                        game.setScreen(new GameScreen(game, game.LEVEL_PATH + game.LEVELS[nextIndex], nextIndex));
+                    if (nextIndex < PathPuzzleGame.LEVELS.length) {
+                        game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[nextIndex], nextIndex));
                     }
                     else {
                         game.setScreen(new MenuScreen(game));
