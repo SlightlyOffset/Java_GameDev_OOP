@@ -22,12 +22,11 @@ import core.mechanics.PathPuzzleGame;
 
 public class LevelSelectionScreen implements Screen {
 
-    private AssetManager assetManager;
-    private PathPuzzleGame game;
+    private final AssetManager assetManager;
+    private final PathPuzzleGame game;
     private Stage stage;
     private Viewport viewport;
     private Skin skin;
-    private Music music;
     private Sound clickSound;
 
     public LevelSelectionScreen(PathPuzzleGame game) {
@@ -49,7 +48,7 @@ public class LevelSelectionScreen implements Screen {
         initUI();
 
         if (assetManager.isLoaded("sounds/menu_bgm.mp3", Music.class)) {
-            music = assetManager.get("sounds/menu_bgm.mp3", Music.class);
+            Music music = assetManager.get("sounds/menu_bgm.mp3", Music.class);
             if (!music.isPlaying()) {
                 music.setLooping(true);
                 music.play();
