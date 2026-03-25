@@ -16,10 +16,11 @@ public class PathPuzzleGame extends Game {
         assetManager = new AssetManager();
 
         // Preload assets
-        assetManager.load("logo.png", Texture.class);
-        assetManager.load("background.png", Texture.class);
-        assetManager.load("menu_bgm.mp3", Music.class);
-        assetManager.load("click.mp3", Sound.class);
+        assetManager.load("images/logo.png", Texture.class);
+        assetManager.load("images/background.png", Texture.class);
+        assetManager.load("images/LevelSelBG.png", Texture.class);
+        assetManager.load("sounds/menu_bgm.mp3", Music.class);
+        assetManager.load("sounds/click.mp3", Sound.class);
         assetManager.load("buttons/Start_bttn.png", Texture.class);
         assetManager.load("buttons/Startpress_bttn.png", Texture.class);
         assetManager.load("buttons/Setting_bttn.png", Texture.class);
