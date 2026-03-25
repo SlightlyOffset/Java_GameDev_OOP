@@ -20,15 +20,32 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import core.mechanics.PathPuzzleGame;
 
+/**
+ * The LevelSelectionScreen provides a visual interface for users to browse and select game levels.
+ * It features a layout of "Order Slips" that correspond to individual puzzle levels, 
+ * matching the hand-drawn aesthetic of the game's background.
+ */
 public class LevelSelectionScreen implements Screen {
 
+    /** Manager for handling textures, sounds, and music assets. */
     private final AssetManager assetManager;
+    /** The main game instance used for screen transitions and accessing global level data. */
     private final PathPuzzleGame game;
+    /** The Scene2D stage for managing UI actors and input. */
     private final Stage stage;
+    /** Viewport ensuring the UI scales correctly to a 1920x1080 virtual resolution. */
     private final Viewport viewport;
+    /** Programmatic skin for styling UI components like buttons and fonts. */
     private Skin skin;
+    /** Sound effect played upon clicking buttons. */
     private Sound clickSound;
 
+    /**
+     * Constructs the Level Selection screen.
+     * Initializes the viewport, stage, and UI components immediately to prepare for display.
+     * 
+     * @param game The main game instance.
+     */
     public LevelSelectionScreen(PathPuzzleGame game) {
         this.game = game;
         this.assetManager = game.assetManager;
@@ -39,6 +56,11 @@ public class LevelSelectionScreen implements Screen {
         initBasicSkin();
         initUI();
     }
+
+    /**
+     * Called when this screen becomes the current screen for a Game.
+     * Sets up input processing and resumes background music if available.
+     */
     @Override
     public void show() {
         if (assetManager.isLoaded("sounds/click.mp3", Sound.class)) {
@@ -49,13 +71,15 @@ public class LevelSelectionScreen implements Screen {
 
         if (assetManager.isLoaded("sounds/menu_bgm.mp3", Music.class)) {
             Music music = assetManager.get("sounds/menu_bgm.mp3", Music.class);
-            if (!music.isPlaying()) {
-                music.setLooping(true);
-                music.play();
-            }
+            if (!music.isPlaying()) music.play();
         }
     }
 
+    /**
+     * Creates a fallback UI skin programmatically.
+     * This avoids dependency on an external JSON skin file and sets up the 
+     * semi-transparent aesthetic needed to see the background drawings through the buttons.
+     */
     private void initBasicSkin() {
         skin = new Skin();
 
@@ -79,6 +103,11 @@ public class LevelSelectionScreen implements Screen {
         skin.add("default", textButtonStyle);
     }
 
+    /**
+     * Constructs the UI layout using Scene2D Tables.
+     * Includes a navigation bar with a 'Back' button and a grid of level 'Order' buttons
+     * generated dynamically from the {@link PathPuzzleGame#LEVELS} array.
+     */
     private void initUI() {
         Table rootTable = new Table();
         rootTable.setFillParent(true);
@@ -92,6 +121,7 @@ public class LevelSelectionScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (clickSound != null) clickSound.play();
                 game.setScreen(new MenuScreen(game));
+                dispose();
             }
         });
         topTable.add(backBtn).left().pad(30).width(250).height(100);
@@ -111,6 +141,7 @@ public class LevelSelectionScreen implements Screen {
                     if (clickSound != null) clickSound.play();
                     Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
                     game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
+                    dispose();
                 }
             });
             levelTable.add(btn).width(230).height(400).pad(70);
@@ -118,6 +149,13 @@ public class LevelSelectionScreen implements Screen {
         rootTable.add(levelTable).expand().top();
     }
 
+    /**
+     * Renders the screen every frame.
+     * Clears the buffer to white, draws the background texture if loaded, 
+     * and updates/draws the Scene2D stage.
+     * 
+     * @param delta Time in seconds since the last frame.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(1, 1, 1, 1);
@@ -135,6 +173,12 @@ public class LevelSelectionScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Updates the stage's viewport whenever the screen is resized.
+     * 
+     * @param width The new window width.
+     * @param height The new window height.
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -156,6 +200,10 @@ public class LevelSelectionScreen implements Screen {
         // But usually Menu and LevelSelect share the same BGM
     }
 
+    /**
+     * Releases all resources held by this screen, including the stage and skin.
+     * Should be called when the screen is no longer needed to prevent memory leaks.
+     */
     @Override
     public void dispose() {
         if (stage != null) stage.dispose();
