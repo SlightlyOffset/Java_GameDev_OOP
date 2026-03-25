@@ -1,62 +1,91 @@
 package core.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import core.windows.awt.AwtGameWindow;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import core.mechanics.PathPuzzleGame;
 
-import java.awt.*;
-import java.io.File;
-import java.util.*;
+public class LevelSelectionScreen implements Screen {
 
-public class LevelSelectionScreen {
+    private AssetManager assetManager;
+    private PathPuzzleGame game;
+    private Stage stage;
+    private Viewport viewport;
+    private Skin skin;
+    private Music music;
+    private Sound clickSound;
 
-    private AwtGameWindow window;
-    private java.util.List<String> levels = new ArrayList<>();
+    private final String levelPath = "levels/";
+    private final String[] levels = {"level_1.json", "level_2.json", "level_3.json"};
 
-    public LevelSelectionScreen(AwtGameWindow window) {
-        this.window = window;
-        loadLevels();
+    public LevelSelectionScreen(PathPuzzleGame game) {
+        this.game = game;
+        this.assetManager = game.assetManager;
     }
 
-    private void loadLevels() {
-        File folder = new File("assets/levels/");
-        File[] files = folder.listFiles();
+    @Override
+    public void show() {
+        viewport = new FitViewport(1920, 1080);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
 
-        if (files == null) return;
+        initUI();
 
-        Arrays.sort(files);
-
-        for (File f : files) {
-            if (f.getName().endsWith(".json")) {
-                levels.add(f.getName());
-            }
-        }
     }
 
-    public void render(Graphics g) {
-        for (int i = 0; i < levels.size(); i++) {
-            int x = 100 + (i % 4) * 150;
-            int y = 150 + (i / 4) * 150;
+    private void initUI() {
+        Table table = new Table();
 
-            g.setColor(Color.GRAY);
-            g.fillRect(x, y, 120, 120);
-
-            g.setColor(Color.BLACK);
-            g.drawString("Level " + (i + 1), x + 30, y + 60);
-        }
     }
 
-    public void mouseClicked(int mx, int my) {
-        for (int i = 0; i < levels.size(); i++) {
-            int x = 100 + (i % 4) * 150;
-            int y = 150 + (i / 4) * 150;
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1); // Clear the screen with black color
 
-            Rectangle r = new Rectangle(x, y, 120, 120);
+        viewport.apply();
 
-            if (r.contains(mx, my)) {
-                window.setScreen(
-                        new GameScreen(window, "assets/levels/" + levels.get(i))
-                );
-            }
+        // Draw background if we have one
+        stage.getBatch().begin();
+        if (assetManager.isLoaded("images/LevelSelBG.png", Texture.class)) {
+            stage.getBatch().draw(assetManager.get("images/LevelSelBG.png", Texture.class), 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         }
+        stage.getBatch().end();
+
+        stage.act(delta);
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
