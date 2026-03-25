@@ -1,6 +1,5 @@
 package core.windows;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
-import core.mechanics.Tile;
 import core.rendering.GdxRenderer;
 import core.rendering.IRenderer;
 import core.rendering.WorldRenderer;
