@@ -10,8 +10,8 @@ import core.windows.MenuScreen;
 
 public class PathPuzzleGame extends Game {
     public AssetManager assetManager;
-    public final String LEVEL_PATH = "levels/";
-    public final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json",};
+    public static final String LEVEL_PATH = "levels/";
+    public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json",};
 
     @Override
     public void create() {
