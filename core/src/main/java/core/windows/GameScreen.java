@@ -78,7 +78,16 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         font = new BitmapFont();
     }
+    @Override
+    public void show() {
+        //for thread time
+        if (timer == null) {
+            timer = new PlaytimeTimer();
+            timer.start();
+        }
 
+        timer.reset(); //reset time in new level
+        timer.resume();
     @Override
     public void show() {
         //for thread time
