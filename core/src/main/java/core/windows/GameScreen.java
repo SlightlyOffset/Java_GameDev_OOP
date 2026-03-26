@@ -5,10 +5,15 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+//Thread time
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+//
 
 import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
+import core.mechanics.PlaytimeTimer; //Thread time
 import core.rendering.GdxRenderer;
 import core.rendering.IRenderer;
 import core.rendering.WorldRenderer;
@@ -26,6 +31,11 @@ public class GameScreen extends ScreenAdapter {
     // Pluggable Rendering components
     private final IRenderer renderer;
     private final WorldRenderer worldRenderer;
+
+    //Thread time
+    private PlaytimeTimer timer;
+    private SpriteBatch batch;
+    private BitmapFont font;
 
     public GameScreen(PathPuzzleGame game) {
         this(game, null, 0);
@@ -64,10 +74,29 @@ public class GameScreen extends ScreenAdapter {
             // 5. Create a ShapeRenderer for drawing shapes
             shapeRenderer = new ShapeRenderer();
         }
+        //for thread time
+        batch = new SpriteBatch();
+        font = new BitmapFont();
     }
-
     @Override
     public void show() {
+        //for thread time
+        if (timer == null) {
+            timer = new PlaytimeTimer();
+            timer.start();
+        }
+
+        timer.reset(); //reset time in new level
+        timer.resume();
+    @Override
+    public void show() {
+        //for thread time
+        timer =  new PlaytimeTimer();
+        timer.start();
+
+        timer.reset(); //reset time in new level
+        timer.resume();
+
         // 6. Register click input
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
@@ -123,6 +152,14 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         worldRenderer.render(grid, gridOffsetX, gridOffsetY);
         shapeRenderer.end();
+        //for Thread time
+        batch.begin();
+        //for Thread time
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        font.draw(batch, "Time: " + timer.getFormattedTime(), 20, Gdx.graphics.getHeight() - 20);
+        batch.end();
+        batch.end();
     }
 
     @Override
@@ -137,6 +174,32 @@ public class GameScreen extends ScreenAdapter {
     public void dispose() {
         if (Gdx.graphics != null) {
             shapeRenderer.dispose();
+        }
+        //for Thread time
+        if (batch != null) {
+            batch.dispose();
+        }
+        if (font != null) {
+            font.dispose();
+        }
+        if (timer != null) {
+            timer.stop(); //close thread
+        }
+    }
+
+    //for Thread time
+    @Override
+    public void pause() {
+        if (timer != null) {
+            timer.pause();
+        }
+    }
+
+    //for Thread time
+    @Override
+    public void resume() {
+        if (timer != null) {
+            timer.resume();
         }
     }
 
@@ -155,6 +218,7 @@ public class GameScreen extends ScreenAdapter {
         grid.setSolved(solved);
         if (solved) {
             System.out.println("Level Complete!");
+            timer.pause();
         }
     }
 }
