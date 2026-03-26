@@ -130,6 +130,12 @@ public class Grid {
         if (currentTile == null || currentTile.getType() == null) {
             return false;
         }
+        if (currentTile.getType() == TileType.TELEPORT) {
+        
+        if (hasPath(currentTile.targetY, currentTile.targetX, visited, resolvedEndX, resolvedEndY)) {
+            return true;
+        }
+    }
         boolean[] currentConnection = currentTile.getType().getConnections(currentTile.getRotation());
 
 

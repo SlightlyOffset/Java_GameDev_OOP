@@ -42,6 +42,7 @@ public enum TileType {
             case DEADEND:
                 return new boolean[] { true, false, false, false };
             case TELEPORT:
+                return new boolean[] { true, true, true, true };
             case CROSS:
                 return new boolean[] { true, true, true, true };
             default:

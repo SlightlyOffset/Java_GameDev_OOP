@@ -1,6 +1,8 @@
 package core.mechanics;
 
 public class Tile extends BaseTile implements Rotatable {
+    public int targetX;
+    public int targetY;
     public Tile() {
         super();
     }
