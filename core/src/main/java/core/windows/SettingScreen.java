@@ -41,6 +41,8 @@ public class SettingScreen implements Screen {
     private Label sfxLabel, musicLabel;
     private Slider sfxSlider, musicSlider;
     private float sfxVolume = 1f;
+
+
     public SettingScreen(PathPuzzleGame game) {
         this.game = game;
         this.assetManager = game.assetManager;
@@ -109,18 +111,19 @@ private void initSkin() {
         setupUI();
 
         // Play background music if loaded
-        if (assetManager.isLoaded("menu_bgm.mp3", Music.class)) {
-            music = assetManager.get("menu_bgm.mp3", Music.class);
+        if (assetManager.isLoaded("sounds/menu_bgm.mp3", Music.class)) {
+            music = assetManager.get("sounds/menu_bgm.mp3", Music.class);
             music.setLooping(true);
             music.setVolume(musicSlider.getValue());
-            music.play();
+            if (!music.isPlaying())
+                music.play();
         }
     }
 
     private void setupUI() {
         // Load click sound
-        if (assetManager.isLoaded("click.mp3", Sound.class)) {
-            clickSound = assetManager.get("click.mp3", Sound.class);
+        if (assetManager.isLoaded("sounds/click.mp3", Sound.class)) {
+            clickSound = assetManager.get("sounds/click.mp3", Sound.class);
         }
         
         // Create Buttons
@@ -254,9 +257,7 @@ private void initSkin() {
 
     @Override
     public void hide() {
-        if (music != null) {
-            music.stop();
-        }
+        // Music continues to next screen if it handles it
     }
 
     @Override

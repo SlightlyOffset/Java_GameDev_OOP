@@ -71,6 +71,7 @@ public class LevelSelectionScreen implements Screen {
 
         if (assetManager.isLoaded("sounds/menu_bgm.mp3", Music.class)) {
             Music music = assetManager.get("sounds/menu_bgm.mp3", Music.class);
+            music.setVolume(game.musicVolume);
             if (!music.isPlaying()) music.play();
         }
     }
@@ -119,7 +120,7 @@ public class LevelSelectionScreen implements Screen {
         backBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (clickSound != null) clickSound.play();
+                if (clickSound != null) clickSound.play(game.sfxVolume);
                 game.setScreen(new MenuScreen(game));
                 dispose();
             }
@@ -138,7 +139,7 @@ public class LevelSelectionScreen implements Screen {
             btn.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (clickSound != null) clickSound.play();
+                    if (clickSound != null) clickSound.play(game.sfxVolume);
                     Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
                     game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
                     dispose();
