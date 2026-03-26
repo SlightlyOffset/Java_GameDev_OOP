@@ -1,9 +1,12 @@
 package core.mechanics;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.lang.Thread.sleep;
+
 //Thread Time
 public class PlaytimeTimer implements Runnable {
-    private AtomicInteger seconds = new AtomicInteger(0);
+    private final AtomicInteger seconds = new AtomicInteger(0);
     private volatile boolean running = true;
     private volatile boolean paused = true;
 
@@ -20,7 +23,7 @@ public class PlaytimeTimer implements Runnable {
     public void run() {
         while (running) {
             try {
-                Thread.sleep(1000);
+                sleep(1000);
                 if (!paused) {
                     seconds.incrementAndGet();
                 }
@@ -40,8 +43,13 @@ public class PlaytimeTimer implements Runnable {
     }
     public void stop() {
         running = false;
-        if (thread != null) {
+        if (thread != null && thread.isAlive()) {
             thread.interrupt();
+            try {
+                thread.join(2000); // Wait up to 2 seconds for thread to finish
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
     public String getFormattedTime() {
