@@ -67,15 +67,16 @@ private void initSkin() {
 
     // ===== LABEL STYLE =====
     Label.LabelStyle labelStyle = new Label.LabelStyle();
+    font.getData().setScale(2.5f);
     labelStyle.font = font;
-    labelStyle.fontColor = Color.WHITE;
+    labelStyle.fontColor = Color.BLACK;
     skin.add("default", labelStyle);
 
     // ===== SLIDER STYLE =====
     Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
 
-    sliderStyle.background = skin.newDrawable("background", Color.DARK_GRAY);
-    sliderStyle.knob = skin.newDrawable("background", Color.WHITE);
+    sliderStyle.background = skin.newDrawable("background", Color.LIGHT_GRAY);
+    sliderStyle.knob = skin.newDrawable("background", Color.BLACK);
 
     skin.add("default-horizontal", sliderStyle);
 
@@ -146,12 +147,12 @@ private void initSkin() {
         ImageButton ExitButton = new ImageButton(ExitStyle);
 
         //set position on button
-        ExitButton.setPosition(1070,100);
-        SaveButton.setPosition(350,100);
+        ExitButton.setPosition(1013,150);
+        SaveButton.setPosition(521,150);
 
         //set size on button
-        SaveButton.setSize(500, 238);
-        ExitButton.setSize(500, 238);
+        SaveButton.setSize(348, 134);
+        ExitButton.setSize(348, 134);
 
 
         //add button to stage
@@ -159,14 +160,14 @@ private void initSkin() {
         stage.addActor(ExitButton);
 
         //add sfxLabel position
-        sfxLabel.setPosition(400, 700);
-        sfxSlider.setPosition(600, 700);
-        sfxSlider.setSize(800, 50);
+        sfxLabel.setPosition(450, 605);
+        sfxSlider.setPosition(650, 600);
+        sfxSlider.setSize(750, 60);
 
         //add musicLabel position
-        musicLabel.setPosition(400, 600);
-        musicSlider.setPosition(600, 600);
-        musicSlider.setSize(800, 50);
+        musicLabel.setPosition(450, 505);
+        musicSlider.setPosition(650, 500);
+        musicSlider.setSize(750, 60);
 
         //add label and slider to stage
         stage.addActor(sfxLabel);
