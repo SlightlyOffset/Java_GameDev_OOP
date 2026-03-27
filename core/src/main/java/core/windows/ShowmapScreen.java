@@ -25,8 +25,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import core.mechanics.PathPuzzleGame;
 
 /**
- * Screen for displaying the game map.
- * Shows a graphical representation of the game map with a button to return to the main menu.
+ * Placeholder screen for displaying the game map.
+ * This class is currently a stub and will eventually handle the graphical representation
+ * of the game map and navigation back to the main menu.
  */
 public class ShowmapScreen {
     
