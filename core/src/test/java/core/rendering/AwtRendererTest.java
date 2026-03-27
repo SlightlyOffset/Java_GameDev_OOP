@@ -17,6 +17,10 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests for the AwtRenderer class.
+ * Tests AWT rendering operations including color parsing and screen clearing.
+ */
 public class AwtRendererTest {
     private AwtRenderer awtRenderer;
     private StubGraphics2D stubG2d;

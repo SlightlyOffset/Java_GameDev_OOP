@@ -5,6 +5,10 @@ import core.mechanics.TileType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Tile class.
+ * Tests tile rotation mechanics (clockwise and counterclockwise) and tile types.
+ */
 public class TileTest {
 
     @Test

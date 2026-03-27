@@ -13,6 +13,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import org.junit.jupiter.api.BeforeEach;
 
+/**
+ * Unit tests for the MenuScreen class.
+ * Tests asset loading, button creation, and screen transitions using stubs.
+ */
 public class MenuScreenTest {
 
     @BeforeEach

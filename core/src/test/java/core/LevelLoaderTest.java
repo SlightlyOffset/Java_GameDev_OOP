@@ -5,6 +5,10 @@ import core.mechanics.LevelLoader;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the LevelLoader class.
+ * Tests JSON level file loading and grid deserialization.
+ */
 public class LevelLoaderTest {
 
     @Test

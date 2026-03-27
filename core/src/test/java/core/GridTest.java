@@ -6,6 +6,10 @@ import core.mechanics.TileType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Grid class.
+ * Tests grid dimensions, tile initialization, and path completion validation.
+ */
 public class GridTest {
 
     @Test

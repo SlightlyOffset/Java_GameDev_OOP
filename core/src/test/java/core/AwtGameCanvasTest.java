@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * Unit tests for the AwtGameCanvas class.
+ * Tests AWT canvas instantiation with grid and renderer components.
+ */
 public class AwtGameCanvasTest {
 
     @Test

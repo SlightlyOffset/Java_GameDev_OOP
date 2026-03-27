@@ -8,6 +8,10 @@ import core.mechanics.TileType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for JSON serialization and deserialization.
+ * Tests tile and grid serialization to/from JSON format.
+ */
 public class JsonSerializationTest {
 
     @Test

@@ -1,5 +1,9 @@
 package core.mechanics;
 
+/**
+ * Represents a single tile on the puzzle grid.
+ * Tiles can be rotated and have connections in different directions based on their type and rotation.
+ */
 public class Tile extends BaseTile implements Rotatable {
     public int targetX;
     public int targetY;

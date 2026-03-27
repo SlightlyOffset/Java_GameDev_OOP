@@ -20,7 +20,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.PathPuzzleGame;
 
-
+/**
+ * Main menu screen for the puzzle game.
+ * Displays start, settings, and exit buttons with background music and click sounds.
+ */
 public class MenuScreen implements Screen {
     private final AssetManager assetManager;
     private final PathPuzzleGame game;

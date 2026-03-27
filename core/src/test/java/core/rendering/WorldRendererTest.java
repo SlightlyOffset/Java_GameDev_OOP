@@ -3,6 +3,10 @@ package core.rendering;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for the WorldRenderer class.
+ * Tests rendering delegation to backend renderers using mock objects.
+ */
 public class WorldRendererTest {
 
     @Test

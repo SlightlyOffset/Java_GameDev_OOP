@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests for the PathPuzzleGame class.
+ * Tests game configuration including level list and level path constants.
+ */
 public class PathPuzzleGameTest {
 
     @Test
