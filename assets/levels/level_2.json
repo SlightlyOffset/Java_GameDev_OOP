@@ -1,7 +1,7 @@
 {
   "cols": 19,
   "rows": 13,
-  //"image": "assets/Level2_BG.png",
+  "backgroundImage": "images/Level2_BG.PNG",
   "tiles": [
     [ //1
       { "type": "EMPTY", "rotation": 0 }, //1

@@ -5,7 +5,7 @@
   "startY": 3,
   "endX": 14,
   "endY": 10,
-  //"image": "assets/Level1_BG.png",
+  "backgroundImage": "images/Level1_BG.PNG",
   "tiles": [
     [ //1
       { "type": "EMPTY", "rotation": 0 }, //1
