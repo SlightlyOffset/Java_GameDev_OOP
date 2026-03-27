@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
+/**
+ * Unit tests for the GameScreen class.
+ * Tests screen instantiation with and without level paths.
+ */
 public class GameScreenTest {
 
     @BeforeEach

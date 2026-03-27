@@ -8,13 +8,28 @@ import com.badlogic.gdx.graphics.Texture;
 
 import core.windows.MenuScreen;
 
+/**
+ * The main entry point and controller for the entire game application.
+ * It extends the LibGDX {@link Game} class, which manages screen transitions.
+ * This class is responsible for managing global resources like the {@link AssetManager}
+ * and game-wide settings such as volume.
+ */
 public class PathPuzzleGame extends Game {
+    /** Manages loading and storage of all game assets, such as textures, sounds, and music. */
     public AssetManager assetManager;
+    /** Global volume setting for music, ranging from 0.0f to 1.0f. */
     public float musicVolume = 1.0f;
+    /** Global volume setting for sound effects, ranging from 0.0f to 1.0f. */
     public float sfxVolume = 1.0f;
+    /** The base directory where level JSON files are stored. */
     public static final String LEVEL_PATH = "levels/";
+    /** An array of level file names, defining the order of level progression. */
     public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json",};
 
+    /**
+     * Called when the application is first created.
+     * Initializes the AssetManager, loads all necessary assets, and sets the initial screen to the MenuScreen.
+     */
     @Override
     public void create() {
         assetManager = new AssetManager();
@@ -41,11 +56,19 @@ public class PathPuzzleGame extends Game {
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
     }
 
+    /**
+     * Called by the game loop from the application every time rendering should be performed.
+     * Delegates the render call to the current active screen.
+     */
     @Override
     public void render() {
         super.render();
     }
 
+    /**
+     * Called when the application is destroyed.
+     * Disposes of the current screen and all loaded assets to prevent memory leaks.
+     */
     @Override
     public void dispose() {
         if (screen != null) screen.dispose(); // Dispose of current active screen

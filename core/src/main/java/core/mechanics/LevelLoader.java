@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
+/**
+ * Utility class for loading puzzle levels from JSON files and serializing them to JSON.
+ * Handles both LibGDX and non-LibGDX contexts for testing purposes.
+ */
 public class LevelLoader {
 
     public static Grid loadLevel(String path) {

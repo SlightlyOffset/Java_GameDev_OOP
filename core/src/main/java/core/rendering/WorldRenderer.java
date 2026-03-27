@@ -4,33 +4,40 @@ import core.mechanics.Grid;
 import core.mechanics.Tile;
 
 /**
- * Custom Class that handles the logic of drawing the game world.
- * Depends on the custom IRenderer interface, satisfying OOP Requirement 1.2.
+ * Handles the logic of drawing the game world, including the grid, tiles, and paths.
+ * This class is decoupled from the specific rendering technology through the IRenderer interface.
  */
 public class WorldRenderer {
     private final IRenderer renderer;
     private final int tileSize;
 
     /**
-     * Constructor using Dependency Injection (Satisfies OOP Requirement 1.2).
-     * @param renderer Any implementation of IRenderer (AWT or GDX)
-     * @param tileSize Size in pixels for each tile
+     * Constructs a new WorldRenderer.
+     * This constructor uses Dependency Injection to accept any implementation of IRenderer,
+     * which satisfies OOP requirements for abstraction.
+     *
+     * @param renderer The rendering implementation (e.g., AwtRenderer, GdxRenderer).
+     * @param tileSize The size of each tile in pixels.
      */
-
     public WorldRenderer(IRenderer renderer, int tileSize) {
         this.renderer = renderer;
         this.tileSize = tileSize;
     }
 
     /**
-     * Clears the screen using a default background color.
+     * Clears the screen with a default background color.
      */
     public void clearScreen() {
         renderer.clearScreen(0.2f, 0.2f, 0.2f, 1.0f);
     }
 
     /**
-     * Main rendering loop logic. Translates Grid state into draw calls.
+     * Renders the entire game world. It translates the current state of the Grid
+     * into a series of draw calls, handling backgrounds, tiles, and paths.
+     *
+     * @param grid The game grid containing the tiles to render.
+     * @param offsetX The horizontal offset at which to start drawing the grid.
+     * @param offsetY The vertical offset at which to start drawing the grid.
      */
     public void render(Grid grid, float offsetX, float offsetY) {
         // 1. Draw tile backgrounds
@@ -67,6 +74,14 @@ public class WorldRenderer {
         }
     }
 
+    /**
+     * Draws the path segments for a single tile based on its type and rotation.
+     *
+     * @param tile The tile to draw.
+     * @param px The pixel x-coordinate of the tile's top-left corner.
+     * @param py The pixel y-coordinate of the tile's top-left corner.
+     * @param isSolved Whether the puzzle is currently in a solved state, which changes the path color.
+     */
     private void drawTilePaths(Tile tile, float px, float py, boolean isSolved) {
         float cx = px + tileSize / 2f;     // center X of the tile
         float cy = py + tileSize / 2f;     // center Y of the tile

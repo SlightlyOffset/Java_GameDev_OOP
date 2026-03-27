@@ -24,7 +24,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.PathPuzzleGame;
 
-//สร้างหน้าจอแสดงแผนที่ของเกม โดยมีปุ่มกลับไปยังเมนูหลัก และแสดงแผนที่ของเกมในรูปแบบกราฟิก
 
 public class ShowmapScreen {
     

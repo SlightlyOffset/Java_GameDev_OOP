@@ -1,5 +1,9 @@
 package core.mechanics;
 
+/**
+ * Abstract base class for all tile types in the puzzle game.
+ * Provides common properties and behavior shared by all tile implementations.
+ */
 public abstract class BaseTile {
     protected TileType type;
     protected int rotation;

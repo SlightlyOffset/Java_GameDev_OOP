@@ -2,6 +2,10 @@ package core.mechanics;
 
 import java.util.Random;
 
+/**
+ * Represents the game's puzzle board. It manages the 2D array of tiles,
+ * the start and end points, and the pathfinding logic to determine if the puzzle is solved.
+ */
 public class Grid {
     private int cols;
     private int rows;
@@ -12,6 +16,9 @@ public class Grid {
     // start(x, y), end(x, y)
     private int startX, startY, endX, endY;
 
+    /**
+     * Default constructor. Creates an empty, zero-sized grid.
+     */
     public Grid() {
         this.cols = 0;
         this.rows = 0;
@@ -21,6 +28,11 @@ public class Grid {
         this.endY = UNSET;
     }
 
+    /**
+     * Constructs a grid with the specified dimensions.
+     * @param cols The number of columns in the grid.
+     * @param rows The number of rows in the grid.
+     */
     public Grid(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
@@ -31,6 +43,14 @@ public class Grid {
         this.endY = UNSET;
     }
 
+    /**
+     * Sets the start and end coordinates for the puzzle path.
+     * @param startX The x-coordinate of the starting tile.
+     * @param startY The y-coordinate of the starting tile.
+     * @param endX The x-coordinate of the ending tile.
+     * @param endY The y-coordinate of the ending tile.
+     * @throws IllegalArgumentException if coordinates are out of bounds.
+     */
     public void setStartAndEnd(int startX, int startY, int endX, int endY) {
         if (startX < 0 || startX >= cols || startY < 0 || startY >= rows) {
             throw new IllegalArgumentException("Start coordinates out of bounds: (" + startX + ", " + startY + ")");
@@ -44,34 +64,47 @@ public class Grid {
         this.endY = endY;
     }
 
+    /** @return The x-coordinate of the starting tile. */
     public int getStartX() {
         return startX;
     }
 
+    /** @return The y-coordinate of the starting tile. */
     public int getStartY() {
         return startY;
     }
 
+    /** @return The x-coordinate of the ending tile, defaulting to the last column if not set. */
     public int getEndX() {
         return endX == UNSET && cols > 0 ? cols - 1 : endX;
     }
 
+    /** @return The y-coordinate of the ending tile, defaulting to the last row if not set. */
     public int getEndY() {
         return endY == UNSET && rows > 0 ? rows - 1 : endY;
     }
 
+    /** @return The number of columns in the grid. */
     public int getCols() {
         return cols;
     }
 
+    /** @return The number of rows in the grid. */
     public int getRows() {
         return rows;
     }
 
+    /** @return The 2D array of {@link Tile} objects representing the grid. */
     public Tile[][] getTiles() {
         return tiles;
     }
 
+    /**
+     * Sets the grid's tiles with a pre-populated 2D array.
+     * Also updates the grid's dimensions based on the array size.
+     * @param tiles The 2D array of tiles to set.
+     * @throws IllegalArgumentException if the tile array is null or empty.
+     */
     public void setTiles(Tile[][] tiles) {
         if (tiles == null || tiles.length == 0 || tiles[0].length == 0) {
             throw new IllegalArgumentException("tiles must be a non-empty array.");
@@ -81,15 +114,23 @@ public class Grid {
         this.cols = tiles[0].length;
     }
 
+    /** @return True if the puzzle is currently in a solved state, false otherwise. */
     public boolean isSolved() {
         return isSolved;
     }
 
+    /**
+     * Sets the solved state of the puzzle.
+     * @param solved The new solved state.
+     */
     public void setSolved(boolean solved) {
         this.isSolved = solved;
     }
 
-    // Randomly initialize tiles <-- for testing purposes
+    /**
+     * Fills the grid with random tiles and random rotations.
+     * This method is primarily used for testing and prototyping.
+     */
     public void randomInitTile() {
         TileType[] types = TileType.values();
         Random random = new Random();
@@ -104,6 +145,11 @@ public class Grid {
         }
     }
 
+    /**
+     * Checks if a complete path exists from the start tile to the end tile.
+     * It uses a recursive depth-first search algorithm.
+     * @return True if a valid path is found, false otherwise.
+     */
     public boolean isPathComplete() {
         if (rows == 0 || cols == 0) {
             return false;
@@ -112,10 +158,19 @@ public class Grid {
         int resolvedEndY = (endY == UNSET) ? rows - 1 : endY;
 
         boolean[][] visited = new boolean[rows][cols];
-        // เริ่มต้นหาเส้นทางจาก Start ที่ตั้งไว้
+        // Start pathfinding from the designated start coordinates.
         return hasPath(startY, startX, visited, resolvedEndX, resolvedEndY);
     }
 
+    /**
+     * Recursive helper method for pathfinding using depth-first search.
+     * @param r The current row.
+     * @param c The current column.
+     * @param visited A 2D array to track visited tiles to prevent cycles.
+     * @param resolvedEndX The final target x-coordinate.
+     * @param resolvedEndY The final target y-coordinate.
+     * @return True if a path to the end is found from the current tile, false otherwise.
+     */
     private boolean hasPath(int r, int c, boolean[][] visited, int resolvedEndX, int resolvedEndY) {
         if (r < 0 || r >= rows || c < 0 || c >= cols || visited[r][c]) {
             return false;
@@ -131,7 +186,7 @@ public class Grid {
             return false;
         }
         if (currentTile.getType() == TileType.TELEPORT) {
-        
+
         if (hasPath(currentTile.targetY, currentTile.targetX, visited, resolvedEndX, resolvedEndY)) {
             return true;
         }
@@ -150,6 +205,13 @@ public class Grid {
         return false;
     }
 
+    /**
+     * Checks if a tile at a given position can connect to a neighbor.
+     * @param nextR The row of the neighboring tile.
+     * @param nextC The column of the neighboring tile.
+     * @param oppositeSide The side of the neighbor to check for a connection (e.g., if moving North, check neighbor's South side).
+     * @return True if the neighbor exists and has a connection on the specified side, false otherwise.
+     */
     public boolean canConnect(int nextR, int nextC, int oppositeSide) {
         if (nextR < 0 || nextR >= rows || nextC < 0 || nextC >= cols) {
             return false;

@@ -5,6 +5,10 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 import core.mechanics.PathPuzzleGame;
 
+/**
+ * Desktop launcher for the P'J Cafe puzzle game.
+ * Configures and starts the LibGDX application with window settings.
+ */
 public class DesktopLauncher {
     public static void main (String[] arg) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
