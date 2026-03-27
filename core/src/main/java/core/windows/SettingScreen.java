@@ -201,6 +201,13 @@ public class SettingScreen implements Screen {
 
             game.sfxVolume = sfxVolume;
             game.musicVolume = musicSlider.getValue();
+            // Save settings to preferences
+            com.badlogic.gdx.Preferences prefs = Gdx.app.getPreferences("PathPuzzleGameSettings");
+            // each value is saved with a key, so we can retrieve it later
+            prefs.putFloat("sfxVolume", game.sfxVolume);
+            prefs.putFloat("musicVolume", game.musicVolume);
+            
+            prefs.flush();
 
             game.setScreen(new MenuScreen(game));
             dispose();

@@ -1,6 +1,8 @@
 package core.mechanics;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -33,6 +35,11 @@ public class PathPuzzleGame extends Game {
     public void create() {
         assetManager = new AssetManager();
 
+        // Load saved settings from preferences
+        Preferences prefs = Gdx.app.getPreferences("PathPuzzleGameSettings");
+        // set default values if preferences are not found, so the game can start with reasonable defaults
+        this.musicVolume = prefs.getFloat("musicVolume", 1.0f);
+        this.sfxVolume = prefs.getFloat("sfxVolume", 1.0f);
         // Preload assets
         assetManager.load("images/logo.png", Texture.class);
         assetManager.load("images/background.png", Texture.class);
