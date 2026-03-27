@@ -109,7 +109,7 @@ public class SettingScreen implements Screen {
      */
     @Override
     public void show() {
-        viewport = new FitViewport(1920, 1080); // Use ScreenViewport to prevent stretching
+        viewport = new FitViewport(1920, 1080); // Use FitViewport to maintain aspect ratio and avoid stretching
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage); // Let the stage handle input events (click events)
         initSkin(); 
