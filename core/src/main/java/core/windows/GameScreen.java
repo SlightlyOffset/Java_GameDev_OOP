@@ -88,14 +88,6 @@ public class GameScreen extends ScreenAdapter {
 
         timer.reset(); //reset time in new level
         timer.resume();
-    @Override
-    public void show() {
-        //for thread time
-        timer =  new PlaytimeTimer();
-        timer.start();
-
-        timer.reset(); //reset time in new level
-        timer.resume();
 
         // 6. Register click input
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -152,13 +144,11 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         worldRenderer.render(grid, gridOffsetX, gridOffsetY);
         shapeRenderer.end();
-        //for Thread time
-        batch.begin();
+
         //for Thread time
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         font.draw(batch, "Time: " + timer.getFormattedTime(), 20, Gdx.graphics.getHeight() - 20);
-        batch.end();
         batch.end();
     }
 
