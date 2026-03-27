@@ -23,8 +23,7 @@ public class PathPuzzleGame extends Game {
     public float sfxVolume = 1.0f;
     /** The base directory where level JSON files are stored. */
     public static final String LEVEL_PATH = "levels/";
-    /** An array of level file names, defining the order of level progression. */
-    public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json",};
+    public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json", "level_4.json"};
 
     /**
      * Called when the application is first created.

@@ -12,14 +12,10 @@ public enum TileType {
     L_TURN,
     /** A T-shaped junction, typically connecting North, East, and West. */
     T_JUNCTION,
-    /** A straight path that can be rotated. */
-    STRAIGHT_ROTATABLE,
-    /** An L-shaped turn that can be rotated. */
-    L_TURN_ROTATABLE,
-    /** A T-shaped junction that can be rotated. */
-    T_JUNCTION_ROTATABLE,
     /** A path with only one connection, a dead end. */
-    DEADEND,
+    DEADEND_X,
+    /** A path with only one connection, a dead end. */
+    DEADEND_Y,
     /** A special tile that connects to another teleport tile. */
     TELEPORT,
     /** A path that connects in all four directions. */
@@ -54,15 +50,13 @@ public enum TileType {
     private boolean[] getBase() {
         switch (this) {
             case STRAIGHT:
-            case STRAIGHT_ROTATABLE:
                 return new boolean[] { true, false, true, false };
             case L_TURN:
-            case L_TURN_ROTATABLE:
                 return new boolean[] { true, true, false, false };
             case T_JUNCTION:
-            case T_JUNCTION_ROTATABLE:
                 return new boolean[] { true, true, false, true };
-            case DEADEND:
+            case DEADEND_X:
+            case DEADEND_Y:
                 return new boolean[] { true, false, false, false };
             case TELEPORT:
                 return new boolean[] { true, true, true, true };

@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-//Thread time
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-//
-
 import core.mechanics.Grid;
 import core.mechanics.LevelLoader;
 import core.mechanics.PathPuzzleGame;
@@ -23,7 +21,7 @@ import core.rendering.WorldRenderer;
  * It manages the game state, including level loading, rendering, and win conditions.
  */
 public class GameScreen extends ScreenAdapter {
-    private static final int TILE_SIZE = 40;
+    private static final int TILE_SIZE = 95;
     private final PathPuzzleGame game;
     private Grid grid;
     private ShapeRenderer shapeRenderer;
@@ -35,6 +33,9 @@ public class GameScreen extends ScreenAdapter {
     // Pluggable Rendering components
     private final IRenderer renderer;
     private final WorldRenderer worldRenderer;
+
+    // Background
+    private Texture backgroundTexture;
 
     //Thread time
     private PlaytimeTimer timer;
@@ -71,6 +72,9 @@ public class GameScreen extends ScreenAdapter {
         // 1. Create and fill the grid
         if (levelPath != null) {
             grid = LevelLoader.loadLevel(levelPath);
+            if (grid.getBackgroundImage() != null && Gdx.files != null) {
+                backgroundTexture = new Texture(Gdx.files.internal(grid.getBackgroundImage()));
+            }
         }
         else {
             grid = new Grid(4, 4);
@@ -163,6 +167,15 @@ public class GameScreen extends ScreenAdapter {
         worldRenderer.clearScreen();
 
         camera.update();
+
+        // Render Background
+        if (backgroundTexture != null) {
+            batch.setProjectionMatrix(camera.combined);
+            batch.begin();
+            batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.end();
+        }
+
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         // 2. Delegate world rendering to WorldRenderer
@@ -170,7 +183,7 @@ public class GameScreen extends ScreenAdapter {
             ((GdxRenderer) renderer).setShapeRenderer(shapeRenderer);
         }
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        worldRenderer.render(grid, gridOffsetX, gridOffsetY);
+        worldRenderer.render(grid, gridOffsetX, gridOffsetY, backgroundTexture != null);
         shapeRenderer.end();
 
         //for Thread time
@@ -200,19 +213,12 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void dispose() {
-        if (Gdx.graphics != null) {
-            shapeRenderer.dispose();
-        }
+        if (Gdx.graphics != null) shapeRenderer.dispose();
+        if (backgroundTexture != null) backgroundTexture.dispose();
         //for Thread time
-        if (batch != null) {
-            batch.dispose();
-        }
-        if (font != null) {
-            font.dispose();
-        }
-        if (timer != null) {
-            timer.stop(); //close thread
-        }
+        if (batch != null) batch.dispose();
+        if (font != null) font.dispose();
+        if (timer != null) timer.stop();
     }
 
     /**
@@ -222,9 +228,7 @@ public class GameScreen extends ScreenAdapter {
     //for Thread time
     @Override
     public void pause() {
-        if (timer != null) {
-            timer.pause();
-        }
+        if (timer != null) timer.pause();
     }
 
     /**
@@ -234,9 +238,7 @@ public class GameScreen extends ScreenAdapter {
     //for Thread time
     @Override
     public void resume() {
-        if (timer != null) {
-            timer.resume();
-        }
+        if (timer != null) timer.resume();
     }
 
     /**
@@ -246,14 +248,6 @@ public class GameScreen extends ScreenAdapter {
      * @param y The y-coordinate of the clicked tile in the grid.
      */
     public void handleTileClick(int x, int y) {
-        // boolean isStartTile = (x == grid.getStartX() && y == grid.getStartY());
-        // boolean isEndTile = (x == grid.getEndX() && y == grid.getEndY());
-        
-        // if (!isStartTile && !isEndTile) {
-        //     grid.getTiles()[y][x].rotateClockwise();    
-        // }
-        // grid.setSolved(grid.isPathComplete());
-        
         grid.getTiles()[y][x].rotateClockwise();
         
         boolean solved = grid.isPathComplete();

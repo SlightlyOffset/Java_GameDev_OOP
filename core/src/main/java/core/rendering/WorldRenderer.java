@@ -40,6 +40,10 @@ public class WorldRenderer {
      * @param offsetY The vertical offset at which to start drawing the grid.
      */
     public void render(Grid grid, float offsetX, float offsetY) {
+        render(grid, offsetX, offsetY, false);
+    }
+
+    public void render(Grid grid, float offsetX, float offsetY, boolean isBackgroundPresent) {
         // 1. Draw tile backgrounds
         int resolvedEndX = grid.getEndX();
         int resolvedEndY = grid.getEndY();
@@ -49,18 +53,26 @@ public class WorldRenderer {
                 float px = offsetX + x * tileSize;
                 float py = offsetY + y * tileSize;
 
-                renderer.drawRect(px, py, tileSize, tileSize, "#000000");
+                if (!isBackgroundPresent) {
+                    renderer.drawRect(px, py, tileSize, tileSize, "#000000");
+                }
                 float borderThickness = 1f;
 
-                String bgColor = "#404040";
+                String bgColor = null;
                 if (x == grid.getStartX() && y == grid.getStartY()) {
                     bgColor = "#1A5276";
                 }
                 else if (x == resolvedEndX && y == resolvedEndY) {
                     bgColor = "#922B21";
                 }
-                // Draw dark gray background
-                renderer.drawRect(px + borderThickness, py + borderThickness, tileSize - (borderThickness * 2), tileSize - (borderThickness * 2), bgColor);
+                else if (!isBackgroundPresent) {
+                    bgColor = "#404040";
+                }
+
+                // Draw background if color is set
+                if (bgColor != null) {
+                    renderer.drawRect(px + borderThickness, py + borderThickness, tileSize - (borderThickness * 2), tileSize - (borderThickness * 2), bgColor);
+                }
             }
         }
 

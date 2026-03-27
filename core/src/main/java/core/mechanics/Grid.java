@@ -15,6 +15,7 @@ public class Grid {
 
     // start(x, y), end(x, y)
     private int startX, startY, endX, endY;
+    private String backgroundImage;
 
     /**
      * Default constructor. Creates an empty, zero-sized grid.
@@ -127,10 +128,15 @@ public class Grid {
         this.isSolved = solved;
     }
 
-    /**
-     * Fills the grid with random tiles and random rotations.
-     * This method is primarily used for testing and prototyping.
-     */
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    // Randomly initialize tiles <-- for testing purposes
     public void randomInitTile() {
         TileType[] types = TileType.values();
         Random random = new Random();

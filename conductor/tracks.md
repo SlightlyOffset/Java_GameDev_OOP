@@ -19,3 +19,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 - [ ] **Track: Feature: Threaded Playtime Timer**
 *Link: [./tracks/threaded_timer_20260311/](./tracks/threaded_timer_20260311/)*
 
+- [x] **Track: Feature: Load Dynamic Level Backgrounds**
+*Link: [./tracks/uiux_level_backgrounds_20260327/](./tracks/uiux_level_backgrounds_20260327/)*
+
