@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 /**
- * Utility class for loading and saving puzzle levels from/to JSON files.
+ * Utility class for loading puzzle levels from JSON files and serializing them to JSON.
  * Handles both LibGDX and non-LibGDX contexts for testing purposes.
  */
 public class LevelLoader {
