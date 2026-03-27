@@ -4,10 +4,8 @@ public enum TileType {
     STRAIGHT,
     L_TURN,
     T_JUNCTION,
-    STRAIGHT_ROTATABLE,
-    L_TURN_ROTATABLE,
-    T_JUNCTION_ROTATABLE,
-    DEADEND,
+    DEADEND_X,
+    DEADEND_Y,
     TELEPORT,
     CROSS,
     WRONG_TELEPORT,
@@ -31,15 +29,13 @@ public enum TileType {
     private boolean[] getBase() {
         switch (this) {
             case STRAIGHT:
-            case STRAIGHT_ROTATABLE:
                 return new boolean[] { true, false, true, false };
             case L_TURN:
-            case L_TURN_ROTATABLE:
                 return new boolean[] { true, true, false, false };
             case T_JUNCTION:
-            case T_JUNCTION_ROTATABLE:
                 return new boolean[] { true, true, false, true };
-            case DEADEND:
+            case DEADEND_X:
+            case DEADEND_Y:
                 return new boolean[] { true, false, false, false };
             case TELEPORT:
                 return new boolean[] { true, true, true, true };

@@ -1,6 +1,10 @@
 {
   "cols": 19,
   "rows": 13,
+  "startX": 10,
+  "startY": 8,
+  "endX": 15,
+  "endY": 3,
   "backgroundImage": "images/Level4_BGpng.png",
   "tiles": [
     [ //1
@@ -75,14 +79,14 @@
       { "type": "EMPTY", "rotation": 0 }, //6
       { "type": "EMPTY", "rotation": 0 }, //7
       { "type": "EMPTY", "rotation": 0 }, //8
-      { "type": "L_TURN_ROTATABLE", "rotation": 270 }, //9
-      { "type": "TELEPORT", "rotation": 0 }, //10
+      { "type": "L_TURN", "rotation": 270 }, //9
+      { "type": "WRONG_TELEPORT", "rotation": 0 }, //10
       { "type": "EMPTY", "rotation": 0 }, //11
       { "type": "EMPTY", "rotation": 0 }, //12
       { "type": "EMPTY", "rotation": 0 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
-      { "type": "EMPTY", "rotation": 0 }, //16
+      { "type": "STRAIGHT", "rotation": 0 }, //16
       { "type": "EMPTY", "rotation": 0 }, //17
       { "type": "EMPTY", "rotation": 0 }, //18
       { "type": "EMPTY", "rotation": 0 }  //19
@@ -94,11 +98,11 @@
       { "type": "EMPTY", "rotation": 0 }, //4
       { "type": "EMPTY", "rotation": 0 }, //5
       { "type": "EMPTY", "rotation": 0 }, //6
-      { "type": "L_TURN_ROTATABLE", "rotation": 180 }, //7
+      { "type": "L_TURN", "rotation": 180 }, //7
       { "type": "STRAIGHT", "rotation": 90 }, //8
       { "type": "T_JUNCTION", "rotation": 180 }, //9
       { "type": "STRAIGHT", "rotation": 90 }, //10
-      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //11
+      { "type": "STRAIGHT", "rotation": 0 }, //11
       { "type": "STRAIGHT", "rotation": 90 }, //12
       { "type": "L_TURN", "rotation": 270 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
@@ -112,7 +116,7 @@
       { "type": "EMPTY", "rotation": 0 }, //1
       { "type": "EMPTY", "rotation": 0 }, //2
       { "type": "EMPTY", "rotation": 0 }, //3
-      { "type": "WRONG_TELEPORT", "rotation": 0 }, //4
+      { "type": "TELEPORT", "rotation": 0, "targetX": 15, "targetY": 9 }, //4
       { "type": "EMPTY", "rotation": 0 }, //5
       { "type": "EMPTY", "rotation": 0 }, //6
       { "type": "STRAIGHT", "rotation": 0 }, //7
@@ -125,7 +129,7 @@
       { "type": "EMPTY", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
       { "type": "L_TURN", "rotation": 90 }, //16
-      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //17
+      { "type": "STRAIGHT", "rotation": 0 }, //17
       { "type": "L_TURN", "rotation": 270 }, //18
       { "type": "EMPTY", "rotation": 0 }  //19
     ],
@@ -154,11 +158,11 @@
       { "type": "EMPTY", "rotation": 0 }, //1
       { "type": "EMPTY", "rotation": 0 }, //2
       { "type": "EMPTY", "rotation": 0 }, //3
-      { "type": "L_TURN_ROTATABLE", "rotation": 180 }, //4
+      { "type": "L_TURN", "rotation": 180 }, //4
       { "type": "STRAIGHT", "rotation": 90 }, //5
-      { "type": "T_JUNCTION_ROTATABLE", "rotation": 180 }, //6
-      { "type": "T_JUNCTION_ROTATABLE", "rotation": 90 }, //7
-      { "type": "L_TURN_ROTATABLE", "rotation": 0 }, //8
+      { "type": "T_JUNCTION", "rotation": 180 }, //6
+      { "type": "T_JUNCTION", "rotation": 90 }, //7
+      { "type": "L_TURN", "rotation": 0 }, //8
       { "type": "EMPTY", "rotation": 0 }, //9
       { "type": "EMPTY", "rotation": 0 }, //10
       { "type": "EMPTY", "rotation": 0 }, //11
@@ -166,7 +170,7 @@
       { "type": "EMPTY", "rotation": 0 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
-      { "type": "L_TURN_ROTATABLE", "rotation": 270 }, //16
+      { "type": "L_TURN", "rotation": 270 }, //16
       { "type": "STRAIGHT", "rotation": 90 }, //17
       { "type": "L_TURN", "rotation": 180 }, //18
       { "type": "EMPTY", "rotation": 0 }  //19
@@ -182,7 +186,7 @@
       { "type": "STRAIGHT", "rotation": 0 }, //8
       { "type": "EMPTY", "rotation": 0 }, //9
       { "type": "EMPTY", "rotation": 0 }, //10
-      { "type": "EMPTY", "rotation": 0 }, //11
+      { "type": "STRAIGHT", "rotation": 0 }, //11
       { "type": "EMPTY", "rotation": 0 }, //12
       { "type": "EMPTY", "rotation": 0 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
@@ -225,7 +229,7 @@
       { "type": "STRAIGHT", "rotation": 90 }, //9
       { "type": "STRAIGHT", "rotation": 90 }, //10
       { "type": "T_JUNCTION", "rotation": 180 }, //11
-      { "type": "STRAIGHT_ROTATABLE", "rotation": 0 }, //12
+      { "type": "STRAIGHT", "rotation": 0 }, //12
       { "type": "STRAIGHT", "rotation": 90 }, //13
       { "type": "WRONG_TELEPORT", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
