@@ -168,7 +168,7 @@
       { "type": "EMPTY", "rotation": 0 }, //11
       { "type": "L_TURN", "rotation": 90 }, //12
       { "type": "T_JUNCTION", "rotation": 180 }, //13
-      { "type": "end", "rotation": 90 }, //14
+      { "type": "end", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
       { "type": "EMPTY", "rotation": 0 }, //16
       { "type": "STRAIGHT", "rotation": 90 }, //17
