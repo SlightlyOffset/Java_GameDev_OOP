@@ -229,47 +229,38 @@ public class GameScreen extends ScreenAdapter {
      * Called when the screen should render itself.
      * @param delta The time in seconds since the last render.
      */
+
     @Override
     public void render(float delta) {
         viewport.apply();
-        
-        if (grid == null || camera == null || shapeRenderer == null) {
-            return;
-        }
+        if (grid == null || camera == null) return;
 
-        // 1. Clear the screen using the pluggable renderer
+        // 1. Clear จอ
         worldRenderer.clearScreen();
-
         camera.update();
 
-        // Render Background
-        if (backgroundTexture != null) {
-            batch.setProjectionMatrix(camera.combined);
-            batch.begin();
-            batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.end();
-        }
-
-        shapeRenderer.setProjectionMatrix(camera.combined);
-
-        // 2. Delegate world rendering to WorldRenderer
-        if (renderer instanceof GdxRenderer) {
-            ((GdxRenderer) renderer).setShapeRenderer(shapeRenderer);
-        }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        worldRenderer.render(grid, gridOffsetX, gridOffsetY, backgroundTexture != null);
-        shapeRenderer.end();
-
-        //for Thread time
+        // 2. เริ่มวาดด้วย Batch
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
+        
+        // วาดพื้นหลังฉากหลัง
+        if (backgroundTexture != null) {
+            batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+        // วาด Tiles ด้วยรูปภาพ (เรียกใช้เมธอดที่เราสร้างใหม่)
+        worldRenderer.render(grid, gridOffsetX, gridOffsetY, batch, assetManager);
+        
+        // วาด Font (Timer)
         font.getData().setScale(2.0f);
+        font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
+        
         batch.end();
 
+        // 3. วาด UI (ปุ่มต่างๆ)
         stage.act(delta);
         stage.draw();
-    }
+}
 
     /**
      * Called when the application is resized.

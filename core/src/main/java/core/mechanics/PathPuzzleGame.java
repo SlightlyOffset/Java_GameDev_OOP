@@ -79,6 +79,16 @@ public class PathPuzzleGame extends Game {
         assetManager.load("LevelSel/Bill3_complete.png", Texture.class);
         assetManager.load("LevelSel/Bill4.png", Texture.class);
         assetManager.load("LevelSel/Bill4_complete.png", Texture.class);
+
+        assetManager.load("tiletype/STRAIGHT.PNG", Texture.class);
+        assetManager.load("tiletype/L_TURN.PNG", Texture.class);    
+        assetManager.load("tiletype/T_JUNCTION.PNG", Texture.class);
+        assetManager.load("tiletype/DEADEND_X.PNG", Texture.class);
+        assetManager.load("tiletype/DEADEND_Y.PNG", Texture.class);
+        assetManager.load("tiletype/TELEPORT.PNG", Texture.class);  
+        assetManager.load("tiletype/WRONG_TELEPORT.PNG", Texture.class);
+        assetManager.load("tiletype/end.PNG", Texture.class);
+
         assetManager.finishLoading();
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
