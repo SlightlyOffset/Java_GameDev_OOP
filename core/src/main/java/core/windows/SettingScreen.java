@@ -194,6 +194,7 @@ public class SettingScreen implements Screen {
 
             game.sfxVolume = sfxVolume;
             game.musicVolume = musicSlider.getValue();
+            game.saveSettings();
 
             game.setScreen(new MenuScreen(game));
             dispose();

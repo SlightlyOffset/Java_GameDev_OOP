@@ -1,6 +1,8 @@
 package core.mechanics;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -30,11 +32,18 @@ public class PathPuzzleGame extends Game {
      * Called when the application is first created.
      * Initializes the AssetManager, loads all necessary assets, and sets the initial screen to the MenuScreen.
      */
-    static {
-        unlockedLevels[0] = true;
-    }
+    private Preferences prefs;
     @Override
     public void create() {
+        prefs = Gdx.app.getPreferences("PathPuzzleGamePrefs");
+        musicVolume = prefs.getFloat("musicVolume", 1.0f);
+        sfxVolume = prefs.getFloat("sfxVolume", 1.0f);
+        for (int i = 0; i < LEVELS.length; i++) {
+            boolean defaultUnlocked = (i == 0);
+            unlockedLevels[i] = prefs.getBoolean("level_" + i + "_unlocked", defaultUnlocked);
+        }
+
+
         assetManager = new AssetManager();
 
         // Preload assets
@@ -72,7 +81,19 @@ public class PathPuzzleGame extends Game {
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
     }
+    
+    public void saveSettings() {
+        prefs.putFloat("musicVolume", musicVolume);
+        prefs.putFloat("sfxVolume", sfxVolume);
+        prefs.flush(); // flush() คือการสั่งเขียนลงไฟล์จริงๆ (สำคัญมาก ห้ามลืม)
+    }
 
+    public void saveProgress() {
+        for (int i = 0; i < LEVELS.length; i++) {
+            prefs.putBoolean("level_" + i + "_unlocked", unlockedLevels[i]);
+        }
+        prefs.flush();
+    }
     /**
      * Called by the game loop from the application every time rendering should be performed.
      * Delegates the render call to the current active screen.
