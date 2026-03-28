@@ -86,7 +86,7 @@
       { "type": "EMPTY", "rotation": 0 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
-      { "type": "STRAIGHT", "rotation": 0 }, //16
+      { "type": "end", "rotation": 0 }, //16
       { "type": "EMPTY", "rotation": 0 }, //17
       { "type": "EMPTY", "rotation": 0 }, //18
       { "type": "EMPTY", "rotation": 0 }  //19
@@ -186,7 +186,7 @@
       { "type": "STRAIGHT", "rotation": 0 }, //8
       { "type": "EMPTY", "rotation": 0 }, //9
       { "type": "EMPTY", "rotation": 0 }, //10
-      { "type": "STRAIGHT", "rotation": 0 }, //11
+      { "type": "start", "rotation": 0 }, //11
       { "type": "EMPTY", "rotation": 0 }, //12
       { "type": "EMPTY", "rotation": 0 }, //13
       { "type": "EMPTY", "rotation": 0 }, //14
