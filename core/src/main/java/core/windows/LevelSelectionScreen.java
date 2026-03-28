@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import core.mechanics.PathPuzzleGame;
 
 /**
@@ -131,21 +132,39 @@ public class LevelSelectionScreen implements Screen {
         // Level Slips
         Table levelTable = new Table();
         for (int i = 0; i < PathPuzzleGame.LEVELS.length; i++) {
-            final String levelName = PathPuzzleGame.LEVELS[i];
             final int levelIndex = i;
             final int levelNum = i + 1;
+            // 1. เพิ่มการประกาศตัวแปร levelName ดึงมาจากอาเรย์ LEVELS
+            final String levelName = PathPuzzleGame.LEVELS[i]; 
 
-            TextButton btn = new TextButton("Order\n\n" + levelNum, skin);
-            btn.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (clickSound != null) clickSound.play(game.sfxVolume);
-                    Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
-                    game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
-                    dispose();
-                }
-            });
+            String buttonText = "Order\n\n" + levelNum;
+            
+            if (PathPuzzleGame.unlockedLevels[i]) {
+                buttonText += "\n[DONE]";
+            }
+
+            TextButton btn = new TextButton(buttonText, skin);
+            
+            if (!PathPuzzleGame.unlockedLevels[i]) {
+                // ถ้าด่านยังไม่ปลดล็อก (unlockedLevels[i] เป็น false)
+                btn.setDisabled(true);
+                btn.setColor(Color.GRAY); // เปลี่ยนสีเป็นสีเทาให้ดูเหมือนกดไม่ได้
+            } else {
+                btn.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        if (clickSound != null) clickSound.play(game.sfxVolume);
+                        Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
+                        // เปลี่ยนหน้าไป GameScreen
+                        game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
+                        dispose();
+                    }
+                });
+            }
+            
             levelTable.add(btn).width(230).height(400).pad(70);
+            
+            if ((i + 1) % 4 == 0) levelTable.row();
         }
         rootTable.add(levelTable).expand().top();
     }

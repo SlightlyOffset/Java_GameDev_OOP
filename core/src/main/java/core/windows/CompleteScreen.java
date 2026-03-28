@@ -37,13 +37,15 @@ public class CompleteScreen  implements Screen {
     private Skin skin;
     private Music music;
     private Sound clickSound;
+    private int finishedLevelIndex;
     /**
      * Constructs a new CompleteScreen.
      * @param game The main game instance, used to access global settings and the AssetManager.
      */
-    public CompleteScreen(PathPuzzleGame game) {
+    public CompleteScreen(PathPuzzleGame game, int finishedLevelIndex) {
         this.game = game;
         this.assetManager = game.assetManager;
+        this.finishedLevelIndex = finishedLevelIndex;
     }
 
     /**
@@ -163,7 +165,13 @@ public class CompleteScreen  implements Screen {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             if (clickSound != null) clickSound.play(game.sfxVolume);
-            game.setScreen(new LevelSelectionScreen(game));
+            
+            int nextIndex = finishedLevelIndex + 1;
+            if (nextIndex < PathPuzzleGame.LEVELS.length) {
+                game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[nextIndex], nextIndex));
+            } else {
+                game.setScreen(new LevelSelectionScreen(game));
+            }
             dispose();
         }
 

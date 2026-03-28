@@ -24,11 +24,15 @@ public class PathPuzzleGame extends Game {
     /** The base directory where level JSON files are stored. */
     public static final String LEVEL_PATH = "levels/";
     public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json", "level_4.json"};
-
+    
+    public static boolean[] unlockedLevels = new boolean[LEVELS.length];
     /**
      * Called when the application is first created.
      * Initializes the AssetManager, loads all necessary assets, and sets the initial screen to the MenuScreen.
      */
+    static {
+        unlockedLevels[0] = true;
+    }
     @Override
     public void create() {
         assetManager = new AssetManager();
