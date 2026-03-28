@@ -95,7 +95,7 @@ public class PathPuzzleGame extends Game {
     public void saveSettings() {
         prefs.putFloat("musicVolume", musicVolume);
         prefs.putFloat("sfxVolume", sfxVolume);
-        prefs.flush(); // flush() คือการสั่งเขียนลงไฟล์จริงๆ (สำคัญมาก ห้ามลืม)
+        prefs.flush(); 
     }
 
     public void saveProgress() {

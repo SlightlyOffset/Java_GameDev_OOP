@@ -235,29 +235,29 @@ public class GameScreen extends ScreenAdapter {
         viewport.apply();
         if (grid == null || camera == null) return;
 
-        // 1. Clear จอ
+
         worldRenderer.clearScreen();
         camera.update();
 
-        // 2. เริ่มวาดด้วย Batch
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         
-        // วาดพื้นหลังฉากหลัง
+
         if (backgroundTexture != null) {
             batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
-        // วาด Tiles ด้วยรูปภาพ (เรียกใช้เมธอดที่เราสร้างใหม่)
+
         worldRenderer.render(grid, gridOffsetX, gridOffsetY, batch, assetManager);
         
-        // วาด Font (Timer)
+
         font.getData().setScale(2.0f);
         font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
         
         batch.end();
 
-        // 3. วาด UI (ปุ่มต่างๆ)
+
         stage.act(delta);
         stage.draw();
 }
