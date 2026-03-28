@@ -50,6 +50,9 @@ public class PathPuzzleGame extends Game {
         assetManager.load("setting/Savepress_bttn.png", Texture.class);
         assetManager.load("setting/Exit_bttn.png", Texture.class);
         assetManager.load("setting/Exitpress_bttn.png", Texture.class);
+        assetManager.load("Complete/Background.png", Texture.class);
+        assetManager.load("Complete/Next_bttn.png", Texture.class);             
+        assetManager.load("Complete/Nextpress_bttn.png", Texture.class);
         assetManager.finishLoading();
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen

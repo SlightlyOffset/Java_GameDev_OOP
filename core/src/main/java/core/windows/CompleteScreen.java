@@ -193,8 +193,8 @@ public class CompleteScreen  implements Screen {
         // Draw background if we have one
         stage.getBatch().begin();
         // load background texture for settings screen
-        if (assetManager.isLoaded("setting/BackgroundSetting.png", Texture.class)) {
-            stage.getBatch().draw(assetManager.get("setting/BackgroundSetting.png", Texture.class), 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        if (assetManager.isLoaded("Complete/Background.png", Texture.class)) {
+            stage.getBatch().draw(assetManager.get("Complete/Background.png", Texture.class), 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         }
         stage.getBatch().end();
 
