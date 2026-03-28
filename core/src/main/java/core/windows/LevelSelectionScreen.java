@@ -23,47 +23,24 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.PathPuzzleGame;
 
-/**
- * The LevelSelectionScreen provides a visual interface for users to browse and select game levels.
- * It features a layout of "Order Slips" that correspond to individual puzzle levels, 
- * matching the hand-drawn aesthetic of the game's background.
- */
 public class LevelSelectionScreen implements Screen {
 
-    /** Manager for handling textures, sounds, and music assets. */
     private final AssetManager assetManager;
-    /** The main game instance used for screen transitions and accessing global level data. */
     private final PathPuzzleGame game;
-    /** The Scene2D stage for managing UI actors and input. */
     private final Stage stage;
-    /** Viewport ensuring the UI scales correctly to a 1920x1080 virtual resolution. */
     private final Viewport viewport;
-    /** Programmatic skin for styling UI components like buttons and fonts. */
     private Skin skin;
-    /** Sound effect played upon clicking buttons. */
     private Sound clickSound;
 
-    /**
-     * Constructs the Level Selection screen.
-     * Initializes the viewport, stage, and UI components immediately to prepare for display.
-     * 
-     * @param game The main game instance.
-     */
     public LevelSelectionScreen(PathPuzzleGame game) {
         this.game = game;
         this.assetManager = game.assetManager;
-
-        viewport = new FitViewport(1920, 1080);
-        stage = new Stage(viewport);
-
+        this.viewport = new FitViewport(1920, 1080);
+        this.stage = new Stage(viewport);
         initBasicSkin();
         initUI();
     }
 
-    /**
-     * Called when this screen becomes the current screen for a Game.
-     * Sets up input processing and resumes background music if available.
-     */
     @Override
     public void show() {
         if (assetManager.isLoaded("sounds/click.mp3", Sound.class)) {
@@ -77,11 +54,6 @@ public class LevelSelectionScreen implements Screen {
         }
     }
 
-    /**
-     * Creates a fallback UI skin programmatically.
-     * This avoids dependency on an external JSON skin file and sets up the 
-     * semi-transparent aesthetic needed to see the background drawings through the buttons.
-     */
     private void initBasicSkin() {
         skin = new Skin();
         BitmapFont font = new BitmapFont();
@@ -104,13 +76,13 @@ public class LevelSelectionScreen implements Screen {
 
     private void initUI() {
         // --- ส่วน Setting & Back ---
-        Texture Back = assetManager.get("buttons/Arrow.png", Texture.class);
-        Texture Backpress = assetManager.get("buttons/Arrow_press.png", Texture.class);
-        Texture Setting = assetManager.get("buttons/setting.png", Texture.class);
+        Texture backTex = assetManager.get("buttons/Arrow.png", Texture.class);
+        Texture backPressTex = assetManager.get("buttons/Arrow_press.png", Texture.class);
+        Texture settingTex = assetManager.get("buttons/setting.png", Texture.class);
 
-        ImageButton backBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(Back)), 
-                                             new TextureRegionDrawable(new TextureRegion(Backpress)));
-        ImageButton settingBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(Setting)));
+        ImageButton backBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(backTex)), 
+                                             new TextureRegionDrawable(new TextureRegion(backPressTex)));
+        ImageButton settingBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(settingTex)));
 
         backBtn.addListener(new ClickListener() {
             @Override
@@ -120,6 +92,7 @@ public class LevelSelectionScreen implements Screen {
                 dispose();
             }
         });
+
         settingBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -150,6 +123,7 @@ public class LevelSelectionScreen implements Screen {
             
             ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
 
+            // เช็คสถานะการผ่านเพื่อเปลี่ยนรูป
             if (PathPuzzleGame.unlockedLevels[i]) { 
                 style.up = new TextureRegionDrawable(new TextureRegion(completeTex));
             } else {
@@ -161,6 +135,7 @@ public class LevelSelectionScreen implements Screen {
             billBtn.setSize(314, 474);
             billBtn.setPosition(startX + (i * spacing), 465);
 
+            // เช็คการปลดล็อก (ด่าน 1 เล่นได้เสมอ หรือด่านที่ผ่านด่านก่อนหน้ามาแล้ว)
             boolean isUnlocked = (i == 0) || PathPuzzleGame.unlockedLevels[i];
 
             if (!isUnlocked) {
@@ -178,17 +153,8 @@ public class LevelSelectionScreen implements Screen {
             }
             stage.addActor(billBtn);
         }
-    } // จบ initUI()
+    }
 
-}
-
-    /**
-     * Renders the screen every frame.
-     * Clears the buffer to white, draws the background texture if loaded, 
-     * and updates/draws the Scene2D stage.
-     * 
-     * @param delta Time in seconds since the last frame.
-     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(1, 1, 1, 1);
@@ -203,37 +169,20 @@ public class LevelSelectionScreen implements Screen {
         stage.draw();
     }
 
-    /**
-     * Updates the stage's viewport whenever the screen is resized.
-     * 
-     * @param width The new window width.
-     * @param height The new window height.
-     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-        // We don't stop music here if we want it to continue to GameScreen
-        // But usually Menu and LevelSelect share the same BGM
-    }
+    public void hide() {}
 
-    /**
-     * Releases all resources held by this screen, including the stage and skin.
-     * Should be called when the screen is no longer needed to prevent memory leaks.
-     */
     @Override
     public void dispose() {
         if (stage != null) stage.dispose();
