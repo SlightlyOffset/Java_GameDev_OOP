@@ -134,7 +134,6 @@ public class LevelSelectionScreen implements Screen {
         for (int i = 0; i < PathPuzzleGame.LEVELS.length; i++) {
             final int levelIndex = i;
             final int levelNum = i + 1;
-            // 1. เพิ่มการประกาศตัวแปร levelName ดึงมาจากอาเรย์ LEVELS
             final String levelName = PathPuzzleGame.LEVELS[i]; 
 
             String buttonText = "Order\n\n" + levelNum;
@@ -146,16 +145,15 @@ public class LevelSelectionScreen implements Screen {
             TextButton btn = new TextButton(buttonText, skin);
             
             if (!PathPuzzleGame.unlockedLevels[i]) {
-                // ถ้าด่านยังไม่ปลดล็อก (unlockedLevels[i] เป็น false)
                 btn.setDisabled(true);
-                btn.setColor(Color.GRAY); // เปลี่ยนสีเป็นสีเทาให้ดูเหมือนกดไม่ได้
+                btn.setColor(Color.GRAY);
             } else {
                 btn.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         if (clickSound != null) clickSound.play(game.sfxVolume);
                         Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
-                        // เปลี่ยนหน้าไป GameScreen
+
                         game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
                         dispose();
                     }
