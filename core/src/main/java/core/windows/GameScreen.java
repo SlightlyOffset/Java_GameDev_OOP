@@ -331,7 +331,7 @@ public class GameScreen extends ScreenAdapter {
                 PathPuzzleGame.unlockedLevels[currentLevelIndex+1] = true;
 }
             game.saveProgress();
-            game.setScreen(new CompleteScreen(game, currentLevelIndex));
+            game.setScreen(new CompleteScreen(game, currentLevelIndex, finalTime));
             dispose();
         }
     }

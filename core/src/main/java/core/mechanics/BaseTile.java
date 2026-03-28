@@ -7,8 +7,6 @@ package core.mechanics;
 public abstract class BaseTile {
     protected TileType type;
     protected int rotation;
-    public int targetX;
-    public int targetY;
 
     public BaseTile() {
         this.type = TileType.STRAIGHT;

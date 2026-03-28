@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import core.mechanics.Grid;
 import core.mechanics.Tile;
-
 /**
  * Handles the logic of drawing the game world, including the grid, tiles, and paths.
  * This class is decoupled from the specific rendering technology through the IRenderer interface.

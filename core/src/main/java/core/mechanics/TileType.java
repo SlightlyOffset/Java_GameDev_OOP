@@ -23,7 +23,9 @@ public enum TileType {
     /** A decorative tile that looks like a teleport but has no connections. */
     WRONG_TELEPORT("tiletype/WRONG_TELEPORT.PNG"),
     /** An empty tile with no connections. */
-    EMPTY("");
+    EMPTY(""),
+    start("tiletype/start.PNG"),
+    end("tiletype/end.PNG");
 
     private static final boolean[][] PRECOMPUTED = new boolean[TileType.values().length * 4][4];
     private final String textureName;
@@ -64,6 +66,10 @@ public enum TileType {
             case DEADEND_X:
             case DEADEND_Y:
                 return new boolean[] { true, false, false, false };
+            case start:
+                return new boolean[] { true, true, true, true };
+            case end:
+                return new boolean[] { true, true, true, true };
             case TELEPORT:
                 return new boolean[] { true, true, true, true };
             case CROSS:

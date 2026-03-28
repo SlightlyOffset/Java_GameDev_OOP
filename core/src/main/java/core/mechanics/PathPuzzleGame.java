@@ -89,6 +89,7 @@ public class PathPuzzleGame extends Game {
         assetManager.load("tiletype/TELEPORT.PNG", Texture.class);  
         assetManager.load("tiletype/WRONG_TELEPORT.PNG", Texture.class);
         assetManager.load("tiletype/end.PNG", Texture.class);
+        assetManager.load("tiletype/start.PNG", Texture.class);
 
         assetManager.finishLoading();
 
@@ -98,7 +99,7 @@ public class PathPuzzleGame extends Game {
     public void saveSettings() {
         prefs.putFloat("musicVolume", musicVolume);
         prefs.putFloat("sfxVolume", sfxVolume);
-        prefs.flush(); // flush() คือการสั่งเขียนลงไฟล์จริงๆ (สำคัญมาก ห้ามลืม)
+        prefs.flush(); 
     }
 
     public void saveProgress() {
