@@ -159,6 +159,40 @@ public class LevelSelectionScreen implements Screen {
 
         //Level bttn
         Table levelTable = new Table();
+        for (int i = 0; i < PathPuzzleGame.LEVELS.length; i++) {
+            final int levelIndex = i;
+            final int levelNum = i + 1;
+            final String levelName = PathPuzzleGame.LEVELS[i]; 
+
+            String buttonText = "Order\n\n" + levelNum;
+            
+            if (PathPuzzleGame.unlockedLevels[i]) {
+                buttonText += "\n[DONE]";
+            }
+
+            TextButton btn = new TextButton(buttonText, skin);
+            
+            if (!PathPuzzleGame.unlockedLevels[i]) {
+                btn.setDisabled(true);
+                btn.setColor(Color.GRAY);
+            } else {
+                btn.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        if (clickSound != null) clickSound.play(game.sfxVolume);
+                        Gdx.app.log("LevelSelection", "Loading Level: " + levelName);
+
+                        game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + levelName, levelIndex));
+                        dispose();
+                    }
+                });
+            }
+            
+            levelTable.add(btn).width(230).height(400).pad(70);
+            
+            if ((i + 1) % 4 == 0) levelTable.row();
+        }
+        rootTable.add(levelTable).expand().top();
 
         ImageButton.ImageButtonStyle Bill1Style = new ImageButton.ImageButtonStyle();
         ImageButton.ImageButtonStyle Bill2Style = new ImageButton.ImageButtonStyle();
