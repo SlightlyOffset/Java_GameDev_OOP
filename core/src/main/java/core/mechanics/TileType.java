@@ -7,28 +7,33 @@ package core.mechanics;
  */
 public enum TileType {
     /** A straight path, typically connecting North and South. */
-    STRAIGHT,
+    STRAIGHT("tiletype/STRAIGHT.PNG"),
     /** An L-shaped turn, typically connecting North and East. */
-    L_TURN,
+    L_TURN("tiletype/L_TURN.PNG"),
     /** A T-shaped junction, typically connecting North, East, and West. */
-    T_JUNCTION,
+    T_JUNCTION("tiletype/T_JUNCTION.PNG"),
     /** A path with only one connection, a dead end. */
-    DEADEND_X,
-    /** A path with only one connection, a dead end. */
-    DEADEND_Y,
+    DEADEND_X("tiletype/DEADEND_X.PNG"),
+    /** A path with  only one connection, a dead end. */
+    DEADEND_Y("tiletype/DEADEND_Y.PNG"),
     /** A special tile that connects to another teleport tile. */
-    TELEPORT,
+    TELEPORT("tiletype/TELEPORT.PNG"),
     /** A path that connects in all four directions. */
-    CROSS,
+    CROSS(""),
     /** A decorative tile that looks like a teleport but has no connections. */
-    WRONG_TELEPORT,
+    WRONG_TELEPORT("tiletype/WRONG_TELEPORT.PNG"),
     /** An empty tile with no connections. */
-    EMPTY;
+    EMPTY(""),
+    start("tiletype/start.PNG"),
+    end("tiletype/end.PNG");
 
     private static final boolean[][] PRECOMPUTED = new boolean[TileType.values().length * 4][4];
-
+    private final String textureName;
     // Statically pre-calculates all possible rotation states for every tile type
     // to avoid redundant calculations during runtime.
+    TileType(String textureName) {
+        this.textureName = textureName;
+    }
     static {
         for (TileType type : TileType.values()) {
             boolean[] base = type.getBase();
@@ -47,6 +52,9 @@ public enum TileType {
      * The boolean array represents connections for [North, East, South, West].
      * @return A boolean array of size 4 representing the base connections.
      */
+    public String getTextureName() {
+        return textureName;
+    }
     private boolean[] getBase() {
         switch (this) {
             case STRAIGHT:
@@ -58,6 +66,10 @@ public enum TileType {
             case DEADEND_X:
             case DEADEND_Y:
                 return new boolean[] { true, false, false, false };
+            case start:
+                return new boolean[] { true, true, true, true };
+            case end:
+                return new boolean[] { true, true, true, true };
             case TELEPORT:
                 return new boolean[] { true, true, true, true };
             case CROSS:

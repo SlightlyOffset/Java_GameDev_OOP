@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,8 +20,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.Grid;
-import core.mechanics.LevelLoader; //Thread time
-import core.mechanics.PathPuzzleGame;
+import core.mechanics.LevelLoader;
+import core.mechanics.PathPuzzleGame; //Thread time
 import core.mechanics.PlaytimeTimer;
 import core.rendering.GdxRenderer;
 import core.rendering.IRenderer;
@@ -136,10 +135,10 @@ public class GameScreen extends ScreenAdapter {
         if (timer == null) {
             timer = new PlaytimeTimer();
             timer.start();
+            timer.resume();
         }
 
         timer.reset(); //reset time in new level
-        timer.resume();
         com.badlogic.gdx.InputMultiplexer multiplexer = new com.badlogic.gdx.InputMultiplexer();
         multiplexer.addProcessor(stage);
         // 6. Register click input
@@ -209,7 +208,7 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (clickSound != null) clickSound.play(game.sfxVolume);
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new LevelSelectionScreen(game));
                 dispose();
             }
         });
@@ -217,8 +216,8 @@ public class GameScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (clickSound != null) clickSound.play(game.sfxVolume);
-                game.setScreen(new SettingScreen(game));
-                dispose();
+                game.setScreen(new SettingScreen(game, GameScreen.this));
+                
             }
         });
         stage.addActor(backBtn);
@@ -230,47 +229,38 @@ public class GameScreen extends ScreenAdapter {
      * Called when the screen should render itself.
      * @param delta The time in seconds since the last render.
      */
+
     @Override
     public void render(float delta) {
         viewport.apply();
-        
-        if (grid == null || camera == null || shapeRenderer == null) {
-            return;
-        }
+        if (grid == null || camera == null) return;
 
-        // 1. Clear the screen using the pluggable renderer
+
         worldRenderer.clearScreen();
-
         camera.update();
 
-        // Render Background
-        if (backgroundTexture != null) {
-            batch.setProjectionMatrix(camera.combined);
-            batch.begin();
-            batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.end();
-        }
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
-
-        // 2. Delegate world rendering to WorldRenderer
-        if (renderer instanceof GdxRenderer) {
-            ((GdxRenderer) renderer).setShapeRenderer(shapeRenderer);
-        }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        worldRenderer.render(grid, gridOffsetX, gridOffsetY, backgroundTexture != null);
-        shapeRenderer.end();
-
-        //for Thread time
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
+        
+
+        if (backgroundTexture != null) {
+            batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+
+        worldRenderer.render(grid, gridOffsetX, gridOffsetY, batch, assetManager);
+        
+
         font.getData().setScale(2.0f);
+        font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
+        
         batch.end();
+
 
         stage.act(delta);
         stage.draw();
-    }
+}
 
     /**
      * Called when the application is resized.
@@ -336,11 +326,13 @@ public class GameScreen extends ScreenAdapter {
         if (solved) {
             System.out.println("Level Complete!");
             timer.pause();
-            PathPuzzleGame.unlockedLevels[currentLevelIndex] = true;
-            if (currentLevelIndex + 1 < PathPuzzleGame.LEVELS.length) {
-                        PathPuzzleGame.unlockedLevels[currentLevelIndex + 1] = true;
-                    }
-            game.setScreen(new CompleteScreen(game, currentLevelIndex));
+            String finalTime = timer.getFormattedTime();
+            PathPuzzleGame.completedLevels[currentLevelIndex] = true;
+            if (currentLevelIndex + 1 < PathPuzzleGame.unlockedLevels.length) {
+                PathPuzzleGame.unlockedLevels[currentLevelIndex+1] = true;
+}
+            game.saveProgress();
+            game.setScreen(new CompleteScreen(game, currentLevelIndex, finalTime));
             dispose();
         }
     }

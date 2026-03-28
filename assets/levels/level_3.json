@@ -57,7 +57,7 @@
       { "type": "EMPTY", "rotation": 0 }, //5
       { "type": "EMPTY", "rotation": 0 }, //6
       { "type": "EMPTY", "rotation": 0 }, //7
-      { "type": "STRAIGHT", "rotation": 0 }, //8
+      { "type": "start", "rotation": 0 }, //8
       { "type": "EMPTY", "rotation": 0 }, //9
       { "type": "EMPTY", "rotation": 0 }, //10
       { "type": "EMPTY", "rotation": 0 }, //11
@@ -168,7 +168,7 @@
       { "type": "EMPTY", "rotation": 0 }, //11
       { "type": "L_TURN", "rotation": 90 }, //12
       { "type": "T_JUNCTION", "rotation": 180 }, //13
-      { "type": "STRAIGHT", "rotation": 90 }, //14
+      { "type": "end", "rotation": 0 }, //14
       { "type": "EMPTY", "rotation": 0 }, //15
       { "type": "EMPTY", "rotation": 0 }, //16
       { "type": "STRAIGHT", "rotation": 90 }, //17

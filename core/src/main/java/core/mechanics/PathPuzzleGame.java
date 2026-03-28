@@ -1,6 +1,8 @@
 package core.mechanics;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -25,16 +27,24 @@ public class PathPuzzleGame extends Game {
     public static final String LEVEL_PATH = "levels/";
     public static final String[] LEVELS = {"level_1.json", "level_2.json", "level_3.json", "level_4.json"};
     
-    public static boolean[] unlockedLevels = new boolean[LEVELS.length];
+    public static boolean[] unlockedLevels = {true, false, false, false};
+    public static boolean[] completedLevels = {false, false, false, false};
     /**
      * Called when the application is first created.
      * Initializes the AssetManager, loads all necessary assets, and sets the initial screen to the MenuScreen.
      */
-    static {
-        unlockedLevels[0] = true;
-    }
+    private Preferences prefs;
     @Override
     public void create() {
+        prefs = Gdx.app.getPreferences("PathPuzzleGamePrefs");
+        musicVolume = prefs.getFloat("musicVolume", 1.0f);
+        sfxVolume = prefs.getFloat("sfxVolume", 1.0f);
+        for (int i = 0; i < LEVELS.length; i++) {
+            boolean defaultUnlocked = (i == 0);
+            unlockedLevels[i] = prefs.getBoolean("level_" + i + "_unlocked", defaultUnlocked);
+        }
+
+
         assetManager = new AssetManager();
 
         // Preload assets
@@ -51,6 +61,8 @@ public class PathPuzzleGame extends Game {
         assetManager.load("buttons/Exitpress_bttn.png", Texture.class);
         assetManager.load("buttons/Arrow.png", Texture.class);
         assetManager.load("buttons/Arrow_press.png", Texture.class);
+        assetManager.load("buttons/Arrow_left.png", Texture.class);
+        assetManager.load("buttons/Arrow_left_press.png", Texture.class);
         assetManager.load("buttons/setting.png", Texture.class);
         assetManager.load("setting/BackgroundSetting.png", Texture.class);   
         assetManager.load("setting/Save_bttn.png", Texture.class);
@@ -68,11 +80,34 @@ public class PathPuzzleGame extends Game {
         assetManager.load("LevelSel/Bill3_complete.png", Texture.class);
         assetManager.load("LevelSel/Bill4.png", Texture.class);
         assetManager.load("LevelSel/Bill4_complete.png", Texture.class);
+
+        assetManager.load("tiletype/STRAIGHT.PNG", Texture.class);
+        assetManager.load("tiletype/L_TURN.PNG", Texture.class);    
+        assetManager.load("tiletype/T_JUNCTION.PNG", Texture.class);
+        assetManager.load("tiletype/DEADEND_X.PNG", Texture.class);
+        assetManager.load("tiletype/DEADEND_Y.PNG", Texture.class);
+        assetManager.load("tiletype/TELEPORT.PNG", Texture.class);  
+        assetManager.load("tiletype/WRONG_TELEPORT.PNG", Texture.class);
+        assetManager.load("tiletype/end.PNG", Texture.class);
+        assetManager.load("tiletype/start.PNG", Texture.class);
+
         assetManager.finishLoading();
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
     }
+    
+    public void saveSettings() {
+        prefs.putFloat("musicVolume", musicVolume);
+        prefs.putFloat("sfxVolume", sfxVolume);
+        prefs.flush(); 
+    }
 
+    public void saveProgress() {
+        for (int i = 0; i < LEVELS.length; i++) {
+            prefs.putBoolean("level_" + i + "_unlocked", unlockedLevels[i]);
+        }
+        prefs.flush();
+    }
     /**
      * Called by the game loop from the application every time rendering should be performed.
      * Delegates the render call to the current active screen.

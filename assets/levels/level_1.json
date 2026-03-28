@@ -75,7 +75,7 @@
       { "type": "EMPTY", "rotation": 0 }, //2
       { "type": "EMPTY", "rotation": 0 }, //3
       { "type": "EMPTY", "rotation": 0 }, //4
-      { "type": "STRAIGHT", "rotation": 90 }, //5
+      { "type": "start", "rotation": 0 }, //5
       { "type": "STRAIGHT", "rotation": 90 }, //6
       { "type": "STRAIGHT", "rotation": 90 }, //7
       { "type": "STRAIGHT", "rotation": 90 }, //8
@@ -232,7 +232,7 @@
       { "type": "STRAIGHT", "rotation": 90 }, //12
       { "type": "STRAIGHT", "rotation": 0 }, //13
       { "type": "STRAIGHT", "rotation": 90 }, //14
-      { "type": "STRAIGHT", "rotation": 90 }, //15
+      { "type": "end", "rotation": 0 }, //15
       { "type": "EMPTY", "rotation": 0 }, //16
       { "type": "EMPTY", "rotation": 0 }, //17
       { "type": "EMPTY", "rotation": 0 }, //18

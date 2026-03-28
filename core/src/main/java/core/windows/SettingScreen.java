@@ -41,6 +41,7 @@ public class SettingScreen implements Screen {
     private Skin skin;
     private Music music;
     private Sound clickSound;
+    private Screen previousScreen;
     private Slider sfxSlider, musicSlider;
     private float sfxVolume = 1f;
 
@@ -48,9 +49,10 @@ public class SettingScreen implements Screen {
      * Constructs a new SettingScreen.
      * @param game The main game instance, used to access global settings and the AssetManager.
      */
-    public SettingScreen(PathPuzzleGame game) {
+    public SettingScreen(PathPuzzleGame game, Screen previousScreen) {
         this.game = game;
         this.assetManager = game.assetManager;
+        this.previousScreen = previousScreen; // จำหน้าเดิมไว้
     }
 
     /**
@@ -194,9 +196,10 @@ public class SettingScreen implements Screen {
 
             game.sfxVolume = sfxVolume;
             game.musicVolume = musicSlider.getValue();
+            game.saveSettings();
 
-            game.setScreen(new MenuScreen(game));
-            dispose();
+            game.setScreen(previousScreen);
+            
         }
 
         });
@@ -227,8 +230,8 @@ public class SettingScreen implements Screen {
                 music.setVolume(game.musicVolume);
             }
 
-            game.setScreen(new MenuScreen(game));
-            dispose();
+            game.setScreen(previousScreen);
+            
         }
     });
     }
@@ -280,6 +283,7 @@ public class SettingScreen implements Screen {
     @Override
     public void hide() {
         // Music continues to next screen if it handles it
+        dispose();
     }
 
     /**

@@ -1,8 +1,10 @@
 package core.windows.awt;
 
-import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
 import core.mechanics.Grid;
 import core.rendering.AwtRenderer;
 import core.rendering.WorldRenderer;
@@ -40,7 +42,7 @@ public class AwtGameCanvas extends JPanel {
         gridOffsetY = (getHeight() - grid.getRows() * tileSize) / 2f;
 
         // Use the pluggable WorldRenderer to draw the grid
-        worldRenderer.render(grid, gridOffsetX, gridOffsetY);
+        worldRenderer.render(grid, gridOffsetX, gridOffsetY,null, null);
     }
 
     public float getGridOffsetX() {

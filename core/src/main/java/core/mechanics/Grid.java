@@ -228,4 +228,8 @@ public class Grid {
         }
         return nextTile.getType().getConnections(nextTile.getRotation())[oppositeSide];
     }
+    public void resetTile(BaseTile tile) {
+        if (tile == null) return;
+        System.out.println("Resetting tile of type: " + tile.getType());
+    }
 }

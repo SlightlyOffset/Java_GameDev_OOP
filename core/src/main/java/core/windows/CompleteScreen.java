@@ -38,14 +38,16 @@ public class CompleteScreen  implements Screen {
     private Music music;
     private Sound clickSound;
     private int finishedLevelIndex;
+    private String timeFinished;
     /**
      * Constructs a new CompleteScreen.
      * @param game The main game instance, used to access global settings and the AssetManager.
      */
-    public CompleteScreen(PathPuzzleGame game, int finishedLevelIndex) {
+    public CompleteScreen(PathPuzzleGame game, int finishedLevelIndex, String timeFinished) {
         this.game = game;
         this.assetManager = game.assetManager;
         this.finishedLevelIndex = finishedLevelIndex;
+        this.timeFinished = timeFinished;
     }
 
     /**
@@ -116,6 +118,13 @@ public class CompleteScreen  implements Screen {
             if (!music.isPlaying())
                 music.play();
         }
+        //set time label
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(1.8f);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLACK);
+        Label timeLabel = new Label("Time: " + timeFinished, labelStyle);
+        timeLabel.setPosition(1500f, 220f);
+        stage.addActor(timeLabel);
     }
 
     /**
