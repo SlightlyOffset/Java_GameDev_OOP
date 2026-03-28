@@ -41,7 +41,6 @@ public class SettingScreen implements Screen {
     private Skin skin;
     private Music music;
     private Sound clickSound;
-    private Label sfxLabel, musicLabel;
     private Slider sfxSlider, musicSlider;
     private float sfxVolume = 1f;
 
@@ -114,8 +113,6 @@ public class SettingScreen implements Screen {
         Gdx.input.setInputProcessor(stage); // Let the stage handle input events (click events)
         initSkin(); 
 
-        sfxLabel = new Label("SFX", skin);
-        musicLabel = new Label("Music", skin);
 
         sfxSlider = new Slider(0f, 1f, 0.01f, false, skin);
         musicSlider = new Slider(0f, 1f, 0.01f, false, skin);
@@ -178,19 +175,15 @@ public class SettingScreen implements Screen {
         stage.addActor(ExitButton);
 
         //add sfxLabel position
-        sfxLabel.setPosition(450, 605);
-        sfxSlider.setPosition(650, 600);
+        sfxSlider.setPosition(650, 580);
         sfxSlider.setSize(750, 60);
 
         //add musicLabel position
-        musicLabel.setPosition(450, 505);
-        musicSlider.setPosition(650, 500);
+        musicSlider.setPosition(650, 450);
         musicSlider.setSize(750, 60);
 
         //add label and slider to stage
-        stage.addActor(sfxLabel);
         stage.addActor(sfxSlider);
-        stage.addActor(musicLabel);
         stage.addActor(musicSlider);
         // Add listeners for interaction
         SaveButton.addListener(new ClickListener() {

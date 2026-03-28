@@ -5,7 +5,7 @@
   "startY": 8,
   "endX": 15,
   "endY": 3,
-  "backgroundImage": "images/Level4_BGpng.png",
+  "backgroundImage": "images/Level4_BG.png",
   "tiles": [
     [ //1
       { "type": "EMPTY", "rotation": 0 }, //1

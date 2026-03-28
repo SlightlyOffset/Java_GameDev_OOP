@@ -3,16 +3,27 @@ package core.windows;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.Grid;
-import core.mechanics.LevelLoader;
+import core.mechanics.LevelLoader; //Thread time
 import core.mechanics.PathPuzzleGame;
-import core.mechanics.PlaytimeTimer; //Thread time
+import core.mechanics.PlaytimeTimer;
 import core.rendering.GdxRenderer;
 import core.rendering.IRenderer;
 import core.rendering.WorldRenderer;
@@ -22,7 +33,7 @@ import core.rendering.WorldRenderer;
  * It manages the game state, including level loading, rendering, and win conditions.
  */
 public class GameScreen extends ScreenAdapter {
-    private static final int TILE_SIZE = 95;
+    private static final int TILE_SIZE = 60;
     private final PathPuzzleGame game;
     private Grid grid;
     private ShapeRenderer shapeRenderer;
@@ -42,6 +53,12 @@ public class GameScreen extends ScreenAdapter {
     private PlaytimeTimer timer;
     private SpriteBatch batch;
     private BitmapFont font;
+
+    // UI components
+    private Viewport viewport;
+    private Stage stage;
+    private AssetManager assetManager;
+    private com.badlogic.gdx.audio.Sound clickSound;
 
     /**
      * Constructs a new GameScreen with a default grid.
@@ -69,6 +86,12 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(PathPuzzleGame game, String levelPath, int levelIndex) {
         this.game = game;
         this.currentLevelIndex = levelIndex;
+        this.assetManager = game.assetManager;
+
+        viewport = new FitViewport(1920, 1080);
+        stage = new Stage(viewport);
+
+        initUI();
 
         // 1. Create and fill the grid
         if (levelPath != null) {
@@ -92,8 +115,8 @@ public class GameScreen extends ScreenAdapter {
             camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
             // 4. Center the grid to the screen
-            gridOffsetX = (Gdx.graphics.getWidth() - TILE_SIZE * grid.getCols()) / 2f;
-            gridOffsetY = (Gdx.graphics.getHeight() - TILE_SIZE * grid.getRows()) / 2f;
+            gridOffsetX = ((Gdx.graphics.getWidth() - TILE_SIZE * grid.getCols()) / 2f);
+            gridOffsetY = ((Gdx.graphics.getHeight() - TILE_SIZE * grid.getRows()) / 2f);
 
             // 5. Create a ShapeRenderer for drawing shapes
             shapeRenderer = new ShapeRenderer();
@@ -117,11 +140,12 @@ public class GameScreen extends ScreenAdapter {
 
         timer.reset(); //reset time in new level
         timer.resume();
-
+        com.badlogic.gdx.InputMultiplexer multiplexer = new com.badlogic.gdx.InputMultiplexer();
+        multiplexer.addProcessor(stage);
         // 6. Register click input
-        Gdx.input.setInputProcessor(new InputAdapter() {
+        multiplexer.addProcessor(new InputAdapter() {
             @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (grid.isSolved()) {
                     int nextIndex = currentLevelIndex + 1;
                     if (nextIndex < PathPuzzleGame.LEVELS.length) {
@@ -132,8 +156,8 @@ public class GameScreen extends ScreenAdapter {
                     }
                     dispose();
                     return true;
+                
                 }
-            
                 float worldX = screenX;
                 float worldY = Gdx.graphics.getHeight() - screenY;
             
@@ -152,6 +176,54 @@ public class GameScreen extends ScreenAdapter {
                 return true;
             }
         });
+        Gdx.input.setInputProcessor(multiplexer);
+    }
+
+    private void initUI() {
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+        stage.addActor(rootTable);
+
+        // Create Buttons
+        ImageButton.ImageButtonStyle BackStyle = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle SettingStyle = new ImageButton.ImageButtonStyle();
+        // Create ImageButton styles
+        Texture Back = assetManager.get("buttons/Arrow.png", Texture.class);
+        Texture Backpress = assetManager.get("buttons/Arrow_press.png", Texture.class);
+        Texture Setting = assetManager.get("buttons/setting.png", Texture.class);
+
+        BackStyle.up = new TextureRegionDrawable(new TextureRegion(Back));
+        BackStyle.over = new TextureRegionDrawable(new TextureRegion(Backpress));
+        SettingStyle.up = new TextureRegionDrawable(new TextureRegion(Setting));
+        ImageButton backBtn = new ImageButton(BackStyle);
+        ImageButton SettingBtn = new ImageButton(SettingStyle);
+
+        backBtn.setSize(143, 100);
+        backBtn.setPosition(20, 975);
+
+        SettingBtn.setSize(121, 100);
+        SettingBtn.setPosition(1800,975);
+
+        // Add listeners for interaction
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play(game.sfxVolume);
+                game.setScreen(new MenuScreen(game));
+                dispose();
+            }
+        });
+        SettingBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play(game.sfxVolume);
+                game.setScreen(new SettingScreen(game));
+                dispose();
+            }
+        });
+        stage.addActor(backBtn);
+        stage.addActor(SettingBtn);
+
     }
 
     /**
@@ -160,6 +232,8 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+        viewport.apply();
+        
         if (grid == null || camera == null || shapeRenderer == null) {
             return;
         }
@@ -190,8 +264,12 @@ public class GameScreen extends ScreenAdapter {
         //for Thread time
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        font.draw(batch, "Time: " + timer.getFormattedTime(), 20, Gdx.graphics.getHeight() - 20);
+        font.draw(batch, "Time: " + timer.getFormattedTime(), 450, Gdx.graphics.getHeight() - 30);
+        font.getData().setScale(2.0f);
         batch.end();
+
+        stage.act(delta);
+        stage.draw();
     }
 
     /**
@@ -204,8 +282,10 @@ public class GameScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         camera.setToOrtho(false, width, height);
 
-        gridOffsetX = (width - TILE_SIZE * grid.getCols()) / 2f;
-        gridOffsetY = (height - TILE_SIZE * grid.getRows()) / 2f;
+        viewport.update(width, height, true);
+
+        gridOffsetX = ((width - TILE_SIZE * grid.getCols()) / 2f)-60f;
+        gridOffsetY = ((height - TILE_SIZE * grid.getRows()) / 2f) ;
     }
 
     /**

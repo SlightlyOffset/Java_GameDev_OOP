@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -108,7 +111,7 @@ public class LevelSelectionScreen implements Screen {
     /**
      * Constructs the UI layout using Scene2D Tables.
      * Includes a navigation bar with a 'Back' button and a grid of level 'Order' buttons
-     * generated dynamically from the {@link PathPuzzleGame#LEVELS} array.
+     * generated dynamically from the {@link PathPuzzleGame#LEVELS} array.*******************************
      */
     private void initUI() {
         Table rootTable = new Table();
@@ -117,7 +120,21 @@ public class LevelSelectionScreen implements Screen {
 
         // Top bar for Back button
         Table topTable = new Table();
-        TextButton backBtn = new TextButton("<-- Back", skin);
+        // Create Buttons
+        ImageButton.ImageButtonStyle BackStyle = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle SettingStyle = new ImageButton.ImageButtonStyle();
+        // Create ImageButton styles
+        Texture Back = assetManager.get("buttons/Arrow.png", Texture.class);
+        Texture Backpress = assetManager.get("buttons/Arrow_press.png", Texture.class);
+        Texture Setting = assetManager.get("buttons/setting.png", Texture.class);
+
+        BackStyle.up = new TextureRegionDrawable(new TextureRegion(Back));
+        BackStyle.over = new TextureRegionDrawable(new TextureRegion(Backpress));
+        SettingStyle.up = new TextureRegionDrawable(new TextureRegion(Setting));
+        ImageButton backBtn = new ImageButton(BackStyle);
+        ImageButton SettingBtn = new ImageButton(SettingStyle);
+
+        // Add listeners for interaction
         backBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -126,10 +143,21 @@ public class LevelSelectionScreen implements Screen {
                 dispose();
             }
         });
-        topTable.add(backBtn).left().pad(30).width(250).height(100);
-        rootTable.add(topTable).expandX().top().left().row();
+        SettingBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (clickSound != null) clickSound.play(game.sfxVolume);
+                game.setScreen(new SettingScreen(game));
+                dispose();
+            }
+        });
+        topTable.add(backBtn).left().pad(30).width(143).height(100);
+        topTable.add().expandX(); 
+        topTable.add(SettingBtn).right().pad(30).width(121).height(100);
+        rootTable.add(topTable).fillX().expandX().top().row();
 
-        // Level Slips
+
+        //Level bttn
         Table levelTable = new Table();
         for (int i = 0; i < PathPuzzleGame.LEVELS.length; i++) {
             final int levelIndex = i;
@@ -165,6 +193,74 @@ public class LevelSelectionScreen implements Screen {
             if ((i + 1) % 4 == 0) levelTable.row();
         }
         rootTable.add(levelTable).expand().top();
+
+        ImageButton.ImageButtonStyle Bill1Style = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle Bill2Style = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle Bill3Style = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle Bill4Style = new ImageButton.ImageButtonStyle();
+        // Create ImageButton styles
+        Texture Bill1 = assetManager.get("LevelSel/Bill1.png", Texture.class);
+        Texture Bill1_complete = assetManager.get("LevelSel/Bill1_complete.png", Texture.class);
+        Texture Bill2 = assetManager.get("LevelSel/Bill2.png", Texture.class);
+        Texture Bill2_complete = assetManager.get("LevelSel/Bill2_complete.png", Texture.class);
+        Texture Bill3 = assetManager.get("LevelSel/Bill3.png", Texture.class);
+        Texture Bill3_complete = assetManager.get("LevelSel/Bill3_complete.png", Texture.class);
+        Texture Bill4 = assetManager.get("LevelSel/Bill4.png", Texture.class);
+        Texture Bill4_complete = assetManager.get("LevelSel/Bill4_complete.png", Texture.class);
+
+        Bill1Style.up = new TextureRegionDrawable(new TextureRegion(Bill1));
+        Bill2Style.up = new TextureRegionDrawable(new TextureRegion(Bill2));
+        Bill3Style.up = new TextureRegionDrawable(new TextureRegion(Bill3));
+        Bill4Style.up = new TextureRegionDrawable(new TextureRegion(Bill4));
+
+        ImageButton bill1 = new ImageButton(Bill1Style);
+        ImageButton bill2 = new ImageButton(Bill2Style);
+        ImageButton bill3 = new ImageButton(Bill3Style);
+        ImageButton bill4 = new ImageButton(Bill4Style);
+
+        //set position on button
+        levelTable.add(bill1).width(294).height(454).pad(60);
+        levelTable.add(bill2).width(294).height(454).pad(60);
+        levelTable.add(bill3).width(294).height(454).pad(60);
+        levelTable.add(bill4).width(294).height(454).pad(60);
+        rootTable.add(levelTable).expand().top().padTop(-79);
+
+        bill1.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (clickSound != null) clickSound.play(game.sfxVolume);
+                    Gdx.app.log("LevelSelection", "Loading Level: " + PathPuzzleGame.LEVELS[0]);
+                    game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[0], 0));
+                    dispose();
+                }
+            });
+        bill2.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (clickSound != null) clickSound.play(game.sfxVolume);
+                    Gdx.app.log("LevelSelection", "Loading Level: " + PathPuzzleGame.LEVELS[1]);
+                    game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[1], 1));
+                    dispose();
+                }
+            });
+        bill3.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (clickSound != null) clickSound.play(game.sfxVolume);
+                    Gdx.app.log("LevelSelection", "Loading Level: " + PathPuzzleGame.LEVELS[2]);
+                    game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[2], 2));
+                    dispose();
+                }
+            });
+        bill4.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (clickSound != null) clickSound.play(game.sfxVolume);
+                    Gdx.app.log("LevelSelection", "Loading Level: " + PathPuzzleGame.LEVELS[3]);
+                    game.setScreen(new GameScreen(game, PathPuzzleGame.LEVEL_PATH + PathPuzzleGame.LEVELS[3], 3));
+                    dispose();
+                }
+            });
     }
 
     /**
