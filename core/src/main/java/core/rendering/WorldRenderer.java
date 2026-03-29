@@ -35,38 +35,50 @@ public class WorldRenderer {
         renderer.clearScreen(0.2f, 0.2f, 0.2f, 1.0f);
     }
     public void render(Grid grid, float offsetX, float offsetY, SpriteBatch batch, AssetManager assetManager) {
-    for (int y = 0; y < grid.getRows(); y++) {
-        for (int x = 0; x < grid.getCols(); x++) {
-            Tile tile = grid.getTiles()[y][x];
-            String texturePath = tile.getType().getTextureName();
+        for (int y = 0; y < grid.getRows(); y++) {
+            for (int x = 0; x < grid.getCols(); x++) {
+                Tile tile = grid.getTiles()[y][x];
+                String texturePath = tile.getType().getTextureName();
 
-            if (texturePath == null || texturePath.isEmpty()) continue;
+                if (texturePath == null || texturePath.isEmpty()) continue;
 
-            if (assetManager.isLoaded(texturePath, Texture.class)) {
-                Texture tex = assetManager.get(texturePath, Texture.class);
-                
-                float px = offsetX + x * tileSize;
-                float py = offsetY + y * tileSize;
+                if (assetManager.isLoaded(texturePath, Texture.class)) {
+                    Texture tex = assetManager.get(texturePath, Texture.class);
+                    
+                    float px = offsetX + x * tileSize;
+                    float py = offsetY + y * tileSize;
 
-                if (grid.isSolved()) {
-                    batch.setColor(com.badlogic.gdx.graphics.Color.GREEN);
-                } else {
-                    batch.setColor(com.badlogic.gdx.graphics.Color.WHITE);
+                    // Determine color based on puzzle completion state
+                    float colorR, colorG, colorB, colorA = 1.0f;
+                    if (grid.isSolved()) {
+                        colorR = 0.0f;
+                        colorG = 1.0f;
+                        colorB = 0.0f;
+                    } else {
+                        colorR = 1.0f;
+                        colorG = 1.0f;
+                        colorB = 1.0f;
+                    }
+
+                    // Delegate tile drawing to the renderer abstraction
+                    // This passes SpriteBatch to GdxRenderer for actual drawing
+                    if (renderer instanceof GdxRenderer) {
+                        GdxRenderer gdxRenderer = (GdxRenderer) renderer;
+                        gdxRenderer.setSpriteBatch(batch);
+                    }
+
+                    renderer.drawTextureRegion(
+                        tex,
+                        px, py,
+                        tileSize / 2f, tileSize / 2f,
+                        tileSize, tileSize,
+                        -tile.getRotation(),
+                        colorR, colorG, colorB, colorA
+                    );
                 }
-
-                batch.draw(
-                    new TextureRegion(tex),
-                    px, py,
-                    tileSize / 2f, tileSize / 2f,
-                    tileSize, tileSize,
-                    1f, 1f,
-                    -tile.getRotation()
-                );
             }
         }
-        batch.setColor(com.badlogic.gdx.graphics.Color.WHITE);
     }
-}
 
     /**
      * Draws the path segments for a single tile based on its type and rotation.

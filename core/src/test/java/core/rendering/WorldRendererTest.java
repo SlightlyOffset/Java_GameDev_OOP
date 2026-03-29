@@ -34,6 +34,11 @@ public class WorldRendererTest {
         public void drawPathLine(float cx, float cy, float halfWidth, float length, int direction, String colorHex) {}
 
         @Override
+        public void drawTextureRegion(com.badlogic.gdx.graphics.Texture texture, float x, float y, float originX, float originY,
+                                      float width, float height, float rotation,
+                                      float colorR, float colorG, float colorB, float colorA) {}
+
+        @Override
         public void endFrame() {}
     }
 }
