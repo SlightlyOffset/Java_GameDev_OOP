@@ -22,7 +22,7 @@
 
 ## UI & Audio Patterns
 - Every screen creates a `Stage` with `FitViewport(1920,1080)` to match the artwork and reassigns `Gdx.input` to that stage inside `show()`.
-- Buttons are backed by textures under `assets/buttons` / `assets/LevelSel`; pressed-state textures follow the `*_press.png` pattern already preloaded in `PathPuzzleGame.create()`.
+- Buttons are backed by textures under `assets/buttons` / `assets/LevelSel`; pressed-state textures follow the `*press_bttn.PNG` pattern (e.g., `Startpress_bttn.PNG`) already preloaded in `PathPuzzleGame.create()`.
 - Background music (`sounds/menu_bgm.mp3`) is reused across menu-like screens; they fetch it from the shared `AssetManager`, update volume from `game.musicVolume`, and only start playback when `!music.isPlaying()` to avoid double starts.
 
 ## Build, Run, Test
