@@ -3,23 +3,34 @@ package core.rendering;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * A libGDX-specific implementation of the {@link IRenderer} interface.
- * This class uses a {@link ShapeRenderer} to draw geometric shapes, providing a
- * high-performance rendering backend for the game.
+ * This class uses a {@link ShapeRenderer} for geometric shapes and a {@link SpriteBatch}
+ * for texture rendering, providing a high-performance rendering backend for the game.
  */
 public class GdxRenderer extends BaseRenderer {
     private ShapeRenderer shapeRenderer;
+    private SpriteBatch spriteBatch;
 
     /**
-     * Sets the {@link ShapeRenderer} instance to be used for all drawing operations.
-     * This method allows the GameScreen to provide its own managed ShapeRenderer.
+     * Sets the {@link ShapeRenderer} instance to be used for geometric drawing.
      * @param shapeRenderer The ShapeRenderer instance.
      */
     public void setShapeRenderer(ShapeRenderer shapeRenderer) {
         this.shapeRenderer = shapeRenderer;
+    }
+
+    /**
+     * Sets the {@link SpriteBatch} instance to be used for texture rendering.
+     * @param spriteBatch The SpriteBatch instance.
+     */
+    public void setSpriteBatch(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
     }
 
     /**
@@ -82,4 +93,37 @@ public class GdxRenderer extends BaseRenderer {
                 break;
         }
     }
+
+    /**
+     * Draws a textured sprite with rotation and color tint.
+     * @param texture The texture to draw.
+     * @param x The x-coordinate of the bottom-left corner.
+     * @param y The y-coordinate of the bottom-left corner.
+     * @param originX The x-coordinate of the rotation origin.
+     * @param originY The y-coordinate of the rotation origin.
+     * @param width The width of the sprite.
+     * @param height The height of the sprite.
+     * @param rotation The rotation in degrees.
+     * @param colorR Red component (0.0 - 1.0).
+     * @param colorG Green component (0.0 - 1.0).
+     * @param colorB Blue component (0.0 - 1.0).
+     * @param colorA Alpha component (0.0 - 1.0).
+     */
+    @Override
+    public void drawTextureRegion(Texture texture, float x, float y, float originX, float originY,
+                                  float width, float height, float rotation,
+                                  float colorR, float colorG, float colorB, float colorA) {
+        if (spriteBatch == null || texture == null) return;
+        
+        spriteBatch.setColor(colorR, colorG, colorB, colorA);
+        spriteBatch.draw(
+            new TextureRegion(texture),
+            x, y,
+            originX, originY,
+            width, height,
+            1f, 1f,
+            rotation
+        );
+    }
 }
+

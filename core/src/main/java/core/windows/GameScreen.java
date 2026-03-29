@@ -123,6 +123,11 @@ public class GameScreen extends ScreenAdapter {
         //for thread time
         batch = new SpriteBatch();
         font = new BitmapFont();
+        
+        // 6. Inject SpriteBatch into GdxRenderer for texture drawing
+        if (renderer instanceof GdxRenderer) {
+            ((GdxRenderer) renderer).setSpriteBatch(batch);
+        }
     }
     
     /**

@@ -1,7 +1,9 @@
 package core.rendering;
 
+import com.badlogic.gdx.graphics.Texture;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 /**
  * AWT-based implementation of the IRenderer interface.
@@ -53,4 +55,33 @@ public class AwtRenderer extends BaseRenderer {
                 break;
         }
     }
+
+    /**
+     * Draws a textured image with rotation and color tint.
+     * AWT doesn't natively support LibGDX textures, so this is a stub implementation.
+     * In a full AWT implementation, you would convert the Texture to BufferedImage.
+     */
+    @Override
+    public void drawTextureRegion(Texture texture, float x, float y, float originX, float originY,
+                                  float width, float height, float rotation,
+                                  float colorR, float colorG, float colorB, float colorA) {
+        // AWT stub: Texture drawing would require LibGDX → BufferedImage conversion
+        // For now, draw a placeholder rectangle to maintain interface contract
+        if (g2d == null || texture == null) return;
+        
+        int argb = (((int) (colorA * 255)) << 24) |
+                   (((int) (colorR * 255)) << 16) |
+                   (((int) (colorG * 255)) << 8) |
+                   ((int) (colorB * 255));
+        
+        g2d.setColor(new Color(argb, true));
+        
+        AffineTransform oldTransform = g2d.getTransform();
+        g2d.translate(x + originX, y + originY);
+        g2d.rotate(Math.toRadians(rotation));
+        g2d.fillRect(-(int)(width / 2), -(int)(height / 2), (int)width, (int)height);
+        g2d.setTransform(oldTransform);
+    }
 }
+
+
