@@ -11,13 +11,6 @@ public class Tile extends BaseTile implements Rotatable {
         super();
     }
 
-    public enum Direction {
-        // ลำดับที่ 0, 1, 2, 3
-        NORTH, EAST, SOUTH, WEST;
-        
-    }
-
-
     public Tile(TileType type) {
         super(type);
     }

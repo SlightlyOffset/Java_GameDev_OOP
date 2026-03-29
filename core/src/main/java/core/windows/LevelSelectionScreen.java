@@ -23,6 +23,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import core.mechanics.PathPuzzleGame;
 
+/**
+ * Presents the level-select hub that reflects unlock and completion state using the
+ * textures stored under {@code assets/LevelSel}. The shared {@link PathPuzzleGame}
+ * reference supplies the {@link AssetManager}, music preferences, and canonical
+ * level metadata used to launch {@link GameScreen} instances.
+ */
 public class LevelSelectionScreen implements Screen {
 
     private final AssetManager assetManager;
@@ -37,10 +43,13 @@ public class LevelSelectionScreen implements Screen {
         this.assetManager = game.assetManager;
         this.viewport = new FitViewport(1920, 1080);
         this.stage = new Stage(viewport);
-        initBasicSkin();
         initUI();
     }
 
+    /**
+     * Called when the screen becomes active; wires input handling and ensures
+     * menu background music plays using the persisted volume.
+     */
     @Override
     public void show() {
         if (assetManager.isLoaded("sounds/click.mp3", Sound.class)) {
@@ -54,26 +63,10 @@ public class LevelSelectionScreen implements Screen {
         }
     }
 
-    private void initBasicSkin() {
-        skin = new Skin();
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(3); 
-        skin.add("default", font);
-
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("white", new Texture(pixmap));
-        pixmap.dispose();
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("white", new Color(0, 0, 0, 0.1f)); 
-        textButtonStyle.down = skin.newDrawable("white", new Color(0, 0, 0, 0.3f));
-        textButtonStyle.font = skin.getFont("default");
-        textButtonStyle.fontColor = Color.BLACK;
-        skin.add("default", textButtonStyle);
-    }
-
+    /**
+     * Builds the static UI: back/settings controls plus the four bill buttons
+     * whose textures respond to unlocked/completed state.
+     */
     private void initUI() {
         // --- ส่วน Setting & Back ---
         Texture backTex = assetManager.get("buttons/Arrow.png", Texture.class);
@@ -155,6 +148,10 @@ public class LevelSelectionScreen implements Screen {
         }
     }
 
+    /**
+     * Draws the background, advances the stage, and renders all actors.
+     * @param delta time elapsed since the previous frame.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(1, 1, 1, 1);
@@ -169,20 +166,29 @@ public class LevelSelectionScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Keeps the fixed-art viewport centered when the window changes size.
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
+    /** Screen pause hook (unused but required by {@link Screen}). */
     @Override
     public void pause() {}
 
+    /** Screen resume hook (unused but required by {@link Screen}). */
     @Override
     public void resume() {}
 
+    /** Screen hide hook (unused but required by {@link Screen}). */
     @Override
     public void hide() {}
 
+    /**
+     * Disposes the stage and skin to release GPU resources when the screen ends.
+     */
     @Override
     public void dispose() {
         if (stage != null) stage.dispose();
