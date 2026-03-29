@@ -1,40 +1,38 @@
 # AGENTS.md
 
-## Project map (read this first)
-- Gradle multi-module Java project: `core` (game logic/rendering) + `desktop` (launcher), wired in `settings.gradle`.
-- Runtime entry point is `desktop/src/main/java/desktop/DesktopLauncher.java`.
-- Main game lifecycle is `PathPuzzleGame -> MenuScreen -> GameScreen` (`core/src/main/java/core/mechanics/PathPuzzleGame.java`, `core/src/main/java/core/windows/MenuScreen.java`, `core/src/main/java/core/windows/GameScreen.java`).
-- Assets are loaded via `AssetManager` from `assets/` and desktop run task sets working dir to that folder (`desktop/build.gradle`).
-- Level data is JSON-deserialized directly into `Grid` (`core/src/main/java/core/mechanics/LevelLoader.java`, `assets/levels/level_1.json`).
+## Project Orientation (read this first)
+- Gradle multi-module setup: `core/` holds gameplay, rendering, and screens; `desktop/` hosts the LWJGL launcher declared in `settings.gradle` and `desktop/src/main/java/desktop/DesktopLauncher.java`.
+- `PathPuzzleGame` (`core/mechanics/PathPuzzleGame.java`) is the LibGDX `Game` implementation that creates the global `AssetManager`, hydrates preferences (audio + level unlocks), and sets the first screen.
+- Assets live in `assets/`; `desktop/build.gradle` points the run task’s working directory there so relative loads like `images/background.png` resolve without extra path math.
 
-## Rendering architecture (project-specific)
-- Rendering is intentionally pluggable: `IRenderer` + backend implementations (`GdxRenderer`, `AwtRenderer`) with shared draw orchestration in `WorldRenderer`.
-- `GameScreen` injects a `GdxRenderer` into `WorldRenderer`; AWT path does the same through `AwtGameCanvas`/`AwtGameWindow`.
-- Keep world drawing logic in `WorldRenderer`; backend classes should stay thin adapters.
-- Direction contract is fixed as `0=N, 1=E, 2=S, 3=W` across renderer code.
-- Coordinate systems differ by backend (LibGDX Y-up, AWT Y-down); preserve existing per-backend conversions.
+## Gameplay & Progression Flow
+- Screen pipeline: `MenuScreen -> StoryScreen -> LevelSelectionScreen -> GameScreen -> CompleteScreen`; screens live under `core/windows/` and pass the `PathPuzzleGame` reference for shared assets and navigation.
+- Level metadata is centralized in `PathPuzzleGame.LEVEL_PATH` and `LEVELS`; progress arrays (`unlockedLevels`, `completedLevels`) gate level buttons in `LevelSelectionScreen`, and `saveProgress()` currently persists the unlocked state.
+- `GameScreen` loads grids through `LevelLoader.loadLevel(...)`, rotates tiles on click, and marks completion which unlocks the next level before navigating to `CompleteScreen`.
 
-## Core gameplay/data model patterns
-- `Grid` owns board dimensions, tile matrix, start/end coords, and solved state (`core/src/main/java/core/mechanics/Grid.java`).
-- `Grid.isPathComplete()` uses DFS (`hasPath`) and `TileType.getConnections(rotation)` to validate links.
-- Tile rotation is always 90-degree increments (`Tile.rotateClockwise/rotateCounterClockwise`).
-- Default end point is implicit bottom-right when `endX/endY` are unset; if UI logic needs explicit end tile markers, call `setStartAndEnd(...)`.
+## Grid & Tile Model
+- `Grid` (`core/mechanics/Grid.java`) owns board dimensions, tile matrix, and DFS-based completion (`isPathComplete()` delegates to `hasPath` + `TileType.getConnections(rotation)`).
+- `Tile.rotateClockwise()` enforces 90° increments; the implicit end tile is bottom-right unless `setStartAndEnd()` supplies explicit coordinates, mirroring the default level JSONs in `assets/levels/`.
+- Background selection is encoded in level JSON (`backgroundImage`) and loaded in `GameScreen` before drawing.
 
-## Build, run, and test workflows
-- Preferred commands from repo root:
-  - `./gradlew desktop:run` (LibGDX desktop game)
-  - `./gradlew core:test` (unit tests)
-  - `./gradlew core:runAwt` (AWT renderer harness)
-- On Windows, this repo documents wrapper issues and fallback command: `java -jar gradle/wrapper/gradle-wrapper.jar <task>` (`README.md`).
-- `desktop` module also supports `-awt` launch arg in `DesktopLauncher` for alternate rendering path.
+## Rendering Contract
+- Rendering stays backend-agnostic via `IRenderer`; `WorldRenderer` orchestrates draw order and tile rotation math while `GdxRenderer` or `AwtRenderer` adapt to LibGDX/AWT specifics.
+- Direction indices are fixed (`0=N,1=E,2=S,3=W`). LibGDX math is Y-up; the AWT path flips Y in its renderer implementation—never mix the coordinate assumptions when adding effects.
+- Keep world drawing inside `WorldRenderer.render(...)`; backend classes should stay thin (clear screen + primitive draw helpers).
 
-## Testing conventions that matter here
-- Tests are in `core/src/test/java/...` and use JUnit 5 + Mockito (declared in root `build.gradle`).
-- Headless-style tests commonly guard LibGDX globals (example: mocking `Gdx.gl` in `GameScreenTest` and `MenuScreenTest`).
-- When tests load level files, use paths relative to `core/` (example: `../assets/levels/level_1.json` in `LevelLoaderTest`).
-- Simple manual stubs are preferred for some collaborators (see `MenuScreenTest.StubAssetManager`, `WorldRendererTest.MockRenderer`).
+## UI & Audio Patterns
+- Every screen creates a `Stage` with `FitViewport(1920,1080)` to match the artwork and reassigns `Gdx.input` to that stage inside `show()`.
+- Buttons are backed by textures under `assets/buttons` / `assets/LevelSel`; pressed-state textures follow the `*press_bttn.PNG` pattern (e.g., `Startpress_bttn.PNG`) already preloaded in `PathPuzzleGame.create()`.
+- Background music (`sounds/menu_bgm.mp3`) is reused across menu-like screens; they fetch it from the shared `AssetManager`, update volume from `game.musicVolume`, and only start playback when `!music.isPlaying()` to avoid double starts.
 
-## Repo process notes
-- `README.md` captures contributor expectations (Conventional Commits, branch naming).
-- `conductor/workflow.md` contains stricter team workflow/checkpoint process; follow it when task requests reference Conductor artifacts.
+## Build, Run, Test
+- Standard commands (run at repo root): `./gradlew desktop:run` for the game, `./gradlew core:test` for unit tests, `./gradlew core:runAwt` for the Swing/AWT harness.
+- Windows note from `README.md`: if the wrapper batch script hangs, execute `java -jar gradle\wrapper\gradle-wrapper.jar <task>` directly or restore the original `gradlew.bat` from `gradlew.bat.original`.
 
+## Testing Conventions
+- Tests live under `core/src/test/java`; they mock LibGDX statics (see `GameScreenTest` / `MenuScreenTest` mocking `Gdx.gl`) and rely on lightweight stubs (e.g., `MenuScreenTest.StubAssetManager`).
+- File I/O in tests uses paths relative to the `core/` module (`../assets/levels/level_1.json` in `LevelLoaderTest`).
+- Renderer tests (`core/src/test/java/core/rendering/`) cover contract expectations without real GL contexts by mocking `IRenderer` collaborators.
+
+## Process Notes
+- Follow Conventional Commits + branch naming from `README.md` and escalate to `conductor/workflow.md` when an issue references Conductor checkpoints.

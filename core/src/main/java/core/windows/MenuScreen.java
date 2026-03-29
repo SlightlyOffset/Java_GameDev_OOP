@@ -45,12 +45,6 @@ public class MenuScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage); // Let the stage handle input events (click events)
 
-        //change to set positon
-        //table = new Table();
-        //table.setFillParent(true); // Make the table the size of the viewport
-        //table.right();  // Align the table to the right side per spec
-        //stage.addActor(table);
-
         // Add Buttons to the stage
         setupUI();
 
@@ -103,8 +97,6 @@ public class MenuScreen implements Screen {
 
         //set size on button
         startButton.setSize(910, 235);
-        //optionsButton.setSize(442, 238);
-        //exitButton.setSize(438, 242);
 
 
         //add button to stage
@@ -138,10 +130,6 @@ public class MenuScreen implements Screen {
             }
         });
 
-        // change to set position on button
-        //table.add(startButton).fillX().uniformX().pad(10).row();
-        //table.add(optionsButton).fillX().uniformX().pad(10).row();
-        //table.add(exitButton).fillX().uniformX().pad(10);
     }
 
     @Override

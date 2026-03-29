@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,12 +35,10 @@ public class StoryScreen implements Screen {
     private Music music;
     private Sound clickSound;
     private SpriteBatch batch;
-    private TextureAtlas atlas;
     private Animation<TextureRegion> animation;
     private Array<Texture> textures = new Array<>();
 
     private float stateTime = 0;
-    private float totalDuration = 0;
 
     public StoryScreen(PathPuzzleGame game) {
         this.game = game;
@@ -183,6 +180,5 @@ public class StoryScreen implements Screen {
         if (stage != null) stage.dispose();
         if (skin != null) skin.dispose();
         if (batch != null) batch.dispose();
-        if (atlas != null) atlas.dispose();
     }
 }

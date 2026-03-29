@@ -95,19 +95,26 @@ public class PathPuzzleGame extends Game {
 
         setScreen(new MenuScreen(this)); // Pass the game instance to MenuScreen
     }
-    
+
+    /**
+     * Saves the current game settings to preferences.
+     */
     public void saveSettings() {
         prefs.putFloat("musicVolume", musicVolume);
         prefs.putFloat("sfxVolume", sfxVolume);
         prefs.flush(); 
     }
 
+    /**
+     * Saves the game progress by storing the unlocked levels in preferences. (wrong by design)
+     */
     public void saveProgress() {
         for (int i = 0; i < LEVELS.length; i++) {
             prefs.putBoolean("level_" + i + "_unlocked", unlockedLevels[i]);
         }
         prefs.flush();
     }
+
     /**
      * Called by the game loop from the application every time rendering should be performed.
      * Delegates the render call to the current active screen.
