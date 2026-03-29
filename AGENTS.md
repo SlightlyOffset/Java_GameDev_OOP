@@ -7,7 +7,7 @@
 
 ## Gameplay & Progression Flow
 - Screen pipeline: `MenuScreen -> StoryScreen -> LevelSelectionScreen -> GameScreen -> CompleteScreen`; screens live under `core/windows/` and pass the `PathPuzzleGame` reference for shared assets and navigation.
-- Level metadata is centralized in `PathPuzzleGame.LEVEL_PATH` and `LEVELS`; progress arrays (`unlockedLevels`, `completedLevels`) gate level buttons in `LevelSelectionScreen` and get persisted via `saveProgress()`.
+- Level metadata is centralized in `PathPuzzleGame.LEVEL_PATH` and `LEVELS`; progress arrays (`unlockedLevels`, `completedLevels`) gate level buttons in `LevelSelectionScreen`, and `saveProgress()` currently persists the unlocked state.
 - `GameScreen` loads grids through `LevelLoader.loadLevel(...)`, rotates tiles on click, and marks completion which unlocks the next level before navigating to `CompleteScreen`.
 
 ## Grid & Tile Model
@@ -22,7 +22,7 @@
 
 ## UI & Audio Patterns
 - Every screen creates a `Stage` with `FitViewport(1920,1080)` to match the artwork and reassigns `Gdx.input` to that stage inside `show()`.
-- Buttons are backed by textures under `assets/buttons` / `assets/LevelSel`; pressed-state textures follow the `*_press.png` pattern already preloaded in `PathPuzzleGame.create()`.
+- Buttons are backed by textures under `assets/buttons` / `assets/LevelSel`; pressed-state textures follow the `*press_bttn.PNG` pattern (e.g., `Startpress_bttn.PNG`) already preloaded in `PathPuzzleGame.create()`.
 - Background music (`sounds/menu_bgm.mp3`) is reused across menu-like screens; they fetch it from the shared `AssetManager`, update volume from `game.musicVolume`, and only start playback when `!music.isPlaying()` to avoid double starts.
 
 ## Build, Run, Test
