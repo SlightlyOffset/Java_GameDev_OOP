@@ -34,6 +34,45 @@ public class WorldRenderer {
     public void clearScreen() {
         renderer.clearScreen(0.2f, 0.2f, 0.2f, 1.0f);
     }
+
+    /**
+     * Renders the game grid by iterating through all tiles and delegating drawing to the pluggable renderer.
+     * This method handles tile positioning, rotation, and color tinting based on puzzle state.
+     * 
+     * <p>The rendering process:
+     * <ul>
+     *   <li>Iterates through every tile in the grid (row by row, column by column)</li>
+     *   <li>Skips tiles with no texture (EMPTY, CROSS types)</li>
+     *   <li>Loads textures from the AssetManager if available</li>
+     *   <li>Calculates screen position: grid offset + tile index * tile size</li>
+     *   <li>Determines color based on puzzle completion state (GREEN if solved, WHITE otherwise)</li>
+     *   <li>Delegates the actual drawing to the renderer abstraction via drawTextureRegion()</li>
+     * </ul>
+     * </p>
+     * 
+     * <p>Tile rotation is negated when passed to the renderer to account for LibGDX's 
+     * counter-clockwise convention (tile rotates clockwise, but LibGDX rotates counter-clockwise).
+     * Rotation origin is set to the tile's center (tileSize/2, tileSize/2) to ensure 
+     * rotation around the center point.
+     * </p>
+     * 
+     * <p>The renderer abstraction (IRenderer) is injected with the SpriteBatch for GdxRenderer 
+     * implementations to use. This ensures all rendering operations are properly encapsulated 
+     * and decoupled from the world rendering logic.
+     * </p>
+     * 
+     * @param grid The game grid containing all tiles to render
+     * @param offsetX The x-coordinate offset for positioning the grid on screen
+     * @param offsetY The y-coordinate offset for positioning the grid on screen
+     * @param batch The SpriteBatch for texture rendering (used by GdxRenderer)
+     * @param assetManager The AssetManager for loading textures by path
+     * 
+     * @see IRenderer#drawTextureRegion(Texture, float, float, float, float, float, float, float, float, float, float, float)
+     * @see Grid#getRows()
+     * @see Grid#getCols()
+     * @see Tile#getType()
+     * @see com.badlogic.gdx.assets.AssetManager
+     */
     public void render(Grid grid, float offsetX, float offsetY, SpriteBatch batch, AssetManager assetManager) {
         for (int y = 0; y < grid.getRows(); y++) {
             for (int x = 0; x < grid.getCols(); x++) {
@@ -79,13 +118,4 @@ public class WorldRenderer {
             }
         }
     }
-
-    /**
-     * Draws the path segments for a single tile based on its type and rotation.
-     *
-     * @param tile The tile to draw.
-     * @param px The pixel x-coordinate of the tile's top-left corner.
-     * @param py The pixel y-coordinate of the tile's top-left corner.
-     * @param isSolved Whether the puzzle is currently in a solved state, which changes the path color.
-     */
 }
